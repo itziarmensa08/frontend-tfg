@@ -37,6 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.6
   get: ^4.6.6
   json_theme: ^6.4.1
+  shared_preferences: ^2.2.2
+  http_interceptor: ^2.0.0-beta.8
+  fluttertoast: ^8.2.4
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +66,12 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/appainter_theme.json
+    - assets/logo_flightline.png
+    - assets/ca.png
+    - assets/en_US.png
+    - assets/es.png
+    - assets/aircraft.png
+    - assets/IMG_0621.JPG
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
