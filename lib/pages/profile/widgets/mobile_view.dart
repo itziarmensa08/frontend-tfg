@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_tfg/data/models/user.model.dart';
+import 'package:frontend_tfg/data/services/image.service.dart';
+import 'package:frontend_tfg/data/services/user.service.dart';
+import 'package:frontend_tfg/general_widgets/toast.dart';
+import 'package:frontend_tfg/pages/profile/profile.controller.dart';
 import 'package:frontend_tfg/pages/profile/widgets/edit_user_form.dart';
 import 'package:frontend_tfg/pages/profile/widgets/view_user_form.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Widget mobileView(double width, GlobalKey<ScaffoldState> scaffoldKey, BuildContext context) {
+  final ProfileController controller = Get.put(ProfileController());
   return Padding(
     padding: EdgeInsets.only(left: width * 0.05, right: width * 0.05 ),
     child: SizedBox(
@@ -32,12 +39,36 @@ Widget mobileView(double width, GlobalKey<ScaffoldState> scaffoldKey, BuildConte
             children: [
               Column(
                 children: [
-                  const CircleAvatar(
+                  Obx(() => CircleAvatar(
                     radius: 50.0,
-                    child: Icon(Icons.person, size: 70.0),
-                  ),
+                    child: controller.user.value.profileImage != null
+                      ? ClipOval(
+                          child: Image.network(
+                            controller.user.value.profileImage!,
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : const Icon(Icons.person, size: 70.0),
+                  )),
                   const SizedBox(height: 20),
-                  ElevatedButton(onPressed: (){}, child: Text('editPhoto'.tr)),
+                  ElevatedButton(onPressed: () async {
+                    final file = await ImagePicker().pickImage(source: ImageSource.gallery);
+                    final imagesSingleton = ImagesSingleton.getInstance();
+                    final secureUrl = await imagesSingleton.uploadPhoto(
+                      file!,
+                      'users',
+                      controller.user.value.id!,
+                    );
+                    if (secureUrl != null) {
+                      UserModel updatedModel = controller.user.value;
+                      updatedModel.profileImage = secureUrl;
+                      await UserService.updateUser(context, controller.user.value.id!, updatedModel);
+                    } else {
+                      ToastUtils.showErrorToast(context, 'errorCloudinary'.tr);
+                    }
+                  }, child: Text('editPhoto'.tr)),
                 ],
               ),
               const SizedBox(height: 20),

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/pages/profile/widgets/desktop_view.dart';
-import 'package:frontend_tfg/pages/profile/widgets/modile_view.dart';
+import 'package:frontend_tfg/pages/profile/widgets/mobile_view.dart';
 
 
 class ProfilePage extends StatefulWidget {

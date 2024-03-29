@@ -90,6 +90,7 @@ final Map<String, String> en = {
   'editData': "Edit data",
   'editPhoto': "Edit photo",
   'signOut': "Sign out",
+  'errorCloudinary': "There was an error uploading the image, please try again later",
 
   //Add aircraft
   'succesAddAircraft': 'Aircraft added successfully',

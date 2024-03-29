@@ -91,6 +91,7 @@ final Map<String, String> ca = {
   'editData': "Editar dades",
   'editPhoto': "Editar foto",
   'signOut': "Tancar sessió",
+  'errorCloudinary': "Hi ha hagut un error pujant la imatge, intenta-ho més tard",
 
   //Add aircraft
   'succesAddAircraft': 'Aeronau registrada correctament',
