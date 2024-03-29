@@ -38,7 +38,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
     topPadding = screenHeight * 0.05;
     botomPadding = screenHeight * 0.01;
     return Scaffold(
-      endDrawer: drawer(contentViews.map((e) => ListTile(title:  Text(e.tab.title), onTap: (){})).toList()),
+      endDrawer: drawer(contentViews.map((e) => ListTile(title:  Text(e.tab.title), onTap: e.onTabPressed)).toList()),
       key: scaffoldKey,
       body: Padding(
         padding: EdgeInsets.only(bottom: botomPadding, top: topPadding),

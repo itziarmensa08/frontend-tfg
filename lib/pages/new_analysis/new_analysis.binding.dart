@@ -1,6 +1,10 @@
+
 import 'package:get/get.dart';
 
 class NewAnalysisBinding implements Bindings {
   @override
-  void dependencies() {}
+  Future<void> dependencies() async {
+
+
+  }
 }

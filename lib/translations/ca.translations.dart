@@ -88,6 +88,9 @@ final Map<String, String> ca = {
   'editUser': 'Editar usuari',
   'invalidPhone': 'Telèfon no vàlid',
   'editUserSuccess': 'Usuari editat correctament',
+  'editData': "Editar dades",
+  'editPhoto': "Editar foto",
+  'signOut': "Tancar sessió",
 
   //Add aircraft
   'succesAddAircraft': 'Aeronau registrada correctament',
@@ -116,5 +119,5 @@ final Map<String, String> ca = {
   'step1Title': 'Dades generals',
   'selectairport': 'Selecciona l\'aeroport: ',
   'addAirportStep1': 'o afegeix les dades si no el trobes: '
-  
+
 };

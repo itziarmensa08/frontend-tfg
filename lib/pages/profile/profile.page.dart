@@ -1,21 +1,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
-import 'package:frontend_tfg/pages/home/home.controller.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/desktop_view.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/mobile_view.dart';
-import 'package:get/get.dart';
+import 'package:frontend_tfg/pages/profile/widgets/desktop_view.dart';
+import 'package:frontend_tfg/pages/profile/widgets/modile_view.dart';
 
-class NewAnalysisPage extends StatefulWidget {
-  const NewAnalysisPage({super.key});
+
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
   @override
-  NewAnalysisPageState createState() => NewAnalysisPageState();
+  HomePageState createState() => HomePageState();
 }
 
-class NewAnalysisPageState extends State<NewAnalysisPage> with SingleTickerProviderStateMixin{
-
-  final controller = Get.put(HomeController());
+class HomePageState extends State<ProfilePage> with SingleTickerProviderStateMixin{
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -28,7 +25,7 @@ class NewAnalysisPageState extends State<NewAnalysisPage> with SingleTickerProvi
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: contentViews.length, vsync: this, initialIndex: 1);
+    tabController = TabController(length: contentViews.length, vsync: this, initialIndex: 3);
   }
 
   @override
@@ -44,7 +41,7 @@ class NewAnalysisPageState extends State<NewAnalysisPage> with SingleTickerProvi
         padding: EdgeInsets.only(bottom: botomPadding, top: topPadding),
         child: LayoutBuilder(builder: (context, constraints) {
           if (constraints.maxWidth > 715){
-            return desktopView(tabController, contentViews, screenHeight*0.85);
+            return desktopView(tabController, contentViews, screenHeight * 0.85, context);
           }else{
             return mobileView(screenWidth, scaffoldKey, context);
           }

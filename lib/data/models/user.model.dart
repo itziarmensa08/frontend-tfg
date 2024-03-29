@@ -14,8 +14,8 @@ class UserModel {
   String? language;
 
   UserModel(
-    { 
-      this.id, 
+    {
+      this.id,
       this.name,
       this.surname,
       this.username,

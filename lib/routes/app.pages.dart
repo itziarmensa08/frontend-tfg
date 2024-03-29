@@ -4,7 +4,9 @@ import 'package:frontend_tfg/pages/login/login.binding.dart';
 import 'package:frontend_tfg/pages/login/login.page.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.binding.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.page.dart';
-import 'package:frontend_tfg/pages/register/register.binfing.dart';
+import 'package:frontend_tfg/pages/profile/profile.binding.dart';
+import 'package:frontend_tfg/pages/profile/profile.page.dart';
+import 'package:frontend_tfg/pages/register/register.binding.dart';
 import 'package:frontend_tfg/pages/register/register.page.dart';
 import 'package:frontend_tfg/pages/splash/splash.binding.dart';
 import 'package:frontend_tfg/pages/splash/splash.page.dart';
@@ -38,6 +40,11 @@ abstract class AppPages {
       name: Routes.newAnalysis,
       page:() => const NewAnalysisPage(),
       binding: NewAnalysisBinding()
+    ),
+    GetPage(
+      name: Routes.profile,
+      page:() => const ProfilePage(),
+      binding: ProfileBinding()
     ),
   ];
 }

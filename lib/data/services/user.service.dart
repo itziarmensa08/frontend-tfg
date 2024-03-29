@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:frontend_tfg/data/models/auth.model.dart';
@@ -9,6 +8,17 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService {
+
+  getUserLogged() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('id');
+    await Future.delayed(const Duration(seconds: 2));
+    if (userId != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   static Future<String?> login(String? username, String? password, BuildContext context) async {
     ApiResponse response;
@@ -35,7 +45,14 @@ class UserService {
           Auth.isAdmin = false;
         }
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('auth', jsonEncode(Auth.toJson()));
+        prefs.setString('token', data['token']);
+        prefs.setString('id', userModel.id!);
+        prefs.setString('language', userModel.language!);
+        if (userModel.role == 'admin') {
+          prefs.setBool('isAdmin', true);
+        } else {
+          prefs.setBool('isAdmin', false);
+        }
         return response.statusCode.toString();
 
       } else if (response.statusCode == 404 ||  response.statusCode == 400) {
@@ -68,6 +85,47 @@ class UserService {
     } catch (error) {
       ToastUtils.showErrorToast(context, 'Error Register: $error');
     }
+  }
+
+  static Future<UserModel?> getUserById(BuildContext context, String userId) async {
+    ApiResponse response;
+    ToastUtils.initFToast(context);
+
+    try {
+      response = await MyApi().get('/users/$userId');
+
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        UserModel user = UserModel.fromJson(data);
+        return user;
+      } else {
+        ToastUtils.showErrorToast(context, response.data);
+      }
+    } catch (error) {
+      ToastUtils.showErrorToast(context, 'Error GetUser: $error');
+    }
+    return null;
+  }
+
+  static Future<bool?> updateUser(BuildContext context, String userId, UserModel user) async {
+    ApiResponse response;
+    ToastUtils.initFToast(context);
+
+    try {
+      response = await MyApi().put(
+        '/users/$userId',
+        data: user.toJson()
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        ToastUtils.showErrorToast(context, response.data);
+      }
+    } catch (error) {
+      ToastUtils.showErrorToast(context, 'Error UpdateUser: $error');
+    }
+    return null;
   }
 
 }

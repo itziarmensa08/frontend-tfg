@@ -31,7 +31,7 @@ final List<ContentView> contentViews = [
   ContentView(
     tab: CustomTab(title: 'profile'.tr),
     onTabPressed: () {
-
+      Get.toNamed(Routes.profile);
     },
   ),
   if (Auth.isAdmin == true)

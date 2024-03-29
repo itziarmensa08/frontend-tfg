@@ -87,6 +87,9 @@ final Map<String, String> en = {
   'editUser': 'Edit user',
   'invalidPhone': 'Invalid phone',
   'editUserSuccess': 'User updated successfully',
+  'editData': "Edit data",
+  'editPhoto': "Edit photo",
+  'signOut': "Sign out",
 
   //Add aircraft
   'succesAddAircraft': 'Aircraft added successfully',

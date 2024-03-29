@@ -1,16 +1,18 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
-import 'package:frontend_tfg/data/models/user.model.dart';
 import 'package:frontend_tfg/data/services/user.service.dart';
-import 'package:frontend_tfg/pages/register/register.controller.dart';
-import 'package:frontend_tfg/routes/app.pages.dart';
+import 'package:frontend_tfg/general_widgets/toast.dart';
+import 'package:frontend_tfg/pages/profile/profile.binding.dart';
+import 'package:frontend_tfg/pages/profile/profile.controller.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
-class RegisterForm extends Container {
+class EditUserForm extends Container {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final controller = Get.put(RegisterController());
+  final ProfileController controller = Get.put(ProfileController());
 
-  RegisterForm({super.key});
+  EditUserForm({super.key});
 
   String? textValidator (String? value) {
     if (value == null || value.isEmpty) {
@@ -37,6 +39,17 @@ class RegisterForm extends Container {
       const pattern = r'\b[A-Za-z0-9._%+-]+@flightlinebcn\.com\b';
       if (!RegExp(pattern).hasMatch(value)) {
         return 'validEmail'.tr;
+      }
+    }
+    return null;
+  }
+
+  String? phoneValidator(String? value) {
+    if (value == null || value.isEmpty) {
+    } else {
+      final phoneRegex = RegExp(r'^[0-9]{9}$');
+      if (!phoneRegex.hasMatch(value)) {
+        return 'invalidPhone'.tr;
       }
     }
     return null;
@@ -125,10 +138,9 @@ class RegisterForm extends Container {
           ),
           const SizedBox(height: 20),
           TextFormField(
-            controller: controller.password1,
-            obscureText: true,
+            controller: controller.telephone,
             decoration: InputDecoration(
-              labelText: 'pass'.tr,
+              labelText: 'telephone'.tr,
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Theme.of(context).primaryColor,
@@ -139,16 +151,29 @@ class RegisterForm extends Container {
                   color: Theme.of(context).primaryColor,
                 ),
               ),
-              suffixIcon: const Icon(Icons.key)
+              suffixIcon: const Icon(Icons.phone),
             ),
-            validator: (value) => passwordValidator(value, controller.password2.text),
+            validator: (value) => phoneValidator(value),
           ),
           const SizedBox(height: 20),
           TextFormField(
-            controller: controller.password2,
-            obscureText: true,
+            controller: controller.dateborn,
+            readOnly: true,
+            onTap: () async {
+              final DateTime? pickedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(1900),
+                lastDate: DateTime.now(),
+              );
+              if (pickedDate != null) {
+                controller.date = pickedDate;
+                String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                controller.dateborn.text = formattedDate;
+              }
+            },
             decoration: InputDecoration(
-              labelText: 'repeatPass'.tr,
+              labelText: 'dateBorn'.tr,
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Theme.of(context).primaryColor,
@@ -159,30 +184,60 @@ class RegisterForm extends Container {
                   color: Theme.of(context).primaryColor,
                 ),
               ),
-              suffixIcon: const Icon(Icons.key)
+              suffixIcon: const Icon(Icons.date_range),
             ),
-            validator: (value) => passwordValidator(value, controller.password1.text),
+          ),
+          const SizedBox(height: 20),
+          DropdownButtonFormField<String>(
+            value: controller.role.text,
+            items: <String>['admin', 'user'].map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value.tr),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              controller.role.text = newValue!;
+            },
+            decoration: InputDecoration(
+              labelText: 'rol'.tr,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ),
+            icon: const Icon(Icons.arrow_drop_down),
           ),
           const SizedBox(height: 40),
-          ElevatedButton(
-            onPressed: () async {
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              if (_formKey.currentState!.validate()) {
-                UserModel user = UserModel(
-                  name: controller.name.text,
-                  surname: controller.surname.text,
-                  username: controller.username.text,
-                  email: controller.email.text,
-                  password: controller.password1.text,
-                  role: 'user',
-                  language: prefs.getString('language') ?? 'es'
-                );
-                await UserService.register(user, context);
-                Get.toNamed(Routes.login);
+          ElevatedButton(onPressed: () async {
+            if (_formKey.currentState!.validate()) {
+              controller.user.value.name = controller.name.text;
+              controller.user.value.surname = controller.surname.text;
+              controller.user.value.username = controller.username.text;
+              controller.user.value.email = controller.email.text;
+              controller.user.value.role = controller.role.text;
+              if (controller.telephone.text.isNotEmpty) {
+                controller.user.value.telephone = int.tryParse(controller.telephone.text);
               }
-            },
-            child: Text('putRegister'.tr),
-          ),
+              if (controller.date != null) {
+                controller.user.value.dateBorn = controller.date;
+              }
+
+              bool? success = await UserService.updateUser(context, controller.user.value.id!, controller.user.value);
+
+              if (success != null || success == true) {
+                ToastUtils.showSuccessToast(context, 'editUserSuccess'.tr);
+                Navigator.of(context).pop();
+                ProfileBinding.updateUserData();
+              }
+            }
+          }, child: Text('editUser'.tr)),
         ],
       )
     );
