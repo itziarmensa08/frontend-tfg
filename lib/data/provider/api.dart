@@ -1,8 +1,8 @@
 import 'dart:convert' show jsonDecode, jsonEncode;
 import 'dart:developer' show log;
+import 'package:frontend_tfg/data/models/auth.model.dart';
 import 'package:frontend_tfg/data/provider/endpoints.dart';
 import 'package:http_interceptor/http_interceptor.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final optHeader = {
   'content-type': 'application/json',
@@ -34,8 +34,7 @@ class MyApi {
 
     try {
 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
+      String? token = Auth.token;
 
       if (token != null) {
         optHeader['Authorization'] = 'Bearer $token';
@@ -72,8 +71,7 @@ class MyApi {
 
     try {
 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
+      String? token = Auth.token;
 
       if (token != null) {
         optHeader['Authorization'] = 'Bearer $token';
@@ -110,8 +108,7 @@ class MyApi {
 
     try {
 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
+      String? token = Auth.token;
 
       if (token != null) {
         optHeader['Authorization'] = 'Bearer $token';
@@ -148,8 +145,7 @@ class MyApi {
 
     try {
 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
+      String? token = Auth.token;
 
       if (token != null) {
         optHeader['Authorization'] = 'Bearer $token';

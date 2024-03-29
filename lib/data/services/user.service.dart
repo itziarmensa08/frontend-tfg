@@ -1,23 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/widgets.dart';
+import 'package:frontend_tfg/data/models/auth.model.dart';
 import 'package:frontend_tfg/data/models/user.model.dart';
 import 'package:frontend_tfg/data/provider/api.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class UserService {
-
-  getUser() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('id');
-    await Future.delayed(const Duration(seconds: 2));
-    if (userId != null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   static Future<String?> login(String? username, String? password, BuildContext context) async {
     ApiResponse response;
@@ -35,15 +26,16 @@ class UserService {
       if (response.statusCode == 200) {
         dynamic data = response.data;
         UserModel userModel = UserModel.fromJson(data['user']);
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('token', data['token']);
-        prefs.setString('id', userModel.id!);
-        prefs.setString('language', userModel.language!);
+        Auth.token = data['token'];
+        Auth.id = userModel.id!;
+        Auth.language = userModel.language!;
         if (userModel.role == 'admin') {
-          prefs.setBool('isAdmin', true);
+          Auth.isAdmin = true;
         } else {
-          prefs.setBool('isAdmin', false);
+          Auth.isAdmin = false;
         }
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('auth', jsonEncode(Auth.toJson()));
         return response.statusCode.toString();
 
       } else if (response.statusCode == 404 ||  response.statusCode == 400) {

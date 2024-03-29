@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_tfg/data/models/auth.model.dart';
 import 'package:frontend_tfg/data/models/user.model.dart';
 import 'package:frontend_tfg/data/services/user.service.dart';
 import 'package:frontend_tfg/pages/register/register.controller.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterForm extends Container {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -32,7 +32,7 @@ class RegisterForm extends Container {
 
   String? emailValidator(String? value) {
     if (value == null || value.isEmpty) {
-      return 'enterText'.tr; 
+      return 'enterText'.tr;
     } else {
       const pattern = r'\b[A-Za-z0-9._%+-]+@flightlinebcn\.com\b';
       if (!RegExp(pattern).hasMatch(value)) {
@@ -167,7 +167,6 @@ class RegisterForm extends Container {
           ElevatedButton(
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
                 UserModel user = UserModel(
                   name: controller.name.text,
                   surname: controller.surname.text,
@@ -175,7 +174,7 @@ class RegisterForm extends Container {
                   email: controller.email.text,
                   password: controller.password1.text,
                   role: 'user',
-                  language: prefs.getString('language') ?? 'es'
+                  language: Auth.language ?? 'es'
                 );
                 await UserService.register(user, context);
                 Get.toNamed(Routes.login);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_tfg/data/models/auth.model.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
-
 class ContentView {
   ContentView({required this.tab, required this.onTabPressed});
 
@@ -11,24 +11,40 @@ class ContentView {
 
 final List<ContentView> contentViews = [
   ContentView(
-    tab: const CustomTab(title: 'Home'),
+    tab: CustomTab(title: 'home'.tr),
     onTabPressed: () {
-      // Lógica para abrir la página de inicio
-      Get.toNamed(Routes.initial);
+      Get.toNamed(Routes.home);
     },
   ),
   ContentView(
-    tab: const CustomTab(title: 'New Analysis'),
+    tab: CustomTab(title: 'newAnalisis'.tr),
     onTabPressed: () {
-      // Lógica para abrir la página "Acerca de"
       Get.toNamed(Routes.newAnalysis);
     },
   ),
   ContentView(
-    tab: const CustomTab(title: 'Projects'),
+    tab: CustomTab(title: 'tasks'.tr),
     onTabPressed: () {
-      // Lógica para abrir la página de proyectos
-      print('Abrir página de Proyectos');
+
+    },
+  ),
+  ContentView(
+    tab: CustomTab(title: 'profile'.tr),
+    onTabPressed: () {
+
+    },
+  ),
+  if (Auth.isAdmin == true)
+  ContentView(
+    tab: CustomTab(title: 'admin'.tr),
+    onTabPressed: () {
+
+    },
+  ),
+  ContentView(
+    tab: CustomTab(title: 'settings'.tr),
+    onTabPressed: () {
+
     },
   ),
 ];
@@ -58,7 +74,8 @@ class CustomTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double tabBarScaling = screenWidth > 1400 ? 0.21 : screenWidth > 1100 ? 0.3 : 0.4;
+    //double tabBarScaling = screenWidth > 1400 ? 0.21 : screenWidth > 1100 ? 0.3 : 0.4;
+    double tabBarScaling = 0.7;
     return Padding(
       padding: EdgeInsets.only(right: screenWidth * 0.05),
       child: SizedBox(

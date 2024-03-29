@@ -13,7 +13,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:frontend_tfg/main.dart';
 import 'package:json_theme/json_theme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -21,8 +20,7 @@ void main() {
     final themeStr = await rootBundle.loadString('assets/appainter_theme.json');
     final themeJson = jsonDecode(themeStr);
     final themeData = ThemeDecoder.decodeThemeData(themeJson)!;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await tester.pumpWidget(MyApp(theme: themeData, prefs: prefs));
+    await tester.pumpWidget(MyApp(theme: themeData));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

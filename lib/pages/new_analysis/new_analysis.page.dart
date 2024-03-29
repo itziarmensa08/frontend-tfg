@@ -1,8 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
+import 'package:frontend_tfg/pages/home/home.controller.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/desktop_view.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/mobile_view.dart';
+import 'package:get/get.dart';
 
 class NewAnalysisPage extends StatefulWidget {
   const NewAnalysisPage({super.key});
@@ -12,6 +14,8 @@ class NewAnalysisPage extends StatefulWidget {
 }
 
 class NewAnalysisPageState extends State<NewAnalysisPage> with SingleTickerProviderStateMixin{
+
+  final controller = Get.put(HomeController());
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
