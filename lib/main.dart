@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:frontend_tfg/pages/splash/splash_binding.dart';
-import 'package:frontend_tfg/pages/splash/splash_page.dart';
-import 'package:frontend_tfg/routes/app_pages.dart';
-import 'package:frontend_tfg/translations/app_translations.dart';
+import 'package:frontend_tfg/pages/splash/splash.binding.dart';
+import 'package:frontend_tfg/pages/splash/splash.page.dart';
+import 'package:frontend_tfg/routes/app.pages.dart';
+import 'package:frontend_tfg/translations/app.translations.dart';
 import 'package:get/get.dart';
 import 'package:json_theme/json_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';

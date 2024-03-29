@@ -1,5 +1,5 @@
 import 'package:frontend_tfg/data/services/user.service.dart';
-import 'package:frontend_tfg/routes/app_pages.dart';
+import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 
 class SplashScreenController extends GetxController {

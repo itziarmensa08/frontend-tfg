@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_tfg/routes/app_pages.dart';
+import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 
 class ContentView {

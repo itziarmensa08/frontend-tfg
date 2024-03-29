@@ -1,11 +1,13 @@
-import 'package:frontend_tfg/pages/home/home_binding.dart';
-import 'package:frontend_tfg/pages/home/home_page.dart';
+import 'package:frontend_tfg/pages/home/home.binding.dart';
+import 'package:frontend_tfg/pages/home/home.page.dart';
 import 'package:frontend_tfg/pages/login/login.binding.dart';
 import 'package:frontend_tfg/pages/login/login.page.dart';
-import 'package:frontend_tfg/pages/new_analysis/new_analysis_binding.dart';
-import 'package:frontend_tfg/pages/new_analysis/new_analysis_page.dart';
-import 'package:frontend_tfg/pages/splash/splash_binding.dart';
-import 'package:frontend_tfg/pages/splash/splash_page.dart';
+import 'package:frontend_tfg/pages/new_analysis/new_analysis.binding.dart';
+import 'package:frontend_tfg/pages/new_analysis/new_analysis.page.dart';
+import 'package:frontend_tfg/pages/register/register.binfing.dart';
+import 'package:frontend_tfg/pages/register/register.page.dart';
+import 'package:frontend_tfg/pages/splash/splash.binding.dart';
+import 'package:frontend_tfg/pages/splash/splash.page.dart';
 import 'package:get/get.dart';
 part './routes.dart';
 
@@ -21,6 +23,11 @@ abstract class AppPages {
       name: Routes.login,
       page:() => const LoginPage(),
       binding: LoginBinding()
+    ),
+    GetPage(
+      name: Routes.register,
+      page:() => const RegisterPage(),
+      binding: RegisterBinding()
     ),
     GetPage(
       name: Routes.home,

@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:frontend_tfg/data/models/user.model.dart';
 import 'package:frontend_tfg/data/provider/api.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -55,6 +56,26 @@ class UserService {
       ToastUtils.showErrorToast(context, 'Error Login: $error');
     }
     return null;
+  }
+
+  static Future<void> register(UserModel user, BuildContext context) async {
+    ApiResponse response;
+    ToastUtils.initFToast(context);
+
+    try {
+      response = await MyApi().post(
+        '/auth/register',
+        data: user.toJson()
+      );
+
+      if (response.statusCode == 201) {
+        ToastUtils.showSuccessToast(context, 'successRegister'.tr);
+      } else {
+        ToastUtils.showErrorToast(context, '${response.data}'.tr);
+      }
+    } catch (error) {
+      ToastUtils.showErrorToast(context, 'Error Register: $error');
+    }
   }
 
 }

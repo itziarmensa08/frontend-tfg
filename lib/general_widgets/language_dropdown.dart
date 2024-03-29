@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_tfg/translations/app_translations.dart';
+import 'package:frontend_tfg/translations/app.translations.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

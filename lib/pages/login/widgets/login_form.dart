@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/services/user.service.dart';
 import 'package:frontend_tfg/pages/login/login.controller.dart';
-import 'package:frontend_tfg/routes/app_pages.dart';
+import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 
@@ -102,72 +102,6 @@ class LoginForm extends Container {
               return null;
             },
           ),
-          /*TextFormField(
-            controller: controller.username,
-            cursorColor: Theme.of(context).hintColor,
-            style: textDarkGrayTextStyle,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Theme.of(context).colorScheme.background,
-              labelText: 'username'.tr,
-              labelStyle: textDarkGrayTextStyle,
-              floatingLabelStyle: textOrangeTextStyle,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.background,
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.background,
-                ),
-              ),
-              suffixIcon: const Icon(Icons.person, color: Color(0xFFCBC8C8),),
-            ),
-            onChanged: (value) async {
-              validateUsername = await validatorUsername(value, context);
-            },
-            validator: (_) {
-              if (validateUsername != null) {
-                return validateUsername;
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
-            controller: controller.password,
-            cursorColor: Theme.of(context).hintColor,
-            style: textDarkGrayTextStyle,
-            obscureText: true,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Theme.of(context).colorScheme.background,
-              labelText: 'pass'.tr,
-              labelStyle: textDarkGrayTextStyle,
-              floatingLabelStyle: textOrangeTextStyle,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.background,
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.background,
-                ),
-              ),
-              suffixIcon: const Icon(Icons.key, color: Color(0xFFCBC8C8),)
-            ),
-            onChanged: (value) async {
-              validatePassword = await validatorPassword(value, context);
-            },
-            validator: (value) {
-              if (validatePassword != null) {
-                return validatePassword;
-              }
-              return null;
-            },
-          ),*/
           const SizedBox(height: 40),
           ElevatedButton(
             onPressed: () async {

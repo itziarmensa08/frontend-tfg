@@ -1,4 +1,4 @@
-part of 'app_pages.dart';
+part of 'app.pages.dart';
 
 abstract class Routes{
 
