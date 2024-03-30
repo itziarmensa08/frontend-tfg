@@ -13,7 +13,7 @@ class NewAnalysisPage extends StatefulWidget {
   NewAnalysisPageState createState() => NewAnalysisPageState();
 }
 
-class NewAnalysisPageState extends State<NewAnalysisPage> with SingleTickerProviderStateMixin{
+class NewAnalysisPageState extends State<NewAnalysisPage> with TickerProviderStateMixin{
 
   final controller = Get.put(HomeController());
 

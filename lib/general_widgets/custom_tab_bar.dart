@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+
 
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/auth.model.dart';
@@ -32,54 +32,59 @@ class CustomTab extends StatelessWidget {
 List<ContentView> tabs = [];
 
 
-class CustomTabBar extends StatelessWidget {
-  CustomTabBar({super.key, required this.page});
+class CustomTabBar extends StatefulWidget {
+  const CustomTabBar({super.key, required this.number, required this.page});
 
-  late TabController controller;
-  final SingleTickerProviderStateMixin page;
+  final int number;
+  final TickerProviderStateMixin page;
+
+  @override
+  CustomTabBarState createState() => CustomTabBarState();
+}
+
+class CustomTabBarState extends State<CustomTabBar> {
+
+  late TabController controller = TabController(length: tabs.length, vsync: widget.page, initialIndex: widget.number);
+  late bool authCompleted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    defineAuth();
+  }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    //double tabBarScaling = screenWidth > 1400 ? 0.21 : screenWidth > 1100 ? 0.3 : 0.4;
     double tabBarScaling = 0.7;
-    return FutureBuilder(
-      future: defineAuth(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (!tabs.isNotEmpty) {
-            buildTabBar();
-            controller = TabController(length: tabs.length, vsync: page, initialIndex: 0);
-          }
-          return Padding(
-            padding: EdgeInsets.only(right: screenWidth * 0.05),
-            child: SizedBox(
-              width: screenWidth * tabBarScaling,
-              child: TabBar(
-                controller: controller,
-                tabs: tabs.map((contentView) => contentView.tab).toList(),
-                onTap: (index) => tabs[index].onTabPressed(),
-              ),
-            ),
-          );
-        } else {
-          return const LinearProgressIndicator();
-        }
-      },
+    return Padding(
+      padding: EdgeInsets.only(right: screenWidth * 0.05),
+      child: SizedBox(
+        width: screenWidth * tabBarScaling,
+        child: TabBar(
+          controller: controller,
+          tabs: tabs.map((contentView) => contentView.tab).toList(),
+          onTap: (index) => tabs[index].onTabPressed(),
+        ),
+      ),
     );
   }
-}
 
-Future<void> defineAuth() async {
-  final userService = UserService();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  var isUserLoggedIn = await userService.getUserLogged();
-  if (isUserLoggedIn == true) {
-    Auth.id = prefs.getString('id');
-    Auth.token = prefs.getString('token');
-    Auth.language = prefs.getString('language');
-    Auth.isAdmin = prefs.getBool('isAdmin')!;
-    print(Auth.toJson());
+  Future<void> defineAuth() async {
+    final userService = UserService();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var isUserLoggedIn = await userService.getUserLogged();
+    if (isUserLoggedIn == true) {
+      Auth.id = prefs.getString('id');
+      Auth.token = prefs.getString('token');
+      Auth.language = prefs.getString('language');
+      Auth.isAdmin = prefs.getBool('isAdmin')!;
+    }
+    setState(() {
+      buildTabBar();
+      authCompleted = true;
+      controller = TabController(length: tabs.length, vsync: widget.page, initialIndex: widget.number);
+    });
   }
 }
 

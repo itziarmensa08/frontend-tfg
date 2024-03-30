@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
   HomePageState createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
+class HomePageState extends State<HomePage> with TickerProviderStateMixin{
 
   final controller = Get.put(HomeController());
 

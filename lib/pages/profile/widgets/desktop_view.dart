@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:frontend_tfg/data/models/user.model.dart';
 import 'package:frontend_tfg/data/services/image.service.dart';
 import 'package:frontend_tfg/data/services/user.service.dart';
@@ -13,12 +12,12 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Widget desktopView(double height, BuildContext context, SingleTickerProviderStateMixin page) {
+Widget desktopView(double height, BuildContext context, TickerProviderStateMixin page) {
   final ProfileController controller = Get.put(ProfileController());
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      CustomTabBar(page: page),
+      CustomTabBar(page: page, number: 3),
       SizedBox(height: MediaQuery.of(context).size.height * 0.15),
       Expanded(
         child: Padding(

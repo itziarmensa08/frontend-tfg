@@ -12,21 +12,14 @@ class ProfilePage extends StatefulWidget {
   HomePageState createState() => HomePageState();
 }
 
-class HomePageState extends State<ProfilePage> with SingleTickerProviderStateMixin{
+class HomePageState extends State<ProfilePage> with TickerProviderStateMixin{
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
-  late TabController tabController;
   late double screenHeight;
   late double screenWidth;
   late double topPadding;
   late double botomPadding;
-
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(length: tabs.length, vsync: this, initialIndex: 3);
-  }
 
   @override
   Widget build(BuildContext context) {
