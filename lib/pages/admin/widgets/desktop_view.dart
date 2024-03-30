@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/pages/admin/widgets/dashboard_card.dart';
+import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 
 Widget desktopView(double height, BuildContext context, TickerProviderStateMixin page) {
@@ -47,6 +48,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                                 icon: Icons.people,
                                 color: Theme.of(context).primaryColor,
                                 onTap: () {
+                                  Get.toNamed(Routes.listUsers);
                                 },
                               ),
                               DashboardCard(

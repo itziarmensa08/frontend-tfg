@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/pages/admin/widgets/dashboard_card.dart';
+import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 
 Widget mobileView(double width, GlobalKey<ScaffoldState> scaffoldKey, BuildContext context) {
@@ -49,6 +50,7 @@ Widget mobileView(double width, GlobalKey<ScaffoldState> scaffoldKey, BuildConte
                             icon: Icons.people,
                             color: Theme.of(context).primaryColor,
                             onTap: () {
+                              Get.toNamed(Routes.listUsers);
                             },
                           ),
                           DashboardCard(

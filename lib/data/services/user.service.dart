@@ -87,6 +87,31 @@ class UserService {
     }
   }
 
+  static Future<List<UserModel>?> getUsers(BuildContext context) async {
+    ApiResponse response;
+    ToastUtils.initFToast(context);
+
+    try {
+      response = await MyApi().get('/users');
+
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        List<UserModel> users = [];
+        for (var user in data) {
+          users.add(UserModel.fromJson(user));
+        }
+
+        return users;
+
+      } else {
+        ToastUtils.showErrorToast(context, response.data);
+      }
+    } catch (error) {
+      ToastUtils.showErrorToast(context, 'Error GetUsers: $error');
+    }
+    return null;
+  }
+
   static Future<UserModel?> getUserById(BuildContext context, String userId) async {
     ApiResponse response;
     ToastUtils.initFToast(context);

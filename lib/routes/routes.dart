@@ -9,6 +9,7 @@ abstract class Routes{
   static const newAnalysis = '/newAnalysis';
   static const profile = '/profile';
   static const admin = '/admin';
+  static const listUsers = '/listUsers';
 
 }
 

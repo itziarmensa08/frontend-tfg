@@ -2,6 +2,8 @@ import 'package:frontend_tfg/pages/admin/admin.binding.dart';
 import 'package:frontend_tfg/pages/admin/admin.page.dart';
 import 'package:frontend_tfg/pages/home/home.binding.dart';
 import 'package:frontend_tfg/pages/home/home.page.dart';
+import 'package:frontend_tfg/pages/list_users/list_users.binding.dart';
+import 'package:frontend_tfg/pages/list_users/list_users.page.dart';
 import 'package:frontend_tfg/pages/login/login.binding.dart';
 import 'package:frontend_tfg/pages/login/login.page.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.binding.dart';
@@ -52,6 +54,11 @@ abstract class AppPages {
       name: Routes.admin,
       page:() => const AdminPage(),
       binding: AdminBinding()
+    ),
+    GetPage(
+      name: Routes.listUsers,
+      page:() => const ListUsersPage(),
+      binding: ListUsersBinding()
     ),
   ];
 }
