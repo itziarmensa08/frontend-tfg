@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:frontend_tfg/data/models/user.model.dart';
 import 'package:frontend_tfg/data/services/image.service.dart';
 import 'package:frontend_tfg/data/services/user.service.dart';
@@ -12,13 +13,13 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Widget desktopView(TabController controllerTab, List<ContentView> tabs, double height, BuildContext context) {
+Widget desktopView(double height, BuildContext context, SingleTickerProviderStateMixin page) {
   final ProfileController controller = Get.put(ProfileController());
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      CustomTabBar(controller: controllerTab, tabs: tabs),
-      const SizedBox(height: 40),
+      CustomTabBar(page: page),
+      SizedBox(height: MediaQuery.of(context).size.height * 0.15),
       Expanded(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -41,6 +42,10 @@ Widget desktopView(TabController controllerTab, List<ContentView> tabs, double h
                         )
                       : const Icon(Icons.person, size: 70.0),
                   )),
+                  const SizedBox(height: 20),
+                  Obx(() =>
+                    Text('${controller.user.value.name} ${controller.user.value.surname}', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),
+                  ),
                   const SizedBox(height: 20),
                   Row(
                     children: [

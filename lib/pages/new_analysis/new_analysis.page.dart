@@ -19,17 +19,10 @@ class NewAnalysisPageState extends State<NewAnalysisPage> with SingleTickerProvi
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
-  late TabController tabController;
   late double screenHeight;
   late double screenWidth;
   late double topPadding;
   late double botomPadding;
-
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(length: contentViews.length, vsync: this, initialIndex: 1);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +31,13 @@ class NewAnalysisPageState extends State<NewAnalysisPage> with SingleTickerProvi
     topPadding = screenHeight * 0.05;
     botomPadding = screenHeight * 0.01;
     return Scaffold(
-      endDrawer: drawer(contentViews.map((e) => ListTile(title:  Text(e.tab.title), onTap: e.onTabPressed)).toList()),
+      endDrawer: drawer(tabs.map((e) => ListTile(title:  Text(e.tab.title), onTap: e.onTabPressed)).toList()),
       key: scaffoldKey,
       body: Padding(
         padding: EdgeInsets.only(bottom: botomPadding, top: topPadding),
         child: LayoutBuilder(builder: (context, constraints) {
           if (constraints.maxWidth > 715){
-            return desktopView(tabController, contentViews, screenHeight*0.85);
+            return desktopView(screenHeight * 0.85, this);
           }else{
             return mobileView(screenWidth, scaffoldKey, context);
           }

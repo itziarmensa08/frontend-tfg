@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 
-Widget desktopView(TabController controller, List<ContentView> tabs, double height) {
+Widget desktopView(double height, SingleTickerProviderStateMixin page) {
 
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.end,
     children: [
-      CustomTabBar(controller: controller, tabs: tabs),
+      CustomTabBar(page: page),
       SizedBox(
         height: height,
         child: Text(

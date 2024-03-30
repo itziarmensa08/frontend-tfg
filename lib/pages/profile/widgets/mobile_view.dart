@@ -53,6 +53,10 @@ Widget mobileView(double width, GlobalKey<ScaffoldState> scaffoldKey, BuildConte
                       : const Icon(Icons.person, size: 70.0),
                   )),
                   const SizedBox(height: 20),
+                  Obx(() =>
+                    Text('${controller.user.value.name} ${controller.user.value.surname}', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),
+                  ),
+                  const SizedBox(height: 20),
                   ElevatedButton(onPressed: () async {
                     final file = await ImagePicker().pickImage(source: ImageSource.gallery);
                     final imagesSingleton = ImagesSingleton.getInstance();

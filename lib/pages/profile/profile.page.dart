@@ -25,7 +25,7 @@ class HomePageState extends State<ProfilePage> with SingleTickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: contentViews.length, vsync: this, initialIndex: 3);
+    tabController = TabController(length: tabs.length, vsync: this, initialIndex: 3);
   }
 
   @override
@@ -35,13 +35,13 @@ class HomePageState extends State<ProfilePage> with SingleTickerProviderStateMix
     topPadding = screenHeight * 0.05;
     botomPadding = screenHeight * 0.01;
     return Scaffold(
-      endDrawer: drawer(contentViews.map((e) => ListTile(title:  Text(e.tab.title), onTap: e.onTabPressed)).toList()),
+      endDrawer: drawer(tabs.map((e) => ListTile(title:  Text(e.tab.title), onTap: e.onTabPressed)).toList()),
       key: scaffoldKey,
       body: Padding(
         padding: EdgeInsets.only(bottom: botomPadding, top: topPadding),
         child: LayoutBuilder(builder: (context, constraints) {
           if (constraints.maxWidth > 715){
-            return desktopView(tabController, contentViews, screenHeight * 0.85, context);
+            return desktopView(screenHeight * 0.85, context, this);
           }else{
             return mobileView(screenWidth, scaffoldKey, context);
           }
