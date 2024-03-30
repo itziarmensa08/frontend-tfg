@@ -115,7 +115,9 @@ buildTabBar() {
     if (Auth.isAdmin == true)
       ContentView(
         tab: CustomTab(title: 'admin'.tr),
-        onTabPressed: () {},
+        onTabPressed: () {
+          Get.toNamed(Routes.admin);
+        },
       ),
     ContentView(
       tab: CustomTab(title: 'settings'.tr),

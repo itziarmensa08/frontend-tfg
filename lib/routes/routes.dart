@@ -8,6 +8,7 @@ abstract class Routes{
   static const home = '/home';
   static const newAnalysis = '/newAnalysis';
   static const profile = '/profile';
+  static const admin = '/admin';
 
 }
 

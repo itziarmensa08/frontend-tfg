@@ -1,3 +1,5 @@
+import 'package:frontend_tfg/pages/admin/admin.binding.dart';
+import 'package:frontend_tfg/pages/admin/admin.page.dart';
 import 'package:frontend_tfg/pages/home/home.binding.dart';
 import 'package:frontend_tfg/pages/home/home.page.dart';
 import 'package:frontend_tfg/pages/login/login.binding.dart';
@@ -45,6 +47,11 @@ abstract class AppPages {
       name: Routes.profile,
       page:() => const ProfilePage(),
       binding: ProfileBinding()
+    ),
+    GetPage(
+      name: Routes.admin,
+      page:() => const AdminPage(),
+      binding: AdminBinding()
     ),
   ];
 }
