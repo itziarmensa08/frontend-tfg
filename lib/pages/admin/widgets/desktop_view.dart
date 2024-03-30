@@ -56,6 +56,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                                 icon: Icons.person_add,
                                 color: Theme.of(context).primaryColor,
                                 onTap: () {
+                                  Get.toNamed(Routes.addUser);
                                 },
                               ),
                             ],

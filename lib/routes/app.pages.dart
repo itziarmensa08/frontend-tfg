@@ -1,3 +1,5 @@
+import 'package:frontend_tfg/pages/add_user/add_user.binding.dart';
+import 'package:frontend_tfg/pages/add_user/add_user.page.dart';
 import 'package:frontend_tfg/pages/admin/admin.binding.dart';
 import 'package:frontend_tfg/pages/admin/admin.page.dart';
 import 'package:frontend_tfg/pages/home/home.binding.dart';
@@ -59,6 +61,11 @@ abstract class AppPages {
       name: Routes.listUsers,
       page:() => const ListUsersPage(),
       binding: ListUsersBinding()
+    ),
+    GetPage(
+      name: Routes.addUser,
+      page:() => const AddUserPage(),
+      binding: AddUserBinding()
     ),
   ];
 }

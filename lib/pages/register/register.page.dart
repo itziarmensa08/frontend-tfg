@@ -28,34 +28,38 @@ class RegisterPage extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(top: 50.0),
-                      child: Card(
-                        color: Colors.white,
-                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.2, right: MediaQuery.of(context).size.width * 0.2),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 20.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              const SizedBox(height: 40),
-                              Text(
-                                'register'.tr,
-                                style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).primaryColor),
-                              ),
-                              const SizedBox(height: 40),
-                              RegisterForm(),
-                              const SizedBox(height: 20),
-                              TextButton(
-                                child: Text('alreadyAccount'.tr),
-                                onPressed: () {
-                                  Get.toNamed(Routes.login);
-                                },
-                              ),
-                              Image.asset(
-                                'assets/logo_flightline.png',
-                                width: 100,
-                                height: 100,
-                              ),
-                            ],
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: Card(
+                          color: Colors.white,
+                          shadowColor: Colors.white,
+                          elevation: 3,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 20.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                const SizedBox(height: 40),
+                                Text(
+                                  'register'.tr,
+                                  style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).primaryColor),
+                                ),
+                                const SizedBox(height: 40),
+                                RegisterForm(),
+                                const SizedBox(height: 20),
+                                TextButton(
+                                  child: Text('alreadyAccount'.tr),
+                                  onPressed: () {
+                                    Get.toNamed(Routes.login);
+                                  },
+                                ),
+                                Image.asset(
+                                  'assets/logo_flightline.png',
+                                  width: 100,
+                                  height: 100,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

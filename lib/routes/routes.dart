@@ -10,6 +10,7 @@ abstract class Routes{
   static const profile = '/profile';
   static const admin = '/admin';
   static const listUsers = '/listUsers';
+  static const addUser = '/addUser';
 
 }
 

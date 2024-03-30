@@ -58,6 +58,7 @@ Widget mobileView(double width, GlobalKey<ScaffoldState> scaffoldKey, BuildConte
                             icon: Icons.person_add,
                             color: Theme.of(context).primaryColor,
                             onTap: () {
+                              Get.toNamed(Routes.addUser);
                             },
                           ),
                         ],
