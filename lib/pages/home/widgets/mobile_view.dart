@@ -51,10 +51,3 @@ Widget mobileView(double width, GlobalKey<ScaffoldState> scaffoldKey, BuildConte
     ),
   );
 }
-
-
-Widget drawer (List<Widget> tabs) {
-  return Drawer(
-    child: ListView(children: tabs),
-  );
-}

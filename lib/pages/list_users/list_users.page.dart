@@ -27,7 +27,7 @@ class ListUsersPageState extends State<ListUsersPage> with TickerProviderStateMi
     topPadding = screenHeight * 0.05;
     botomPadding = screenHeight * 0.01;
     return Scaffold(
-      endDrawer: drawer(tabs.map((e) => ListTile(title:  Text(e.tab.title), onTap: e.onTabPressed)).toList()),
+      endDrawer: const CustomDrawer(),
       key: scaffoldKey,
       body: Padding(
         padding: EdgeInsets.only(bottom: botomPadding, top: topPadding),

@@ -29,7 +29,34 @@ class CustomTab extends StatelessWidget {
   }
 }
 
-List<ContentView> tabs = [];
+List<ContentView> tabs = [
+  ContentView(
+    tab: CustomTab(title: 'home'.tr),
+    onTabPressed: () {
+      Get.toNamed(Routes.home);
+    },
+  ),
+  ContentView(
+    tab: CustomTab(title: 'newAnalisis'.tr),
+    onTabPressed: () {
+      Get.toNamed(Routes.newAnalysis);
+    },
+  ),
+  ContentView(
+    tab: CustomTab(title: 'tasks'.tr),
+    onTabPressed: () {},
+  ),
+  ContentView(
+    tab: CustomTab(title: 'profile'.tr),
+    onTabPressed: () {
+      Get.toNamed(Routes.profile);
+    },
+  ),
+  ContentView(
+    tab: CustomTab(title: 'settings'.tr),
+    onTabPressed: () {},
+  ),
+];
 
 
 class CustomTabBar extends StatefulWidget {
@@ -88,40 +115,65 @@ class CustomTabBarState extends State<CustomTabBar> {
   }
 }
 
-buildTabBar() {
-  tabs = [
-    ContentView(
-      tab: CustomTab(title: 'home'.tr),
-      onTabPressed: () {
-        Get.toNamed(Routes.home);
-      },
-    ),
-    ContentView(
-      tab: CustomTab(title: 'newAnalisis'.tr),
-      onTabPressed: () {
-        Get.toNamed(Routes.newAnalysis);
-      },
-    ),
-    ContentView(
-      tab: CustomTab(title: 'tasks'.tr),
-      onTabPressed: () {},
-    ),
-    ContentView(
-      tab: CustomTab(title: 'profile'.tr),
-      onTabPressed: () {
-        Get.toNamed(Routes.profile);
-      },
-    ),
-    if (Auth.isAdmin == true)
+void buildTabBar() {
+  bool isAdminTabExists = tabs.any((contentView) => contentView.tab.title == 'admin'.tr);
+
+  if (Auth.isAdmin == true && !isAdminTabExists) {
+    tabs.add(
       ContentView(
         tab: CustomTab(title: 'admin'.tr),
         onTabPressed: () {
           Get.toNamed(Routes.admin);
         },
       ),
-    ContentView(
-      tab: CustomTab(title: 'settings'.tr),
-      onTabPressed: () {},
-    ),
-  ];
+    );
+  }
+}
+
+
+class CustomDrawer extends StatefulWidget {
+  const CustomDrawer({super.key});
+
+  @override
+  CustomDrawerState createState() => CustomDrawerState();
+}
+
+class CustomDrawerState extends State<CustomDrawer> {
+  late bool authCompleted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    defineAuth();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: tabs.map((contentView) => ListTile(
+          title: Text(contentView.tab.title),
+          onTap: () {
+            contentView.onTabPressed();
+          },
+        )).toList(),
+      ),
+    );
+  }
+
+  void defineAuth() async {
+    final userService = UserService();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var isUserLoggedIn = await userService.getUserLogged();
+    if (isUserLoggedIn == true) {
+      Auth.id = prefs.getString('id');
+      Auth.token = prefs.getString('token');
+      Auth.language = prefs.getString('language');
+      Auth.isAdmin = prefs.getBool('isAdmin')!;
+    }
+    setState(() {
+      buildTabBar();
+      authCompleted = true;
+    });
+  }
 }
