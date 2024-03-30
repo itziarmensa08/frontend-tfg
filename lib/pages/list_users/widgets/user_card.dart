@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/user.model.dart';
+import 'package:frontend_tfg/routes/app.pages.dart';
+import 'package:get/get.dart';
 
 class UserCard extends StatefulWidget {
   final UserModel user;
@@ -29,7 +31,12 @@ class UserCardState extends State<UserCard> {
       child: InkWell(
         borderRadius: BorderRadius.circular(10.0),
         onTap: () {
-          // Add onTap functionality if needed
+          Get.toNamed(
+            Routes.editUser,
+            arguments: {
+              'id': widget.user.id,
+            },
+          );
         },
         child: Card(
           elevation: 3,

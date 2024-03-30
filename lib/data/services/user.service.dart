@@ -153,4 +153,21 @@ class UserService {
     return null;
   }
 
+  static Future<void> deleteUser(BuildContext context, String idUser) async {
+    ApiResponse response;
+    ToastUtils.initFToast(context);
+
+    try {
+      response = await MyApi().delete('/users/$idUser');
+
+      if (response.statusCode == 200) {
+        ToastUtils.showSuccessToast(context, 'userDeleted'.tr);
+      } else {
+        ToastUtils.showErrorToast(context, response.data);
+      }
+    } catch (error) {
+      ToastUtils.showErrorToast(context, 'Error DeleteUser: $error');
+    }
+  }
+
 }

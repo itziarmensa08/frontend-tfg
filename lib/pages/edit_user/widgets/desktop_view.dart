@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/user.model.dart';
 import 'package:frontend_tfg/data/services/image.service.dart';
 import 'package:frontend_tfg/data/services/user.service.dart';
+import 'package:frontend_tfg/general_widgets/alert.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
-import 'package:frontend_tfg/pages/profile/profile.controller.dart';
-import 'package:frontend_tfg/pages/profile/widgets/edit_user_form.dart';
-import 'package:frontend_tfg/pages/profile/widgets/view_user_form.dart';
+import 'package:frontend_tfg/pages/edit_user/edit_user.controller.dart';
+import 'package:frontend_tfg/pages/edit_user/widgets/edit_user_form.dart';
+import 'package:frontend_tfg/pages/edit_user/widgets/view_user_form.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 Widget desktopView(double height, BuildContext context, TickerProviderStateMixin page) {
-  final ProfileController controller = Get.put(ProfileController());
+  final EditUserController controller = Get.put(EditUserController());
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      CustomTabBar(page: page, number: 3),
+      CustomTabBar(page: page, number: 4),
       SizedBox(height: MediaQuery.of(context).size.height * 0.15),
       Expanded(
         child: Padding(
@@ -85,13 +85,23 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(onPressed: () async {
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                    prefs.remove('token');
-                    prefs.remove('id');
-                    prefs.remove('language');
-                    prefs.remove('isAdmin');
-                    Get.toNamed(Routes.login);
-                  }, child: Text('signOut'.tr, style: const TextStyle(color: Color.fromRGBO(255, 0, 0, 1)),)),
+                    showAlert(
+                      context,
+                      'deleteUser'.tr,
+                      'confirmDeleteUser'.tr,
+                      'yes'.tr,
+                      'no'.tr,
+                      const Color.fromRGBO(255, 0, 0, 1),
+                      const Color.fromARGB(255, 255, 255, 255),
+                      () async {
+                        await UserService.deleteUser(context, controller.user.value.id!);
+                        Get.toNamed(Routes.admin);
+                      },
+                      () {
+                        Navigator.of(context).pop();
+                      }
+                    );
+                  }, child: Text('deleteUser'.tr, style: const TextStyle(color: Color.fromRGBO(255, 0, 0, 1)),)),
                 ],
               ),
               const SizedBox(width: 100),
