@@ -13,6 +13,7 @@ class ProfileController extends GetxController {
   TextEditingController telephone = TextEditingController();
   TextEditingController dateborn = TextEditingController();
   TextEditingController role = TextEditingController();
+  final Rx<String?> profileImage = Rx<String?>(null);
 
   DateTime? date;
 

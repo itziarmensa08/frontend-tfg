@@ -24,6 +24,7 @@ class ProfileBinding implements Bindings {
         controller.username.text = user.username!;
         controller.email.text = user.email!;
         controller.role.text = user.role!;
+        controller.profileImage.value = user.profileImage!;
 
         if (user.telephone != null) {
           controller.telephone.text = user.telephone.toString();

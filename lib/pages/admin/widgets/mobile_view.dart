@@ -85,14 +85,18 @@ Widget mobileView(double width, GlobalKey<ScaffoldState> scaffoldKey, BuildConte
                           DashboardCard(
                             title: 'aircraftsTitle'.tr,
                             icon: Icons.airplanemode_active,
-                            color: Color(0xFFF3720A),
-                            onTap: () {},
+                            color: const Color(0xFFF3720A),
+                            onTap: () {
+                              Get.toNamed(Routes.listAircrafts);
+                            },
                           ),
                           DashboardCard(
                             title: 'addAircraftTitle'.tr,
                             icon: Icons.add_circle_outline_outlined,
-                            color: Color(0xFFF3720A),
-                            onTap: () {},
+                            color: const Color(0xFFF3720A),
+                            onTap: () {
+                              Get.toNamed(Routes.listAircrafts);
+                            },
                           ),
                         ],
                       ),

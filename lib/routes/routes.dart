@@ -12,6 +12,9 @@ abstract class Routes{
   static const listUsers = '/listUsers';
   static const addUser = '/addUser';
   static const editUser = '/editUser';
+  static const listAircrafts = '/listAircrafts';
+  static const addAircraft = '/addAircraft';
+  static const editAircraft = '/editAircraft';
 
 }
 

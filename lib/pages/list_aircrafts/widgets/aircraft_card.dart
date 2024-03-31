@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_tfg/data/models/user.model.dart';
+import 'package:frontend_tfg/data/models/aircraft_model.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 
-class UserCard extends StatefulWidget {
-  final UserModel user;
+class AircraftCard extends StatefulWidget {
+  final AircraftModel aircraft;
 
-  const UserCard({super.key, required this.user});
+  const AircraftCard({super.key, required this.aircraft});
 
   @override
-  UserCardState createState() => UserCardState();
+  AircraftCardState createState() => AircraftCardState();
 }
 
-class UserCardState extends State<UserCard> {
+class AircraftCardState extends State<AircraftCard> {
   bool isHovered = false;
 
   @override
@@ -32,9 +32,9 @@ class UserCardState extends State<UserCard> {
         borderRadius: BorderRadius.circular(10.0),
         onTap: () {
           Get.toNamed(
-            Routes.editUser,
+            Routes.editAircraft,
             arguments: {
-              'id': widget.user.id,
+              'id': widget.aircraft.id,
             },
           );
         },
@@ -66,17 +66,17 @@ class UserCardState extends State<UserCard> {
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
                     ),
-                    child: widget.user.profileImage != null
+                    child: widget.aircraft.profileImage != null
                         ? Image.network(
-                            widget.user.profileImage!,
+                            widget.aircraft.profileImage!,
                             fit: BoxFit.cover,
                           )
-                        : const Icon(Icons.person, size: 80),
+                        : const Icon(Icons.airplanemode_active, size: 80),
                   ),
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  '${widget.user.name} ${widget.user.surname}',
+                  '${widget.aircraft.name}',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -84,7 +84,7 @@ class UserCardState extends State<UserCard> {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  widget.user.email!,
+                  widget.aircraft.metro!,
                   style: const TextStyle(
                     color: Colors.grey,
                   ),

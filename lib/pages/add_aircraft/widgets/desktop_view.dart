@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
-import 'package:frontend_tfg/pages/add_user/widgets/add_user_form.dart';
+import 'package:frontend_tfg/pages/add_aircraft/widgets/add_aircraft_form.dart';
 
 Widget desktopView(double height, BuildContext context, TickerProviderStateMixin page) {
   return Column(
@@ -20,10 +20,10 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                     const SizedBox(height: 30),
                     const CircleAvatar(
                       radius: 50.0,
-                      child: Icon(Icons.person, size: 70.0),
+                      child: Icon(Icons.airplanemode_active, size: 70.0),
                     ),
                     const SizedBox(height: 40),
-                    AddUserForm(),
+                    AddAircraftForm(),
                     const SizedBox(height: 40),
                   ],
                 ),

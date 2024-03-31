@@ -5,6 +5,7 @@ import 'package:frontend_tfg/data/services/user.service.dart';
 import 'package:frontend_tfg/general_widgets/alert.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
+import 'package:frontend_tfg/pages/edit_user/edit_user.binding.dart';
 import 'package:frontend_tfg/pages/edit_user/edit_user.controller.dart';
 import 'package:frontend_tfg/pages/edit_user/widgets/edit_user_form.dart';
 import 'package:frontend_tfg/pages/edit_user/widgets/view_user_form.dart';
@@ -17,6 +18,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      if(tabs.length > 5)
       CustomTabBar(page: page, number: 5),
       SizedBox(height: MediaQuery.of(context).size.height * 0.15),
       Expanded(
@@ -30,10 +32,10 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 children: [
                   Obx(() => CircleAvatar(
                     radius: 50.0,
-                    child: controller.user.value.profileImage != null
+                    child: controller.profileImage.value != null
                       ? ClipOval(
                           child: Image.network(
-                            controller.user.value.profileImage!,
+                            controller.profileImage.value!,
                             width: 100,
                             height: 100,
                             fit: BoxFit.cover,
@@ -76,7 +78,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                           UserModel updatedModel = controller.user.value;
                           updatedModel.profileImage = secureUrl;
                           await UserService.updateUser(context, controller.user.value.id!, updatedModel);
-                          controller.user.value.profileImage = secureUrl;
+                          EditUserBinding.updateUserData();
                         } else {
                           ToastUtils.showErrorToast(context, 'errorCloudinary'.tr);
                         }

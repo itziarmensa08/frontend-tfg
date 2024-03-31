@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_tfg/data/models/user.model.dart';
+import 'package:frontend_tfg/data/services/aircraft.service.dart';
 import 'package:frontend_tfg/data/services/image.service.dart';
-import 'package:frontend_tfg/data/services/user.service.dart';
+import 'package:frontend_tfg/general_widgets/alert.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
-import 'package:frontend_tfg/pages/profile/profile.binding.dart';
-import 'package:frontend_tfg/pages/profile/profile.controller.dart';
-import 'package:frontend_tfg/pages/profile/widgets/edit_user_form.dart';
-import 'package:frontend_tfg/pages/profile/widgets/view_user_form.dart';
+import 'package:frontend_tfg/pages/edit_aircraft/edit_aircraft.binding.dart';
+import 'package:frontend_tfg/pages/edit_aircraft/edit_aircraft.controller.dart';
+import 'package:frontend_tfg/pages/edit_aircraft/widgets/edit_aircraft_form.dart';
+import 'package:frontend_tfg/pages/edit_aircraft/widgets/view_aircraft_form.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 Widget desktopView(double height, BuildContext context, TickerProviderStateMixin page) {
-  final ProfileController controller = Get.put(ProfileController());
+  final EditAircraftController controller = Get.put(EditAircraftController());
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      CustomTabBar(page: page, number: 3),
+      if(tabs.length > 5)
+      CustomTabBar(page: page, number: 5),
       SizedBox(height: MediaQuery.of(context).size.height * 0.15),
       Expanded(
         child: Padding(
@@ -40,11 +40,11 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                             fit: BoxFit.cover,
                           ),
                         )
-                      : const Icon(Icons.person, size: 70.0),
+                      : const Icon(Icons.airplanemode_active, size: 70.0),
                   )),
                   const SizedBox(height: 20),
                   Obx(() =>
-                    Text('${controller.user.value.name} ${controller.user.value.surname}', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),
+                    Text('${controller.aircraft.value.name}', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),
                   ),
                   const SizedBox(height: 20),
                   Row(
@@ -58,7 +58,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                               title: Text('editData'.tr),
                               content: SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.4,
-                                child: EditUserForm()
+                                child: EditAircraftForm()
                               ),
                             );
                           },
@@ -70,14 +70,13 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                         final imagesSingleton = ImagesSingleton.getInstance();
                         final secureUrl = await imagesSingleton.uploadPhoto(
                           file!,
-                          'users',
-                          controller.user.value.id!,
+                          'aircrafts',
+                          controller.aircraft.value.id!,
                         );
                         if (secureUrl != null) {
-                          UserModel updatedModel = controller.user.value;
-                          updatedModel.profileImage = secureUrl;
-                          await UserService.updateUser(context, controller.user.value.id!, updatedModel);
-                          ProfileBinding.updateUserData();
+                          controller.aircraft.value.profileImage = secureUrl;
+                          await AircraftService.updateAircraft(context, controller.aircraft.value.id!, controller.aircraft.value);
+                          EditAircraftBinding.updateAircraftData();
                         } else {
                           ToastUtils.showErrorToast(context, 'errorCloudinary'.tr);
                         }
@@ -86,19 +85,29 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(onPressed: () async {
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                    prefs.remove('token');
-                    prefs.remove('id');
-                    prefs.remove('language');
-                    prefs.remove('isAdmin');
-                    Get.toNamed(Routes.login);
-                  }, child: Text('signOut'.tr, style: const TextStyle(color: Color.fromRGBO(255, 0, 0, 1)),)),
+                    showAlert(
+                      context,
+                      'deleteAircraft'.tr,
+                      'confirmDeleteAircraft'.tr,
+                      'yes'.tr,
+                      'no'.tr,
+                      const Color.fromRGBO(255, 0, 0, 1),
+                      const Color.fromARGB(255, 255, 255, 255),
+                      () async {
+                        await AircraftService.deleteAircraft(context, controller.aircraft.value.id!);
+                        Get.toNamed(Routes.admin);
+                      },
+                      () {
+                        Navigator.of(context).pop();
+                      }
+                    );
+                  }, child: Text('deleteAircraft'.tr, style: const TextStyle(color: Color.fromRGBO(255, 0, 0, 1)),)),
                 ],
               ),
               const SizedBox(width: 100),
               SizedBox(
                 width: 400,
-                child: ViewUserForm(),
+                child: ViewAircraftForm(),
               ),
             ],
           ),

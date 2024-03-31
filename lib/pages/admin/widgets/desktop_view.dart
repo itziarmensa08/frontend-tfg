@@ -8,6 +8,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      if(tabs.length > 5)
       CustomTabBar(page: page, number: 5),
       SizedBox(height: MediaQuery.of(context).size.height * 0.05),
       Expanded(
@@ -90,14 +91,18 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                               DashboardCard(
                                 title: 'aircraftsTitle'.tr,
                                 icon: Icons.airplanemode_active,
-                                color: Color(0xFFF3720A),
-                                onTap: () {},
+                                color: const Color(0xFFF3720A),
+                                onTap: () {
+                                  Get.toNamed(Routes.listAircrafts);
+                                },
                               ),
                               DashboardCard(
                                 title: 'addAircraftTitle'.tr,
                                 icon: Icons.add_circle_outline_outlined,
-                                color: Color(0xFFF3720A),
-                                onTap: () {},
+                                color: const Color(0xFFF3720A),
+                                onTap: () {
+                                  Get.toNamed(Routes.addAircraft);
+                                },
                               ),
                             ],
                           ),
