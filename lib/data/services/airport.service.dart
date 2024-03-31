@@ -32,7 +32,7 @@ class AirportService {
     return null;
   }
 
-  static Future<void> addAirport(AirportModel airport, BuildContext context) async {
+  static Future<AirportModel?> addAirport(AirportModel airport, BuildContext context) async {
     ApiResponse response;
     ToastUtils.initFToast(context);
 
@@ -43,12 +43,17 @@ class AirportService {
       );
 
       if (response.statusCode == 201) {
+        dynamic data = response.data;
+        AirportModel airportModel = AirportModel.fromJson(data);
         ToastUtils.showSuccessToast(context, 'succesAddAirport'.tr);
+        return airportModel;
       } else {
         ToastUtils.showErrorToast(context, '${response.data}'.tr);
+        return null;
       }
     } catch (error) {
       ToastUtils.showErrorToast(context, 'Error AddAirport: $error');
+      return null;
     }
   }
 

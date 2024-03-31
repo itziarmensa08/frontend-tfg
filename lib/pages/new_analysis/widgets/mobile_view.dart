@@ -9,11 +9,24 @@ Widget mobileView(double width, GlobalKey<ScaffoldState> scaffoldKey, BuildConte
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          IconButton(
-            iconSize: width * 0.08,
-            onPressed: () => scaffoldKey.currentState!.openEndDrawer(),
-            icon: const Icon(Icons.menu_rounded),
-            color: Theme.of(context).colorScheme.primary,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                iconSize: width * 0.08,
+                onPressed: () => scaffoldKey.currentState!.openEndDrawer(),
+                icon: const Icon(Icons.menu_rounded),
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('new analyisi')
+            ]
           )
         ],
       ),

@@ -118,7 +118,12 @@ final Map<String, String> es = {
 
   // New analysis
   'step1Title': 'Datos generales',
-  'selectairport': 'Selecciona el aeropuerto: ',
+  'searchAirport': 'Buscar aeropuerto',
+  'searchAircraft': 'Buscar avión',
+  'selectAirport': 'Para realizar el análisis debes seleccionar el aeropuerto:',
+  'notAirport': 'Si no encuentras el aeropuerto deseado, puedes añadir los datos',
+  'here': 'aquí.',
+  'selectAircraft': 'y el avión por el que quieres empezar: ',
   'addAirportStep1': 'o añade los datos si no lo encuentras: '
 
 };
