@@ -135,14 +135,18 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                               DashboardCard(
                                 title: 'airportsTitle'.tr,
                                 icon: Icons.connecting_airports,
-                                color: Color.fromARGB(255, 180, 179, 179),
-                                onTap: () {},
+                                color: const Color.fromARGB(255, 180, 179, 179),
+                                onTap: () {
+                                  Get.toNamed(Routes.listAirports);
+                                },
                               ),
                               DashboardCard(
                                 title: 'addAirportTitle'.tr,
                                 icon: Icons.add_home_work_outlined,
-                                color: Color.fromARGB(255, 180, 179, 179),
-                                onTap: () {},
+                                color: const Color.fromARGB(255, 180, 179, 179),
+                                onTap: () {
+                                  Get.toNamed(Routes.addAirport);
+                                },
                               ),
                             ],
                           )

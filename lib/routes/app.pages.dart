@@ -1,17 +1,23 @@
 import 'package:frontend_tfg/pages/add_aircraft/add_aircraft.binding.dart';
 import 'package:frontend_tfg/pages/add_aircraft/add_aircraft.page.dart';
+import 'package:frontend_tfg/pages/add_airport/add_airport.binding.dart';
+import 'package:frontend_tfg/pages/add_airport/add_airport.page.dart';
 import 'package:frontend_tfg/pages/add_user/add_user.binding.dart';
 import 'package:frontend_tfg/pages/add_user/add_user.page.dart';
 import 'package:frontend_tfg/pages/admin/admin.binding.dart';
 import 'package:frontend_tfg/pages/admin/admin.page.dart';
 import 'package:frontend_tfg/pages/edit_aircraft/edit_aircraft.binding.dart';
 import 'package:frontend_tfg/pages/edit_aircraft/edit_aircraft.page.dart';
+import 'package:frontend_tfg/pages/edit_airport/edit_airport.binding.dart';
+import 'package:frontend_tfg/pages/edit_airport/edit_airport.page.dart';
 import 'package:frontend_tfg/pages/edit_user/edit_user.binding.dart';
 import 'package:frontend_tfg/pages/edit_user/edit_user.page.dart';
 import 'package:frontend_tfg/pages/home/home.binding.dart';
 import 'package:frontend_tfg/pages/home/home.page.dart';
 import 'package:frontend_tfg/pages/list_aircrafts/list_aircrafts.binding.dart';
 import 'package:frontend_tfg/pages/list_aircrafts/list_aircrafts.page.dart';
+import 'package:frontend_tfg/pages/list_airports/list_airports.binding.dart';
+import 'package:frontend_tfg/pages/list_airports/list_airports.page.dart';
 import 'package:frontend_tfg/pages/list_users/list_users.binding.dart';
 import 'package:frontend_tfg/pages/list_users/list_users.page.dart';
 import 'package:frontend_tfg/pages/login/login.binding.dart';
@@ -94,6 +100,21 @@ abstract class AppPages {
       name: Routes.editAircraft,
       page:() => const EditAircraftPage(),
       binding: EditAircraftBinding()
+    ),
+    GetPage(
+      name: Routes.listAirports,
+      page:() => const ListAirportsPage(),
+      binding: ListAirportsBinding()
+    ),
+    GetPage(
+      name: Routes.addAirport,
+      page:() => const AddAirportPage(),
+      binding: AddAirportBinding()
+    ),
+    GetPage(
+      name: Routes.editAirport,
+      page:() => const EditAirportPage(),
+      binding: EditAirportBinding()
     ),
   ];
 }

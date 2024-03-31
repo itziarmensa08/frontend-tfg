@@ -108,6 +108,7 @@ final Map<String, String> ca = {
   'elevation': 'Elevació',
   'oaciCode': 'Codi OACI',
   'iataCode': 'Codi IATA',
+  'referenceTemperature': 'Temperatura de referència',
   'succesAddAirport': 'Aeroport registrat correctament',
   'addAirport': 'Guardar aeroport',
   'editAirport': 'Editar aeroport',

@@ -8,6 +8,7 @@ class AirportModel {
   String? createdAt;
   String? updatedAt;
   String? profileImage;
+  double? referenceTemperature;
 
   AirportModel({
     this.name,
@@ -18,10 +19,12 @@ class AirportModel {
     this.createdAt,
     this.updatedAt,
     this.profileImage,
+    this.referenceTemperature,
   });
   AirportModel.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     elevation = json['elevation']?.toDouble();
+    referenceTemperature = json['referenceTemperature']?.toDouble();
     oaciCode = json['oaciCode']?.toString();
     iataCode = json['iataCode']?.toString();
     id = json['_id']?.toString();
@@ -33,6 +36,7 @@ class AirportModel {
     final data = <String, dynamic>{};
     data['name'] = name;
     data['elevation'] = elevation;
+    data['referenceTemperature'] = referenceTemperature;
     data['oaciCode'] = oaciCode;
     data['iataCode'] = iataCode;
     data['_id'] = id;

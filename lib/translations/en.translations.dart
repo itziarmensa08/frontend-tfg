@@ -107,6 +107,7 @@ final Map<String, String> en = {
   'elevation': 'Elevation',
   'oaciCode': 'OACI code',
   'iataCode': 'IATA code',
+  'referenceTemperature': 'Reference temperature',
   'succesAddAirport': 'Airport added successfully',
   'addAirport': 'Save airport',
   'editAirport': 'Edit airport',

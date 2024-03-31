@@ -15,6 +15,9 @@ abstract class Routes{
   static const listAircrafts = '/listAircrafts';
   static const addAircraft = '/addAircraft';
   static const editAircraft = '/editAircraft';
+  static const listAirports = '/listAirports';
+  static const addAirport = '/addAirport';
+  static const editAirport = '/editAirport';
 
 }
 

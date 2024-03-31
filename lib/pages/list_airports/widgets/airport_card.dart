@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_tfg/data/models/aircraft_model.dart';
+import 'package:frontend_tfg/data/models/airport_model.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 
-class AircraftCard extends StatefulWidget {
-  final AircraftModel aircraft;
+class AirportCard extends StatefulWidget {
+  final AirportModel airport;
 
-  const AircraftCard({super.key, required this.aircraft});
+  const AirportCard({super.key, required this.airport});
 
   @override
-  AircraftCardState createState() => AircraftCardState();
+  AirportCardState createState() => AirportCardState();
 }
 
-class AircraftCardState extends State<AircraftCard> {
+class AirportCardState extends State<AirportCard> {
   bool isHovered = false;
 
   @override
@@ -32,9 +32,9 @@ class AircraftCardState extends State<AircraftCard> {
         borderRadius: BorderRadius.circular(10.0),
         onTap: () {
           Get.toNamed(
-            Routes.editAircraft,
+            Routes.editAirport,
             arguments: {
-              'id': widget.aircraft.id,
+              'id': widget.airport.id,
             },
           );
         },
@@ -68,17 +68,17 @@ class AircraftCardState extends State<AircraftCard> {
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
                       ),
-                      child: widget.aircraft.profileImage != null
+                      child: widget.airport.profileImage != null
                           ? Image.network(
-                              widget.aircraft.profileImage!,
+                              widget.airport.profileImage!,
                               fit: BoxFit.cover,
                             )
-                          : const Icon(Icons.airplanemode_active, size: 80),
+                          : const Icon(Icons.connecting_airports, size: 80),
                     ),
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    '${widget.aircraft.name}',
+                    '${widget.airport.name}',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -86,7 +86,7 @@ class AircraftCardState extends State<AircraftCard> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    widget.aircraft.metro!,
+                    '${widget.airport.iataCode} / ${widget.airport.oaciCode}',
                     style: const TextStyle(
                       color: Colors.grey,
                     ),
