@@ -26,6 +26,15 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController referenceTemperature = TextEditingController();
   final RxBool airportCorrect = RxBool(false);
 
+  final Rx<String?> sidDoc = Rx<String?>(null);
+  final Rx<String?> rwyDoc = Rx<String?>(null);
+
+  final TextEditingController rwyName = TextEditingController();
+  final TextEditingController sidName = TextEditingController();
+  final TextEditingController dpName = TextEditingController();
+  final TextEditingController dpDistance = TextEditingController();
+  final TextEditingController weight = TextEditingController();
+
 }
 
 asignAirportData (NewAnalaysisController controller) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/services/airport.service.dart';
-import 'package:frontend_tfg/data/services/image.service.dart';
+import 'package:frontend_tfg/data/services/cloudinary.service.dart';
 import 'package:frontend_tfg/general_widgets/alert.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
 import 'package:frontend_tfg/pages/edit_airport/edit_airport.binding.dart';

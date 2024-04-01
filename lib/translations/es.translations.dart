@@ -129,6 +129,14 @@ final Map<String, String> es = {
   'tookDocs': 'A continuación, entra en',
   'foreflight': 'para descargar la ficha SID del aeropuerto y en el',
   'apg': 'para descargar el RWY analysis.',
-  'apg2': 'Cuándo los hayas descargardo, súbelos a continuación para poder visualizarlos.'
+  'apg2': 'Cuándo los hayas descargardo, súbelos a continuación para poder visualizarlos.',
+  'uploadSid': "Subir ficha SID",
+  'uploadRWY': "Subir RWY analysis",
+  'finalData': "Finalmente introduce estos últimos datos:",
+  'rwyName': 'Nombre de la pista',
+  'sidName': "Nombre de la SID",
+  'dpName': "Nombre del decision point",
+  'dpDistance': "Distancia desde el DER hasta el DP",
+  "weight": "Peso del avión en el peor caso"
 
 };

@@ -1,11 +1,9 @@
 
-import 'package:file_picker/_internal/file_picker_web.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:frontend_tfg/data/models/aircraft_model.dart';
 import 'package:frontend_tfg/data/models/airport_model.dart';
-import 'package:frontend_tfg/data/services/image.service.dart';
+import 'package:frontend_tfg/data/services/cloudinary.service.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/edit_aircraft_form.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/edit_airport_form.dart';
@@ -14,11 +12,15 @@ import 'package:frontend_tfg/pages/new_analysis/widgets/view_airport_form.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/add_airport_form.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:get/get.dart';
+import 'package:pdf_render/pdf_render_widgets.dart';
+import 'package:uuid/uuid.dart';
 
 class FirstStep extends StatelessWidget {
-  const FirstStep({Key? key, required this.controller}) : super(key: key);
+  const FirstStep({super.key, required this.controller});
 
   final NewAnalaysisController controller;
+
+  final uuid = const Uuid();
 
   @override
   Widget build(BuildContext context) {
@@ -264,9 +266,10 @@ class FirstStep extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.4,
-                    child: Obx(() {
-                      if (controller.newProcedure.value.sidDoc == null) {
-                        return ElevatedButton(onPressed: () async {
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ElevatedButton(onPressed: () async {
                           var result = await FilePicker.platform.pickFiles(
                             type: FileType.custom,
                             allowedExtensions: ['pdf'],
@@ -277,51 +280,224 @@ class FirstStep extends StatelessWidget {
                             final secureUrl = await imagesSingleton.uploadPdf(
                               file,
                               'sids',
-                              file.name,
+                              uuid.v1(),
                             );
                             if (secureUrl != null) {
                               controller.newProcedure.value.sidDoc = secureUrl;
+                              controller.sidDoc.value = secureUrl;
+                              print(controller.newProcedure.value.toJson());
                             } else {
                               ToastUtils.showErrorToast(context, 'errorCloudinary'.tr);
                             }
                           }
-                        }, child: Text('Subir ficha SID'));
-                      } else {
-                        return PDFView(
-                          filePath: controller.newProcedure.value.sidDoc,
-                          enableSwipe: true,
-                          swipeHorizontal: true,
-                          autoSpacing: false,
-                          pageFling: false,
-                          onRender: (_pages) {
-                            
-                          },
-                          onError: (error) {
-                            print(error.toString());
-                          },
-                          onPageError: (page, error) {
-                            print('$page: ${error.toString()}');
-                          },
-                          onViewCreated: (PDFViewController pdfViewController) {
-                            
-                          },
-                          onPageChanged: (int? page, int? total) {
-                            print('page change: $page/$total');
-                          },
-                        );
-                      }
-                    })
+                        }, child: Text('uploadSid'.tr)),
+                        const SizedBox(height: 20),
+                        Obx(() {
+                          if (controller.sidDoc.value != null) {
+                            return SizedBox(
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.height,
+                              child: PdfViewer.openFile(controller.sidDoc.value!),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        })
+                      ],
+                    )
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.4,
-                    child: ElevatedButton(onPressed: (){}, child: Text('Subir RWY analysis'))
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ElevatedButton(onPressed: () async {
+                          var result = await FilePicker.platform.pickFiles(
+                            type: FileType.custom,
+                            allowedExtensions: ['pdf'],
+                          );
+                          if (result != null) {
+                            PlatformFile file = result.files.first;
+                            final imagesSingleton = ImagesSingleton.getInstance();
+                            final secureUrl = await imagesSingleton.uploadPdf(
+                              file,
+                              'sids',
+                              uuid.v1(),
+                            );
+                            if (secureUrl != null) {
+                              controller.newProcedure.value.rwyDoc = secureUrl;
+                              controller.rwyDoc.value = secureUrl;
+                              print(controller.newProcedure.value.toJson());
+                            } else {
+                              ToastUtils.showErrorToast(context, 'errorCloudinary'.tr);
+                            }
+                          }
+                        }, child: Text('uploadRWY'.tr)),
+                        const SizedBox(height: 20),
+                        Obx(() {
+                          if (controller.rwyDoc.value != null) {
+                            return SizedBox(
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.height,
+                              child: PdfViewer.openFile(controller.rwyDoc.value!),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        })
+                      ],
+                    )
                   )
                 ],
-              )
+              ),
             ],
           ),
-        ))
+        )),
+        Obx(() =>
+          Visibility(
+            visible: controller.sidDoc.value != null && controller.rwyDoc.value != null,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 50),
+                Text('finalData'.tr, style: Theme.of(context).textTheme.titleMedium),
+                const SizedBox(height: 20),
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: controller.sidName,
+                            onChanged: (value) {
+                              controller.newProcedure.value.sidName = value;
+                              print(controller.newProcedure.value.toJson());
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'sidName'.tr,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: TextFormField(
+                            controller: controller.rwyName,
+                            onChanged: (value) {
+                              controller.newProcedure.value.rwyName = value;
+                              print(controller.newProcedure.value.toJson());
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'rwyName'.tr,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: TextFormField(
+                            controller: controller.dpName,
+                            onChanged: (value) {
+                              controller.newProcedure.value.dpName = value;
+                              print(controller.newProcedure.value.toJson());
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'dpName'.tr,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: TextFormField(
+                            controller: controller.dpDistance,
+                            onChanged: (value) {
+                              controller.newProcedure.value.dpDistance = double.parse(value);
+                              print(controller.newProcedure.value.toJson());
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'dpDistance'.tr,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: TextFormField(
+                            controller: controller.weight,
+                            onChanged: (value) {
+                              controller.newProcedure.value.weight = double.parse(value);
+                              print(controller.newProcedure.value.toJson());
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'weight'.tr,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                      ],
+                    )
+                  ],
+                )
+              ],
+            )
+          )
+        )
       ],
     );
   }
 }
+
