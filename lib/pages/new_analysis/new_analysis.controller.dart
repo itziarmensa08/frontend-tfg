@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/aircraft_model.dart';
 import 'package:frontend_tfg/data/models/airport_model.dart';
+import 'package:frontend_tfg/data/models/procedure.model.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewAnalaysisController extends GetxController {
+
+  final Rx<Procedure> newProcedure = Procedure().obs;
 
   final RxInt indexStepper = RxInt(0);
 
@@ -39,4 +43,12 @@ asignAircraftData (NewAnalaysisController controller) {
     controller.nameAircraft.text = controller.selectedAircraft.value!.name!;
     controller.metro.text = controller.selectedAircraft.value!.metro!;
   }
+}
+
+Future<void> launchForeFlight() async {
+  await launchUrl(Uri.parse('https://plan.foreflight.com/'));
+}
+
+Future<void> launchAPG() async {
+  launchUrl(Uri.parse('https://atlas.apgdata.com/winplan5/Login.aspx'));
 }

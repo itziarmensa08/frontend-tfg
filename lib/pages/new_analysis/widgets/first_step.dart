@@ -1,6 +1,12 @@
+
+import 'package:file_picker/_internal/file_picker_web.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:frontend_tfg/data/models/aircraft_model.dart';
 import 'package:frontend_tfg/data/models/airport_model.dart';
+import 'package:frontend_tfg/data/services/image.service.dart';
+import 'package:frontend_tfg/general_widgets/toast.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/edit_aircraft_form.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/edit_airport_form.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/view_aircraft_form.dart';
@@ -130,17 +136,19 @@ class FirstStep extends StatelessWidget {
             ],
           ),
         )),
-        const SizedBox(height: 20),
         Obx(() => Visibility(
           visible: controller.selectedAirport.value != null && controller.selectedAircraft.value != null && controller.airportCorrect.value == false,
           child: Column(
             children: [
+              const SizedBox(height: 20),
               Row(
                 children: [
                   Text('correctAirport'.tr, style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(width: 20),
                   ElevatedButton(onPressed: () {
                     controller.airportCorrect.value = true;
+                    controller.newProcedure.value.airport = controller.selectedAirport.value!.id;
+                    print(controller.newProcedure.value.toJson());
                   }, child: Text('yes'.tr)),
                   const SizedBox(width: 20),
                   ElevatedButton(onPressed: () {
@@ -168,17 +176,19 @@ class FirstStep extends StatelessWidget {
             ],
           )
         )),
-        const SizedBox(height: 20),
         Obx(() => Visibility(
           visible: controller.selectedAirport.value != null && controller.selectedAircraft.value != null && controller.aircraftCorrect.value == false,
           child: Column(
             children: [
+              const SizedBox(height: 20),
               Row(
                 children: [
                   Text('correctAircraft'.tr, style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(width: 20),
                   ElevatedButton(onPressed: () {
                     controller.aircraftCorrect.value = true;
+                    controller.newProcedure.value.aircraft = controller.selectedAircraft.value!.id;
+                    print(controller.newProcedure.value.toJson());
                   }, child: Text('yes'.tr)),
                   const SizedBox(width: 20),
                   ElevatedButton(onPressed: () {
@@ -205,6 +215,111 @@ class FirstStep extends StatelessWidget {
               ),
             ],
           )
+        )),
+        Obx(() => Visibility(
+          visible: controller.aircraftCorrect.value == true && controller.airportCorrect.value == true,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Wrap(
+                children: [
+                  Text('tookDocs'.tr, style: Theme.of(context).textTheme.titleMedium),
+                  const SizedBox(width: 5),
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () {
+                        launchForeFlight();
+                      },
+                      child: Text(
+                        'ForeFlight',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.blue)
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  Text('foreflight'.tr, style: Theme.of(context).textTheme.titleMedium),
+                  const SizedBox(width: 5),
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () {
+                        launchAPG();
+                      },
+                      child: Text(
+                        'APG',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.blue)
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  Text('apg'.tr, style: Theme.of(context).textTheme.titleMedium),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Text('apg2'.tr, style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    child: Obx(() {
+                      if (controller.newProcedure.value.sidDoc == null) {
+                        return ElevatedButton(onPressed: () async {
+                          var result = await FilePicker.platform.pickFiles(
+                            type: FileType.custom,
+                            allowedExtensions: ['pdf'],
+                          );
+                          if (result != null) {
+                            PlatformFile file = result.files.first;
+                            final imagesSingleton = ImagesSingleton.getInstance();
+                            final secureUrl = await imagesSingleton.uploadPdf(
+                              file,
+                              'sids',
+                              file.name,
+                            );
+                            if (secureUrl != null) {
+                              controller.newProcedure.value.sidDoc = secureUrl;
+                            } else {
+                              ToastUtils.showErrorToast(context, 'errorCloudinary'.tr);
+                            }
+                          }
+                        }, child: Text('Subir ficha SID'));
+                      } else {
+                        return PDFView(
+                          filePath: controller.newProcedure.value.sidDoc,
+                          enableSwipe: true,
+                          swipeHorizontal: true,
+                          autoSpacing: false,
+                          pageFling: false,
+                          onRender: (_pages) {
+                            
+                          },
+                          onError: (error) {
+                            print(error.toString());
+                          },
+                          onPageError: (page, error) {
+                            print('$page: ${error.toString()}');
+                          },
+                          onViewCreated: (PDFViewController pdfViewController) {
+                            
+                          },
+                          onPageChanged: (int? page, int? total) {
+                            print('page change: $page/$total');
+                          },
+                        );
+                      }
+                    })
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    child: ElevatedButton(onPressed: (){}, child: Text('Subir RWY analysis'))
+                  )
+                ],
+              )
+            ],
+          ),
         ))
       ],
     );

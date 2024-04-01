@@ -121,11 +121,14 @@ final Map<String, String> es = {
   'searchAirport': 'Buscar aeropuerto',
   'searchAircraft': 'Buscar avión',
   'selectAirport': 'Para realizar el análisis debes seleccionar el aeropuerto:',
+  'selectAircraft': 'y el avión por el que quieres empezar:',
   'notAirport': 'Si no encuentras el aeropuerto deseado, puedes añadir los datos',
+  'here': 'aquí',
   'correctAirport': 'Son correctos los datos del aeropuerto?',
   'correctAircraft': 'Son correctos los datos del avión?',
-  'here': 'aquí.',
-  'selectAircraft': 'y el avión por el que quieres empezar: ',
-  'addAirportStep1': 'o añade los datos si no lo encuentras: '
+  'tookDocs': 'A continuación, entra en',
+  'foreflight': 'para descargar la ficha SID del aeropuerto y en el',
+  'apg': 'para descargar el RWY analysis.',
+  'apg2': 'Cuándo los hayas descargardo, súbelos a continuación para poder visualizarlos.'
 
 };
