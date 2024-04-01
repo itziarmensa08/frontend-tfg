@@ -1,12 +1,11 @@
-// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:frontend_tfg/pages/edit_airport/edit_airport.controller.dart';
+import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:get/get.dart';
 
 class ViewAirportForm extends Container {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final EditAirportController controller = Get.put(EditAirportController());
+  final NewAnalaysisController controller = Get.put(NewAnalaysisController());
 
   ViewAirportForm({super.key});
 
@@ -14,10 +13,29 @@ class ViewAirportForm extends Container {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Obx(() => Column(
+      child: Column(
         children: [
           TextFormField(
-            controller: TextEditingController(text: controller.airport.value.elevation.toString()),
+            controller: controller.name,
+            readOnly: true,
+            decoration: InputDecoration(
+              labelText: 'name'.tr,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              suffixIcon: const Icon(Icons.airplanemode_active),
+            ),
+          ),
+          const SizedBox(height: 20),
+          TextFormField(
+            controller: controller.elevation,
             readOnly: true,
             decoration: InputDecoration(
               labelText: 'elevation'.tr,
@@ -36,7 +54,7 @@ class ViewAirportForm extends Container {
           ),
           const SizedBox(height: 20),
           TextFormField(
-            controller: TextEditingController(text: controller.airport.value.oaciCode),
+            controller: controller.oaciCode,
             readOnly: true,
             decoration: InputDecoration(
               labelText: 'oaciCode'.tr,
@@ -55,7 +73,7 @@ class ViewAirportForm extends Container {
           ),
           const SizedBox(height: 20),
           TextFormField(
-            controller: TextEditingController(text: controller.airport.value.iataCode),
+            controller: controller.iataCode,
             readOnly: true,
             decoration: InputDecoration(
               labelText: 'iataCode'.tr,
@@ -74,7 +92,7 @@ class ViewAirportForm extends Container {
           ),
           const SizedBox(height: 20),
           TextFormField(
-            controller: TextEditingController(text: controller.airport.value.referenceTemperature.toString()),
+            controller: controller.referenceTemperature,
             readOnly: true,
             decoration: InputDecoration(
               labelText: 'referenceTemperature'.tr,
@@ -93,7 +111,7 @@ class ViewAirportForm extends Container {
           ),
           const SizedBox(height: 20),
         ],
-      ))
+      )
     );
   }
 }

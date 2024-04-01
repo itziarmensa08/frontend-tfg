@@ -9,6 +9,9 @@ class NewAnalaysisController extends GetxController {
 
   final RxList<AircraftModel> aircrafts = RxList<AircraftModel>();
   final Rx<AircraftModel?> selectedAircraft = Rx<AircraftModel?>(null);
+  final TextEditingController nameAircraft = TextEditingController();
+  final TextEditingController metro = TextEditingController();
+  final RxBool aircraftCorrect = RxBool(false);
 
   final RxList<AirportModel> airports = RxList<AirportModel>();
   final Rx<AirportModel?> selectedAirport = Rx<AirportModel?>(null);
@@ -17,5 +20,23 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController oaciCode = TextEditingController();
   final TextEditingController iataCode = TextEditingController();
   final TextEditingController referenceTemperature = TextEditingController();
+  final RxBool airportCorrect = RxBool(false);
 
+}
+
+asignAirportData (NewAnalaysisController controller) {
+  if (controller.selectedAirport.value != null) {
+    controller.name.text = controller.selectedAirport.value!.name!;
+    controller.elevation.text = controller.selectedAirport.value!.elevation!.toString();
+    controller.oaciCode.text = controller.selectedAirport.value!.oaciCode!;
+    controller.iataCode.text = controller.selectedAirport.value!.iataCode!;
+    controller.referenceTemperature.text = controller.selectedAirport.value!.referenceTemperature!.toString();
+  }
+}
+
+asignAircraftData (NewAnalaysisController controller) {
+  if (controller.selectedAircraft.value != null) {
+    controller.nameAircraft.text = controller.selectedAircraft.value!.name!;
+    controller.metro.text = controller.selectedAircraft.value!.metro!;
+  }
 }

@@ -3,13 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/services/airport.service.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
-import 'package:frontend_tfg/pages/edit_airport/edit_airport.binding.dart';
-import 'package:frontend_tfg/pages/edit_airport/edit_airport.controller.dart';
+import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:get/get.dart';
 
 class EditAirportForm extends Container {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final EditAirportController controller = Get.put(EditAirportController());
+  final NewAnalaysisController controller = Get.put(NewAnalaysisController());
 
   EditAirportForm({super.key});
 
@@ -123,22 +122,22 @@ class EditAirportForm extends Container {
           const SizedBox(height: 40),
           ElevatedButton(onPressed: () async {
             if (_formKey.currentState!.validate()) {
-              controller.airport.value.name = controller.name.text;
-              controller.airport.value.elevation = double.parse(controller.elevation.text);
-              controller.airport.value.oaciCode = controller.oaciCode.text;
-              controller.airport.value.iataCode = controller.iataCode.text;
-              controller.airport.value.referenceTemperature = double.parse(controller.referenceTemperature.text);
+              controller.selectedAirport.value?.name = controller.name.text;
+              controller.selectedAirport.value?.elevation = double.parse(controller.elevation.text);
+              controller.selectedAirport.value?.oaciCode = controller.oaciCode.text;
+              controller.selectedAirport.value?.iataCode = controller.iataCode.text;
+              controller.selectedAirport.value?.referenceTemperature = double.parse(controller.referenceTemperature.text);
 
               bool? success = await AirportService.updateAirport(
                 context,
-                controller.airport.value.id!,
-                controller.airport.value
+                controller.selectedAirport.value!.id!,
+                controller.selectedAirport.value!
               );
 
               if (success != null || success == true) {
                 ToastUtils.showSuccessToast(context, 'editAirportSuccess'.tr);
                 Navigator.of(context).pop();
-                EditAirportBinding.updateAirportData();
+                asignAirportData(controller);
               }
             }
           }, child: Text('editAirport'.tr)),
