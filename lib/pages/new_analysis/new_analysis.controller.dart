@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/aircraft_model.dart';
 import 'package:frontend_tfg/data/models/airport_model.dart';
 import 'package:frontend_tfg/data/models/procedure.model.dart';
+import 'package:frontend_tfg/data/models/v2table.moel.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -34,6 +35,8 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController dpName = TextEditingController();
   final TextEditingController dpDistance = TextEditingController();
   final TextEditingController weight = TextEditingController();
+
+  final Rx<V2TableModel> data = V2TableModel().obs;
 
 }
 

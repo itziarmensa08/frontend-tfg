@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/first_step.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/second_step.dart';
 import 'package:get/get.dart';
 
 List<Step> getSteps (controller) => [
@@ -11,17 +12,17 @@ List<Step> getSteps (controller) => [
   ),
   Step(
     isActive: controller.indexStepper.value >= 1,
-    title: Text('Step 2 title'),
-    content: Text('Content for Step 2'),
+    title: Text('step2title'.tr),
+    content: SecondStep(controller: controller),
   ),
   Step(
     isActive: controller.indexStepper.value >= 2,
-    title: Text('Step 3 title'),
+    title: Text('step3title'.tr),
     content: Text('Content for Step 3'),
   ),
   Step(
     isActive: controller.indexStepper.value >= 3,
-    title: Text('Step 4 title'),
+    title: Text('step4title'.tr),
     content: Text('Content for Step 4'),
   ),
 ];

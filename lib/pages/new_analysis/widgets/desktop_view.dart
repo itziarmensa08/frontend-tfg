@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_tfg/data/services/v2table.service.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/steps.dart';
@@ -23,7 +24,13 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 controller.indexStepper.value -= 1;
               }
             },
-            onStepContinue: () {
+            onStepContinue: () async {
+              if (controller.indexStepper.value == 0) {
+                var response = await V2TableService.getV2tableByAircraft(context, controller.selectedAircraft.value!.id!);
+                if (response != null) {
+                  controller.data.value = response;
+                }
+              }
               final isLastSteo = controller.indexStepper.value == getSteps(controller).length - 1;
               if (isLastSteo) {
                 print('completed');

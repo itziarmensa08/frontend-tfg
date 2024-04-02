@@ -6,6 +6,7 @@ final Map<String, String> es = {
   'no': 'No',
   'confirm': 'Confirmar',
   'next': 'Siguiente',
+  'nonext': 'Anterior',
   'cancel': 'Cancelar',
 
   //Languages
@@ -137,6 +138,11 @@ final Map<String, String> es = {
   'sidName': "Nombre de la SID",
   'dpName': "Nombre del decision point",
   'dpDistance': "Distancia desde el DER hasta el DP",
-  "weight": "Peso del avión en el peor caso"
+  "weight": "Peso del avión en el peor caso",
+  'step2title': "Cáculos para N motores",
+
+  'step3title': "Cálculos para N - 1 motores",
+
+  'step4title': "Conclusión"
 
 };
