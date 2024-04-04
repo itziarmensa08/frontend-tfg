@@ -2,170 +2,107 @@ import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/v2table.moel.dart';
 
 class SpeedTable extends StatelessWidget {
-  const SpeedTable({super.key, required this.table});
+  const SpeedTable({Key? key, required this.table}) : super(key: key);
 
   final V2TableModel table;
 
   @override
   Widget build(BuildContext context) {
-
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: SingleChildScrollView(
         child: Table(
-          columnWidths: const <int, TableColumnWidth>{
-            0: FixedColumnWidth(100.0),
-            1: FixedColumnWidth(100.0),
-            3: FixedColumnWidth(100.0),
-            4: FixedColumnWidth(100.0), // example width
-            // Define other column widths
-          },
+          columnWidths: _buildColumnWidths(),
           border: TableBorder.all(),
-          children: List<TableRow>.generate(table.rows!.length, (index) {
-            List<Widget> rowWidgets = [
-              Text('${table.rows![index].pressure}'),
-              Text('${table.rows![index].weight}'),
-            ];
-
-            // Adding Text widgets for each column
-            for (var data in table.rows![index].data!) {
-              rowWidgets.add(
-                Text('${data.velocityValue}'),
-              );
-            }
-
+          children: [
+            _buildTemperaturesRow(),
+            ..._buildVelocities(),
+            ...buildTableRowsData()
+          ].map((row) {
             return TableRow(
-              children: rowWidgets,
+              children: row.children.map((cell) {
+                return TableCell(
+                  child: Center(
+                    child: cell,
+                  ),
+                );
+              }).toList(),
             );
-          }),
-        )
-        /*child: DataTable(
-          columns: const [
-            DataColumn(label: Text('Pressure altitud')),
-            DataColumn(label: Text('Gross weight')),
-            DataColumn(label: Text('Outside Air Temperature')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-            DataColumn(label: Text('')),
-          ],
-          rows: [
-            DataRow(cells: [
-              DataCell(Text('')),
-              DataCell(Text('')),
-              DataCell(Text('-30')),
-              DataCell(Text('-30')),
-              DataCell(Text('-30')),
-              DataCell(Text('-30')),
-              DataCell(Text('-10')),
-              DataCell(Text('-10')),
-              DataCell(Text('-10')),
-              DataCell(Text('-10')),
-              DataCell(Text('0')),
-              DataCell(Text('0')),
-              DataCell(Text('0')),
-              DataCell(Text('0')),
-              DataCell(Text('10')),
-              DataCell(Text('10')),
-              DataCell(Text('10')),
-              DataCell(Text('10')),
-              DataCell(Text('20')),
-              DataCell(Text('20')),
-              DataCell(Text('20')),
-              DataCell(Text('20')),
-              DataCell(Text('40')),
-              DataCell(Text('40')),
-              DataCell(Text('40')),
-              DataCell(Text('40')),
-              DataCell(Text('55')),
-              DataCell(Text('55')),
-              DataCell(Text('55')),
-              DataCell(Text('55')),
-            ]),
-            DataRow(cells: [
-              DataCell(Text('')),
-              DataCell(Text('')),
-              DataCell(Text('V1')),
-              DataCell(Text('VR')),
-              DataCell(Text('V2')),
-              DataCell(Text('V50')),
-              DataCell(Text('V1')),
-              DataCell(Text('VR')),
-              DataCell(Text('V2')),
-              DataCell(Text('V50')),
-              DataCell(Text('V1')),
-              DataCell(Text('VR')),
-              DataCell(Text('V2')),
-              DataCell(Text('V50')),
-              DataCell(Text('V1')),
-              DataCell(Text('VR')),
-              DataCell(Text('V2')),
-              DataCell(Text('V50')),
-              DataCell(Text('V1')),
-              DataCell(Text('VR')),
-              DataCell(Text('V2')),
-              DataCell(Text('V50')),
-              DataCell(Text('V1')),
-              DataCell(Text('VR')),
-              DataCell(Text('V2')),
-              DataCell(Text('V50')),
-              DataCell(Text('V1')),
-              DataCell(Text('VR')),
-              DataCell(Text('V2')),
-              DataCell(Text('V50')),
-            ]),
-            DataRow(cells: [
-              DataCell(Text('0')),
-              DataCell(Text('16000')),
-              ... table.data!.map((item) {
-                return
-                  DataCell(Text((item.velocityName == 'V1' && item.temperature.toString() == '-30') ? item.velocityValue.toString() : ''));
-              }),
-              ... table.data!.map((item) {
-                return
-                  DataCell(Text((item.velocityName == 'VR' && item.temperature.toString() == '-30') ? item.velocityValue.toString() : ''));
-              }),
-              ... table.data!.map((item) {
-                return
-                  DataCell(Text((item.velocityName == 'V2' && item.temperature.toString() == '-30') ? item.velocityValue.toString() : ''));
-              }),
-            ]),
-          ],
-          /*columns: [
-            DataColumn(label: Text('Pressure Altitude')),
-            DataColumn(label: Text('Gross Weight')),
-          ],
-          rows: table.data!.map((item) {
-            return DataRow(cells: [
-              DataCell(Text(item.pressure.toString())),
-              DataCell(Text(item.weight.toString())),
-            ]);
-          }).toList(),*/
-        ),*/
+          }).toList(),
+        ),
       ),
     );
   }
+
+  Map<int, TableColumnWidth> _buildColumnWidths() {
+    Map<int, TableColumnWidth> columnWidths = {};
+
+    columnWidths[0] = const FixedColumnWidth(70.0);
+    columnWidths[1] = const FixedColumnWidth(70.0);
+
+    for (int i = 2; i < 30; i++) {
+      columnWidths[i] = const FixedColumnWidth(30.0);
+    }
+
+    return columnWidths;
+  }
+
+  List<TableRow> _buildVelocities() {
+    List<Widget> rowWidgets = [
+      Text('PRESS ALT (FT)'),
+      Text('GROSS WT (LBS)'),
+    ];
+
+    for (int i = 0; i < 7; i++) {
+      rowWidgets.addAll([
+        Text('V1'),
+        Text('VR'),
+        Text('V2'),
+        Text('V50'),
+      ]);
+    }
+
+    List<TableRow> rows = [TableRow(children: rowWidgets)];
+    return rows;
+  }
+
+  TableRow _buildTemperaturesRow() {
+    List<int> values = [-30, -10, 0, 10, 20, 40, 55];
+    List<Widget> cells = [
+      SizedBox(),
+      SizedBox(),
+    ];
+
+    for (int value in values) {
+      for (int i = 0; i < 4; i++) {
+        cells.add(Text('$value'));
+      }
+    }
+
+    return TableRow(children: cells);
+  }
+
+  List<TableRow> buildTableRowsData() {
+  List<TableRow> rows = [];
+  for (var rowData in table.rows!) {
+    List<Widget> rowWidgets = [
+      Text('${rowData.pressure}'),
+      Text('${rowData.weight}'),
+    ];
+
+    for (var data in rowData.data!) {
+      rowWidgets.add(
+        Text('${data.velocityValue}'),
+      );
+    }
+
+    while (rowWidgets.length < 30) {
+      rowWidgets.add(SizedBox());
+    }
+
+    rows.add(TableRow(children: rowWidgets));
+  }
+  return rows;
+}
+
 }
