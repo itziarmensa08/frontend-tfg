@@ -30,6 +30,11 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 if (response != null) {
                   controller.data.value = response;
                 }
+                var obtainedData = await V2TableService.getObtainedData(context, controller.selectedAircraft.value!.id!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text), controller.selectedAirport.value!.referenceTemperature!, "V50");
+                if (obtainedData != null) {
+                  controller.obtainedData.value = obtainedData.dataList;
+                  controller.velocityFirstSegment.text = obtainedData.velocityValue.toString();
+                }
               }
               final isLastSteo = controller.indexStepper.value == getSteps(controller).length - 1;
               if (isLastSteo) {
