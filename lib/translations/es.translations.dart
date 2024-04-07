@@ -141,7 +141,7 @@ final Map<String, String> es = {
   "weight": "Peso del avión en el peor caso",
   'step2title': "Cáculos para N motores",
   'reviewDataFirstSegment': 'Los datos introducidos necesarios para encontrar la velocidad en el primer segmento (V50) son:',
-  'finalVelocity': 'Velocidad final encontrada:',
+  'finalVelocityIAS': 'Velocidad (IAS) final encontrada:',
   'velocity': 'Velocidad',
 
   'step3title': "Cálculos para N - 1 motores",

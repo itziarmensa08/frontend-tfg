@@ -10,6 +10,9 @@ class Procedure {
   String? dpName;
   double? dpDistance;
   double? weight;
+  FirstSegment? firstSegment;
+  SecondSegment? secondSegment;
+  ThirdSegment? thirdSegment;
   String? createdAt;
   String? updatedAt;
 
@@ -24,6 +27,9 @@ class Procedure {
     this.dpName,
     this.dpDistance,
     this.weight,
+    this.firstSegment,
+    this.secondSegment,
+    this.thirdSegment,
     this.createdAt,
     this.updatedAt,
   });
@@ -38,6 +44,9 @@ class Procedure {
     dpName = json['dpName']?.toString();
     dpDistance = json['dpDistance']?.toDouble();
     weight = json['weight']?.toDouble();
+    firstSegment = (json['firstSegment'] != null) ? FirstSegment.fromJson(json['firstSegment']) : null;
+    secondSegment = (json['secondSegment'] != null) ? SecondSegment.fromJson(json['secondSegment']) : null;
+    thirdSegment = (json['thirdSegment'] != null) ? ThirdSegment.fromJson(json['thirdSegment']) : null;
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
   }
@@ -53,8 +62,118 @@ class Procedure {
     data['dpName'] = dpName;
     data['dpDistance'] = dpDistance;
     data['weight'] = weight;
+    if (firstSegment != null) {
+      data['firstSegment'] = firstSegment?.toJson();
+    }
+    if (secondSegment != null) {
+      data['secondSegment'] = secondSegment?.toJson();
+    }
+    if (thirdSegment != null) {
+      data['thirdSegment'] = thirdSegment?.toJson();
+    }
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     return data;
   }
 }
+
+class ThirdSegment {
+
+  double? velocityIAS;
+  double? velocityTAS;
+  double? rateClimb;
+  double? distanceToDP;
+  String? id;
+
+  ThirdSegment({
+    this.velocityIAS,
+    this.velocityTAS,
+    this.rateClimb,
+    this.distanceToDP,
+    this.id,
+  });
+  ThirdSegment.fromJson(Map<String, dynamic> json) {
+    velocityIAS = json['velocityIAS']?.toDouble();
+    velocityTAS = json['velocityTAS']?.toDouble();
+    rateClimb = json['rateClimb']?.toDouble();
+    distanceToDP = json['distanceToDP']?.toDouble();
+    id = json['_id']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['velocityIAS'] = velocityIAS;
+    data['velocityTAS'] = velocityTAS;
+    data['rateClimb'] = rateClimb;
+    data['distanceToDP'] = distanceToDP;
+    data['_id'] = id;
+    return data;
+  }
+}
+
+class SecondSegment {
+
+  double? velocityIAS;
+  double? velocityTAS;
+  double? rateClimb;
+  double? distanceToDP;
+  String? id;
+
+  SecondSegment({
+    this.velocityIAS,
+    this.velocityTAS,
+    this.rateClimb,
+    this.distanceToDP,
+    this.id,
+  });
+  SecondSegment.fromJson(Map<String, dynamic> json) {
+    velocityIAS = json['velocityIAS']?.toDouble();
+    velocityTAS = json['velocityTAS']?.toDouble();
+    rateClimb = json['rateClimb']?.toDouble();
+    distanceToDP = json['distanceToDP']?.toDouble();
+    id = json['_id']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['velocityIAS'] = velocityIAS;
+    data['velocityTAS'] = velocityTAS;
+    data['rateClimb'] = rateClimb;
+    data['distanceToDP'] = distanceToDP;
+    data['_id'] = id;
+    return data;
+  }
+}
+
+class FirstSegment {
+
+  double? velocityIAS;
+  double? velocityTAS;
+  double? rateClimb;
+  double? distanceToDP;
+  String? id;
+
+  FirstSegment({
+    this.velocityIAS,
+    this.velocityTAS,
+    this.rateClimb,
+    this.distanceToDP,
+    this.id,
+  });
+  FirstSegment.fromJson(Map<String, dynamic> json) {
+    velocityIAS = json['velocityIAS']?.toDouble();
+    velocityTAS = json['velocityTAS']?.toDouble();
+    rateClimb = json['rateClimb']?.toDouble();
+    distanceToDP = json['distanceToDP']?.toDouble();
+    id = json['_id']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['velocityIAS'] = velocityIAS;
+    data['velocityTAS'] = velocityTAS;
+    data['rateClimb'] = rateClimb;
+    data['distanceToDP'] = distanceToDP;
+    data['_id'] = id;
+    return data;
+  }
+}
+
+

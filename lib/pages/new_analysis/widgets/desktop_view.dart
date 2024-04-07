@@ -1,6 +1,6 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:frontend_tfg/data/models/procedure.model.dart';
 import 'package:frontend_tfg/data/services/v2table.service.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
@@ -36,11 +36,14 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 if (obtainedData != null) {
                   controller.obtainedData.value = obtainedData.dataList;
                   controller.velocityFirstSegment.text = obtainedData.velocityValue.toString();
+                  FirstSegment firstSegment = FirstSegment(velocityIAS: obtainedData.velocityValue);
+                  controller.newProcedure.value.firstSegment = firstSegment;
+                  print('Procedure First segment final: ${controller.newProcedure.value.toJson()}');
                 }
               }
               final isLastSteo = controller.indexStepper.value == getSteps(controller).length - 1;
               if (isLastSteo) {
-                log('completed');
+                print('completed');
               } else {
                 controller.indexStepper.value += 1;
               }
