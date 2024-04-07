@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/isa_table.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/v2_table.dart';
 import 'package:get/get.dart';
 
@@ -23,9 +24,6 @@ class SecondStep extends StatelessWidget {
           final weight = controller.newProcedure.value.weight;
           final referenceTemperature = controller.selectedAirport.value?.referenceTemperature;
           print('Procedure Second segment inicial: ${controller.newProcedure.value.toJson()}');
-          print('Elevation: $elevation');
-          print('Weight: $weight');
-          print('Reference temperature: $referenceTemperature');
 
           if (elevation != null && weight != null && referenceTemperature != null) {
             return Row(
@@ -125,7 +123,10 @@ class SecondStep extends StatelessWidget {
               ),
             ),
           ],
-        )
+        ),
+        const SizedBox(height: 50),
+        Center(child: Obx(() => ISATable(table: controller.isatable.value, obtainedData: controller.obtainedISAData))),
+        const SizedBox(height: 50),
 
       ],
     );

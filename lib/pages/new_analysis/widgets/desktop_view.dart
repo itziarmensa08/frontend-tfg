@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/procedure.model.dart';
+import 'package:frontend_tfg/data/services/isatable.service.dart';
 import 'package:frontend_tfg/data/services/v2table.service.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
@@ -39,6 +40,10 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   FirstSegment firstSegment = FirstSegment(velocityIAS: obtainedData.velocityValue);
                   controller.newProcedure.value.firstSegment = firstSegment;
                   print('Procedure First segment final: ${controller.newProcedure.value.toJson()}');
+                }
+                var isatableresponse = await ISATableService.getISATables();
+                if (isatableresponse != null) {
+                  controller.isatable.value = isatableresponse;
                 }
               }
               final isLastSteo = controller.indexStepper.value == getSteps(controller).length - 1;
