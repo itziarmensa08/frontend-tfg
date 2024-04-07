@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
+import 'package:frontend_tfg/general_widgets/toast.dart';
 import 'package:frontend_tfg/pages/home/home.controller.dart';
 import 'package:frontend_tfg/pages/admin/widgets/desktop_view.dart';
 import 'package:frontend_tfg/pages/admin/widgets/mobile_view.dart';
@@ -26,6 +27,7 @@ class AdminPageState extends State<AdminPage> with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
+    ToastUtils.initFToast(context);
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     topPadding = screenHeight * 0.05;

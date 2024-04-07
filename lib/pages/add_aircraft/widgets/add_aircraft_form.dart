@@ -72,7 +72,7 @@ class AddAircraftForm extends Container {
                   metro: controller.metro.text
                 );
 
-                await AircraftService.addAircraft(aircraft, context);
+                await AircraftService.addAircraft(aircraft);
                 controller.name.clear();
                 controller.metro.clear();
                 Get.toNamed(Routes.admin);

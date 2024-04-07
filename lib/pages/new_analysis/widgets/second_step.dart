@@ -17,13 +17,17 @@ class SecondStep extends StatelessWidget {
       children: [
         Text('reviewDataFirstSegment'.tr, style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: 30),
-        Obx(() =>
-          Row(
+        Obx(() {
+          final elevation = controller.selectedAirport.value?.elevation;
+          final weight = controller.newProcedure.value.weight;
+          final referenceTemperature = controller.selectedAirport.value?.referenceTemperature;
+
+          return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: TextFormField(
-                  initialValue: controller.selectedAirport.value?.elevation.toString(),
+                  initialValue: elevation != null ? elevation.toString() : 'Pensando...',
                   readOnly: true,
                   decoration: InputDecoration(
                     labelText: 'elevation'.tr,
@@ -43,7 +47,7 @@ class SecondStep extends StatelessWidget {
               const SizedBox(width: 20),
               Expanded(
                 child: TextFormField(
-                  initialValue: controller.newProcedure.value.weight.toString(),
+                  initialValue: weight != null ? weight.toString() : 'Pensando...',
                   readOnly: true,
                   decoration: InputDecoration(
                     labelText: 'weight'.tr,
@@ -63,7 +67,7 @@ class SecondStep extends StatelessWidget {
               const SizedBox(width: 20),
               Expanded(
                 child: TextFormField(
-                  initialValue: controller.selectedAirport.value!.referenceTemperature.toString(),
+                  initialValue: referenceTemperature != null ? referenceTemperature.toString() : 'Pensando...',
                   readOnly: true,
                   decoration: InputDecoration(
                     labelText: 'referenceTemperature'.tr,
@@ -81,8 +85,8 @@ class SecondStep extends StatelessWidget {
                 ),
               ),
             ],
-          )
-        ),
+          );
+        }),
         const SizedBox(height: 50),
         Center(child: Obx(() => SpeedTable(table: controller.data.value, obtainedData: controller.obtainedData))),
         const SizedBox(height: 50),
@@ -94,7 +98,7 @@ class SecondStep extends StatelessWidget {
               child: TextFormField(
                 controller: controller.velocityFirstSegment,
                 onChanged: (value) {
-              
+
                 },
                 decoration: InputDecoration(
                   labelText: 'velocity'.tr,

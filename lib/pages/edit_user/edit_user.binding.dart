@@ -8,18 +8,15 @@ import 'package:get/get.dart';
 class EditUserBinding implements Bindings {
   @override
   Future<void> dependencies() async {
-
-    updateUserData();
-
+    await updateUserData();
   }
 
   static Future<void> updateUserData() async {
-    BuildContext context = Get.context!;
     final controller = Get.put(EditUserController());
 
     final Map arguments = Get.arguments;
     final String userId = arguments['id'];
-    final UserModel? user = await UserService.getUserById(context, userId);
+    final UserModel? user = await UserService.getUserById(userId);
     if (user != null) {
       controller.user.value = user;
       controller.name.text = user.name!;

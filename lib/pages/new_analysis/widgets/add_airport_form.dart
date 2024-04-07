@@ -130,10 +130,11 @@ class AddAirportForm extends Container {
                   referenceTemperature: double.parse(controller.referenceTemperature.text)
                 );
 
-                AirportModel? airportAdded = await AirportService.addAirport(airport, context);
+                AirportModel? airportAdded = await AirportService.addAirport(airport);
                 if (airportAdded != null) {
                   controller.selectedAirport.value = airportAdded;
                 }
+                if (!context.mounted) return;
                 Navigator.of(context).pop();
               }
             },

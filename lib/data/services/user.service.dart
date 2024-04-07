@@ -1,5 +1,4 @@
 
-import 'package:flutter/widgets.dart';
 import 'package:frontend_tfg/data/models/auth.model.dart';
 import 'package:frontend_tfg/data/models/user.model.dart';
 import 'package:frontend_tfg/data/provider/api.dart';
@@ -20,9 +19,8 @@ class UserService {
     }
   }
 
-  static Future<String?> login(String? username, String? password, BuildContext context) async {
+  static Future<String?> login(String? username, String? password) async {
     ApiResponse response;
-    ToastUtils.initFToast(context);
 
     try {
       response = await MyApi().post(
@@ -59,17 +57,16 @@ class UserService {
         return response.data;
 
       } else {
-        ToastUtils.showErrorToast(context, response.data);
+        ToastUtils.showErrorToast(response.data);
       }
     } catch (error) {
-      ToastUtils.showErrorToast(context, 'Error Login: $error');
+      ToastUtils.showErrorToast('Error Login: $error');
     }
     return null;
   }
 
-  static Future<void> register(UserModel user, BuildContext context) async {
+  static Future<void> register(UserModel user) async {
     ApiResponse response;
-    ToastUtils.initFToast(context);
 
     try {
       response = await MyApi().post(
@@ -78,18 +75,17 @@ class UserService {
       );
 
       if (response.statusCode == 201) {
-        ToastUtils.showSuccessToast(context, 'successRegister'.tr);
+        ToastUtils.showSuccessToast('successRegister'.tr);
       } else {
-        ToastUtils.showErrorToast(context, '${response.data}'.tr);
+        ToastUtils.showErrorToast('${response.data}'.tr);
       }
     } catch (error) {
-      ToastUtils.showErrorToast(context, 'Error Register: $error');
+      ToastUtils.showErrorToast('Error Register: $error');
     }
   }
 
-  static Future<List<UserModel>?> getUsers(BuildContext context) async {
+  static Future<List<UserModel>?> getUsers() async {
     ApiResponse response;
-    ToastUtils.initFToast(context);
 
     try {
       response = await MyApi().get('/users');
@@ -104,17 +100,16 @@ class UserService {
         return users;
 
       } else {
-        ToastUtils.showErrorToast(context, response.data);
+        ToastUtils.showErrorToast(response.data);
       }
     } catch (error) {
-      ToastUtils.showErrorToast(context, 'Error GetUsers: $error');
+      ToastUtils.showErrorToast('Error GetUsers: $error');
     }
     return null;
   }
 
-  static Future<UserModel?> getUserById(BuildContext context, String userId) async {
+  static Future<UserModel?> getUserById(String userId) async {
     ApiResponse response;
-    ToastUtils.initFToast(context);
 
     try {
       response = await MyApi().get('/users/$userId');
@@ -124,17 +119,16 @@ class UserService {
         UserModel user = UserModel.fromJson(data);
         return user;
       } else {
-        ToastUtils.showErrorToast(context, response.data);
+        ToastUtils.showErrorToast(response.data);
       }
     } catch (error) {
-      ToastUtils.showErrorToast(context, 'Error GetUser: $error');
+      ToastUtils.showErrorToast('Error GetUser: $error');
     }
     return null;
   }
 
-  static Future<bool?> updateUser(BuildContext context, String userId, UserModel user) async {
+  static Future<bool?> updateUser(String userId, UserModel user) async {
     ApiResponse response;
-    ToastUtils.initFToast(context);
 
     try {
       response = await MyApi().put(
@@ -145,28 +139,27 @@ class UserService {
       if (response.statusCode == 200) {
         return true;
       } else {
-        ToastUtils.showErrorToast(context, response.data);
+        ToastUtils.showErrorToast(response.data);
       }
     } catch (error) {
-      ToastUtils.showErrorToast(context, 'Error UpdateUser: $error');
+      ToastUtils.showErrorToast('Error UpdateUser: $error');
     }
     return null;
   }
 
-  static Future<void> deleteUser(BuildContext context, String idUser) async {
+  static Future<void> deleteUser(String idUser) async {
     ApiResponse response;
-    ToastUtils.initFToast(context);
 
     try {
       response = await MyApi().delete('/users/$idUser');
 
       if (response.statusCode == 200) {
-        ToastUtils.showSuccessToast(context, 'userDeleted'.tr);
+        ToastUtils.showSuccessToast('userDeleted'.tr);
       } else {
-        ToastUtils.showErrorToast(context, response.data);
+        ToastUtils.showErrorToast(response.data);
       }
     } catch (error) {
-      ToastUtils.showErrorToast(context, 'Error DeleteUser: $error');
+      ToastUtils.showErrorToast('Error DeleteUser: $error');
     }
   }
 

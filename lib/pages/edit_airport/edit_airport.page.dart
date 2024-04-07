@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
+import 'package:frontend_tfg/general_widgets/toast.dart';
 import 'package:frontend_tfg/pages/edit_airport/widgets/desktop_view.dart';
 import 'package:frontend_tfg/pages/edit_airport/widgets/mobile_view.dart';
 
@@ -22,6 +23,7 @@ class EditAirportPageState extends State<EditAirportPage> with TickerProviderSta
 
   @override
   Widget build(BuildContext context) {
+    ToastUtils.initFToast(context);
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     topPadding = screenHeight * 0.05;

@@ -18,11 +18,11 @@ List<Step> getSteps (controller) => [
   Step(
     isActive: controller.indexStepper.value >= 2,
     title: Text('step3title'.tr),
-    content: Text('Content for Step 3'),
+    content: const Text('Content for Step 3'),
   ),
   Step(
     isActive: controller.indexStepper.value >= 3,
     title: Text('step4title'.tr),
-    content: Text('Content for Step 4'),
+    content: const Text('Content for Step 4'),
   ),
 ];

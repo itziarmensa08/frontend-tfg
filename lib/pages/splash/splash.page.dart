@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_tfg/general_widgets/toast.dart';
 import 'package:frontend_tfg/pages/splash/splash.controller.dart';
 import 'package:get/get.dart';
 
@@ -7,6 +8,7 @@ class SplashScreenPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ToastUtils.initFToast(context);
     final controller = Get.put(SplashScreenController());
     controller.checkUser();
     return Scaffold(

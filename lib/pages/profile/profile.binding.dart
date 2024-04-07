@@ -8,15 +8,14 @@ import 'package:get/get.dart';
 class ProfileBinding implements Bindings {
   @override
   Future<void> dependencies() async {
-    updateUserData();
+    await updateUserData();
   }
 
   static Future<void> updateUserData() async {
-    BuildContext context = Get.context!;
     final controller = Get.put(ProfileController());
     var idUser = Auth.id;
     if (idUser != null) {
-      var user = await UserService.getUserById(context, idUser);
+      var user = await UserService.getUserById(idUser);
       if (user != null) {
         controller.user.value = user;
         controller.name.text = user.name!;

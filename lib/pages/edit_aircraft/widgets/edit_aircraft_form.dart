@@ -69,13 +69,13 @@ class EditAircraftForm extends Container {
               controller.aircraft.value.metro = controller.metro.text;
 
               bool? success = await AircraftService.updateAircraft(
-                context,
                 controller.aircraft.value.id!,
                 controller.aircraft.value
               );
 
               if (success != null || success == true) {
-                ToastUtils.showSuccessToast(context, 'editAircraftSuccess'.tr);
+                ToastUtils.showSuccessToast('editAircraftSuccess'.tr);
+                if (!context.mounted) return;
                 Navigator.of(context).pop();
                 EditAircraftBinding.updateAircraftData();
               }

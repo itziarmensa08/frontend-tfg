@@ -9,19 +9,19 @@ class ToastUtils {
     _fToast = FToast().init(context);
   }
 
-  static void showSuccessToast(BuildContext context, String message) {
-    _showToast(context, message, Colors.green, Icons.check, 2);
+  static void showSuccessToast(String message) {
+    _showToast(message, Colors.green, Icons.check, 2);
   }
 
-  static void showErrorToast(BuildContext context, String message) {
-    _showToast(context, message, Colors.red, Icons.error, 3);
+  static void showErrorToast(String message) {
+    _showToast(message, Colors.red, Icons.error, 3);
   }
 
-  static void showWarningToast(BuildContext context, String message) {
-    _showToast(context, message, Colors.orange, Icons.warning, 3);
+  static void showWarningToast(String message) {
+    _showToast(message, Colors.orange, Icons.warning, 3);
   }
 
-  static void _showToast(BuildContext context, String message, Color backgroundColor, IconData icon, int seconds) {
+  static void _showToast(String message, Color backgroundColor, IconData icon, int seconds) {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(

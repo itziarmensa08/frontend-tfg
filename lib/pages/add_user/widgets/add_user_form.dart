@@ -206,7 +206,7 @@ class AddUserForm extends Container {
                   language: prefs.getString('language') ?? 'es'
                 );
 
-                await UserService.register(user, context);
+                await UserService.register(user);
                 Get.toNamed(Routes.admin);
               }
             },

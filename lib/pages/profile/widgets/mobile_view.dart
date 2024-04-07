@@ -69,10 +69,10 @@ Widget mobileView(double width, GlobalKey<ScaffoldState> scaffoldKey, BuildConte
                     if (secureUrl != null) {
                       UserModel updatedModel = controller.user.value;
                       updatedModel.profileImage = secureUrl;
-                      await UserService.updateUser(context, controller.user.value.id!, updatedModel);
+                      await UserService.updateUser(controller.user.value.id!, updatedModel);
                       ProfileBinding.updateUserData();
                     } else {
-                      ToastUtils.showErrorToast(context, 'errorCloudinary'.tr);
+                      ToastUtils.showErrorToast('errorCloudinary'.tr);
                     }
                   }, child: Text('editPhoto'.tr)),
                 ],

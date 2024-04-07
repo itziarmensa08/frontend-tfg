@@ -68,10 +68,10 @@ Widget mobileView(double width, GlobalKey<ScaffoldState> scaffoldKey, BuildConte
                     );
                     if (secureUrl != null) {
                       controller.airport.value.profileImage = secureUrl;
-                      await AirportService.updateAirport(context, controller.airport.value.id!, controller.airport.value);
+                      await AirportService.updateAirport(controller.airport.value.id!, controller.airport.value);
                       EditAirportBinding.updateAirportData();
                     } else {
-                      ToastUtils.showErrorToast(context, 'errorCloudinary'.tr);
+                      ToastUtils.showErrorToast('errorCloudinary'.tr);
                     }
                   }, child: Text('editPhoto'.tr)),
                 ],
@@ -111,7 +111,7 @@ Widget mobileView(double width, GlobalKey<ScaffoldState> scaffoldKey, BuildConte
                       const Color.fromRGBO(255, 0, 0, 1),
                       const Color.fromARGB(255, 255, 255, 255),
                       () async {
-                        await AirportService.deleteAirport(context, controller.airport.value.id!);
+                        await AirportService.deleteAirport(controller.airport.value.id!);
                         Get.toNamed(Routes.admin);
                       },
                       () {

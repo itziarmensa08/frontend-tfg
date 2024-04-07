@@ -130,13 +130,12 @@ class EditAirportForm extends Container {
               controller.airport.value.referenceTemperature = double.parse(controller.referenceTemperature.text);
 
               bool? success = await AirportService.updateAirport(
-                context,
                 controller.airport.value.id!,
                 controller.airport.value
               );
 
               if (success != null || success == true) {
-                ToastUtils.showSuccessToast(context, 'editAirportSuccess'.tr);
+                ToastUtils.showSuccessToast('editAirportSuccess'.tr);
                 Navigator.of(context).pop();
                 EditAirportBinding.updateAirportData();
               }

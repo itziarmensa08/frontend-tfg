@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/airport_model.dart';
 import 'package:frontend_tfg/data/provider/api.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
 import 'package:get/get.dart';
 
 class AirportService {
-  static Future<List<AirportModel>?> getAirports(BuildContext context) async {
+  static Future<List<AirportModel>?> getAirports() async {
     ApiResponse response;
-    ToastUtils.initFToast(context);
 
     try {
       response = await MyApi().get('/airports');
@@ -23,18 +21,17 @@ class AirportService {
         return airports;
 
       } else {
-        ToastUtils.showErrorToast(context, response.data);
+        ToastUtils.showErrorToast(response.data);
       }
 
     } catch (error) {
-      ToastUtils.showErrorToast(context, 'Error GetAirports: $error');
+      ToastUtils.showErrorToast('Error GetAirports: $error');
     }
     return null;
   }
 
-  static Future<AirportModel?> addAirport(AirportModel airport, BuildContext context) async {
+  static Future<AirportModel?> addAirport(AirportModel airport) async {
     ApiResponse response;
-    ToastUtils.initFToast(context);
 
     try {
       response = await MyApi().post(
@@ -45,39 +42,37 @@ class AirportService {
       if (response.statusCode == 201) {
         dynamic data = response.data;
         AirportModel airportModel = AirportModel.fromJson(data);
-        ToastUtils.showSuccessToast(context, 'succesAddAirport'.tr);
+        ToastUtils.showSuccessToast('succesAddAirport'.tr);
         return airportModel;
       } else {
-        ToastUtils.showErrorToast(context, '${response.data}'.tr);
+        ToastUtils.showErrorToast('${response.data}'.tr);
         return null;
       }
     } catch (error) {
-      ToastUtils.showErrorToast(context, 'Error AddAirport: $error');
+      ToastUtils.showErrorToast('Error AddAirport: $error');
       return null;
     }
   }
 
-  static Future<void> deleteAirport(BuildContext context, String idAirport) async {
+  static Future<void> deleteAirport(String idAirport) async {
     ApiResponse response;
-    ToastUtils.initFToast(context);
 
     try {
       response = await MyApi().delete('/airports/$idAirport');
 
       if (response.statusCode == 200) {
-        ToastUtils.showSuccessToast(context, 'airportDeleted'.tr);
+        ToastUtils.showSuccessToast('airportDeleted'.tr);
       } else {
-        ToastUtils.showErrorToast(context, response.data);
+        ToastUtils.showErrorToast(response.data);
       }
 
     } catch (error) {
-      ToastUtils.showErrorToast(context, 'Error DeleteAirport: $error');
+      ToastUtils.showErrorToast('Error DeleteAirport: $error');
     }
   }
 
-  static Future<AirportModel?> getAirportById(BuildContext context, String idAirport) async {
+  static Future<AirportModel?> getAirportById(String idAirport) async {
     ApiResponse response;
-    ToastUtils.initFToast(context);
 
     try {
       response = await MyApi().get('/airports/$idAirport');
@@ -87,18 +82,17 @@ class AirportService {
         AirportModel airport = AirportModel.fromJson(data);
         return airport;
       } else {
-        ToastUtils.showErrorToast(context, response.data);
+        ToastUtils.showErrorToast(response.data);
       }
 
     } catch (error) {
-      ToastUtils.showErrorToast(context, 'Error GetAirport: $error');
+      ToastUtils.showErrorToast('Error GetAirport: $error');
     }
     return null;
   }
 
-  static Future<bool?> updateAirport(BuildContext context, String idAirport, AirportModel airport) async {
+  static Future<bool?> updateAirport(String idAirport, AirportModel airport) async {
     ApiResponse response;
-    ToastUtils.initFToast(context);
 
     try {
       response = await MyApi().put(
@@ -109,11 +103,11 @@ class AirportService {
       if (response.statusCode == 200) {
         return true;
       } else {
-        ToastUtils.showErrorToast(context, response.data);
+        ToastUtils.showErrorToast(response.data);
       }
 
     } catch (error) {
-      ToastUtils.showErrorToast(context, 'Error UpdateAirport: $error');
+      ToastUtils.showErrorToast('Error UpdateAirport: $error');
     }
     return null;
   }

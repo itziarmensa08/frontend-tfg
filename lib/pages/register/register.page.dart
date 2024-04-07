@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/language_dropdown.dart';
+import 'package:frontend_tfg/general_widgets/toast.dart';
 import 'package:frontend_tfg/pages/register/widgets/register_form.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ToastUtils.initFToast(context);
 
     return Scaffold(
       backgroundColor: Colors.transparent,

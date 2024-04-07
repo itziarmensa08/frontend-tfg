@@ -21,7 +21,7 @@ Widget mobileView(double width, GlobalKey<ScaffoldState> scaffoldKey, BuildConte
             ],
           ),
           const SizedBox(height: 20),
-          Column(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

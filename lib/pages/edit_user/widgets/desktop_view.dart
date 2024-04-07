@@ -77,10 +77,10 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                         if (secureUrl != null) {
                           UserModel updatedModel = controller.user.value;
                           updatedModel.profileImage = secureUrl;
-                          await UserService.updateUser(context, controller.user.value.id!, updatedModel);
+                          await UserService.updateUser(controller.user.value.id!, updatedModel);
                           EditUserBinding.updateUserData();
                         } else {
-                          ToastUtils.showErrorToast(context, 'errorCloudinary'.tr);
+                          ToastUtils.showErrorToast('errorCloudinary'.tr);
                         }
                       }, child: Text('editPhoto'.tr)),
                     ],
@@ -96,7 +96,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                       const Color.fromRGBO(255, 0, 0, 1),
                       const Color.fromARGB(255, 255, 255, 255),
                       () async {
-                        await UserService.deleteUser(context, controller.user.value.id!);
+                        await UserService.deleteUser(controller.user.value.id!);
                         Get.toNamed(Routes.admin);
                       },
                       () {

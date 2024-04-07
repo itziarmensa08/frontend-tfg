@@ -50,16 +50,16 @@ class SpeedTable extends StatelessWidget {
 
   List<TableRow> _buildVelocities() {
     List<Widget> rowWidgets = [
-      Text('PRESS ALT (FT)'),
-      Text('GROSS WT (LBS)'),
+      const Text('PRESS ALT (FT)'),
+      const Text('GROSS WT (LBS)'),
     ];
 
     for (int i = 0; i < 7; i++) {
       rowWidgets.addAll([
-        Text('V1'),
-        Text('VR'),
-        Text('V2'),
-        Text('V50'),
+        const Text('V1'),
+        const Text('VR'),
+        const Text('V2'),
+        const Text('V50'),
       ]);
     }
 
@@ -70,8 +70,8 @@ class SpeedTable extends StatelessWidget {
   TableRow _buildTemperaturesRow() {
     List<int> values = [-30, -10, 0, 10, 20, 40, 55];
     List<Widget> cells = [
-      SizedBox(),
-      SizedBox(),
+      const SizedBox(),
+      const SizedBox(),
     ];
 
     for (int value in values) {
@@ -85,29 +85,31 @@ class SpeedTable extends StatelessWidget {
 
   List<TableRow> buildTableRowsData() {
     List<TableRow> rows = [];
-    for (var rowData in table.rows!) {
-      List<Widget> rowWidgets = [
-        Text('${rowData.pressure}'),
-        Text('${rowData.weight}'),
-      ];
+    if (table.rows != null) {
+      for (var rowData in table.rows!) {
+        List<Widget> rowWidgets = [
+          Text('${rowData.pressure}'),
+          Text('${rowData.weight}'),
+        ];
 
-      for (var data in rowData.data!) {
-        bool isObtained = obtainedData.any((obtained) => obtained.id == data.id);
-        Color textColor = isObtained ? Colors.red : Colors.black;
+        for (var data in rowData.data!) {
+          bool isObtained = obtainedData.any((obtained) => obtained.id == data.id);
+          Color textColor = isObtained ? Colors.red : Colors.black;
 
-        rowWidgets.add(
-          Text(
-            '${data.velocityValue}',
-            style: TextStyle(color: textColor),
-          ),
-        );
+          rowWidgets.add(
+            Text(
+              '${data.velocityValue}',
+              style: TextStyle(color: textColor),
+            ),
+          );
+        }
+
+        while (rowWidgets.length < 30) {
+          rowWidgets.add(const SizedBox());
+        }
+
+        rows.add(TableRow(children: rowWidgets));
       }
-
-      while (rowWidgets.length < 30) {
-        rowWidgets.add(SizedBox());
-      }
-
-      rows.add(TableRow(children: rowWidgets));
     }
     return rows;
   }

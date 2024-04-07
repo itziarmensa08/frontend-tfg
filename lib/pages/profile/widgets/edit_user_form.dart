@@ -229,10 +229,10 @@ class EditUserForm extends Container {
                 controller.user.value.dateBorn = controller.date;
               }
 
-              bool? success = await UserService.updateUser(context, controller.user.value.id!, controller.user.value);
+              bool? success = await UserService.updateUser(controller.user.value.id!, controller.user.value);
 
               if (success != null || success == true) {
-                ToastUtils.showSuccessToast(context, 'editUserSuccess'.tr);
+                ToastUtils.showSuccessToast('editUserSuccess'.tr);
                 Navigator.of(context).pop();
                 ProfileBinding.updateUserData();
               }

@@ -15,11 +15,11 @@ class LoginForm extends Container {
 
   LoginForm({super.key});
 
-  Future<String?> validatorUsername (String? value, BuildContext context) async {
+  Future<String?> validatorUsername (String? value) async {
     if (value == null || value.isEmpty)  {
       return 'enterText'.tr;
     } else {
-      var response = await UserService.login(controller.username.text, controller.password.text, context);
+      var response = await UserService.login(controller.username.text, controller.password.text);
       if (response == 'Not found user') {
         return 'Not found user'.tr;
       }
@@ -27,11 +27,11 @@ class LoginForm extends Container {
     return null;
   }
 
-  Future<String?> validatorPassword (String? value, BuildContext context) async {
+  Future<String?> validatorPassword (String? value) async {
     if (value == null || value.isEmpty)  {
       return 'enterText'.tr;
     } else {
-      var response = await UserService.login(controller.username.text, controller.password.text, context);
+      var response = await UserService.login(controller.username.text, controller.password.text);
       if (response == 'Incorrect password') {
         return 'Incorrect password'.tr;
       }
@@ -65,7 +65,7 @@ class LoginForm extends Container {
               suffixIcon: const Icon(Icons.person),
             ),
             onChanged: (value) async {
-              validateUsername = await validatorUsername(value, context);
+              validateUsername = await validatorUsername(value);
             },
             validator: (_) {
               if (validateUsername != null) {
@@ -93,7 +93,7 @@ class LoginForm extends Container {
               suffixIcon: const Icon(Icons.key),
             ),
             onChanged: (value) async {
-              validatePassword = await validatorPassword(value, context);
+              validatePassword = await validatorPassword(value);
             },
             validator: (value) {
               if (validatePassword != null) {
@@ -105,10 +105,10 @@ class LoginForm extends Container {
           const SizedBox(height: 40),
           ElevatedButton(
             onPressed: () async {
-              validateUsername = await validatorUsername(controller.username.text, context);
-              validatePassword = await validatorPassword(controller.password.text, context);
+              validateUsername = await validatorUsername(controller.username.text);
+              validatePassword = await validatorPassword(controller.password.text);
               if (_formKey.currentState!.validate()) {
-                var login = await UserService.login(controller.username.text, controller.password.text, context);
+                var login = await UserService.login(controller.username.text, controller.password.text);
                 if (login == '200') {
                   Get.toNamed(Routes.home);
                 }

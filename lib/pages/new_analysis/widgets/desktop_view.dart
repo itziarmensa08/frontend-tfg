@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/services/v2table.service.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
@@ -26,11 +28,11 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
             },
             onStepContinue: () async {
               if (controller.indexStepper.value == 0) {
-                var response = await V2TableService.getV2tableByAircraft(context, controller.selectedAircraft.value!.id!);
+                var response = await V2TableService.getV2tableByAircraft(controller.selectedAircraft.value!.id!);
                 if (response != null) {
                   controller.data.value = response;
                 }
-                var obtainedData = await V2TableService.getObtainedData(context, controller.selectedAircraft.value!.id!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text), controller.selectedAirport.value!.referenceTemperature!, "V50");
+                var obtainedData = await V2TableService.getObtainedData(controller.selectedAircraft.value!.id!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text), controller.selectedAirport.value!.referenceTemperature!, "V50");
                 if (obtainedData != null) {
                   controller.obtainedData.value = obtainedData.dataList;
                   controller.velocityFirstSegment.text = obtainedData.velocityValue.toString();
@@ -38,7 +40,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
               }
               final isLastSteo = controller.indexStepper.value == getSteps(controller).length - 1;
               if (isLastSteo) {
-                print('completed');
+                log('completed');
               } else {
                 controller.indexStepper.value += 1;
               }

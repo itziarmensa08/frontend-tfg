@@ -1,5 +1,4 @@
 
-import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/v2table.model.dart';
 import 'package:frontend_tfg/data/provider/api.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
@@ -12,9 +11,8 @@ class ObtainedDataWithVelocity {
 }
 
 class V2TableService {
-  static Future<V2TableModel?> getV2tableByAircraft(BuildContext context, String id) async {
+  static Future<V2TableModel?> getV2tableByAircraft(String id) async {
     ApiResponse response;
-    ToastUtils.initFToast(context);
 
     try {
       response = await MyApi().get('/v2tables/aircraft/$id');
@@ -26,18 +24,17 @@ class V2TableService {
         return table;
 
       } else {
-        ToastUtils.showErrorToast(context, response.data);
+        ToastUtils.showErrorToast(response.data);
       }
 
     } catch (error) {
-      ToastUtils.showErrorToast(context, 'Error GetAircrafts: $error');
+      ToastUtils.showErrorToast('Error GetAircrafts: $error');
     }
     return null;
   }
 
-  static Future<ObtainedDataWithVelocity?> getObtainedData(BuildContext context, String id, double pressure, double grossWeight, double temperature, String speedName) async {
+  static Future<ObtainedDataWithVelocity?> getObtainedData(String id, double pressure, double grossWeight, double temperature, String speedName) async {
     ApiResponse response;
-    ToastUtils.initFToast(context);
 
     try {
       response = await MyApi().post('/v2tables/filterData',
@@ -61,11 +58,11 @@ class V2TableService {
         return ObtainedDataWithVelocity(dataList: dataList, velocityValue: velocityValue);
 
       } else {
-        ToastUtils.showErrorToast(context, response.data);
+        ToastUtils.showErrorToast(response.data);
       }
 
     } catch (error) {
-      ToastUtils.showErrorToast(context, 'Error GetAircrafts: $error');
+      ToastUtils.showErrorToast('Error GetAircrafts: $error');
     }
     return null;
   }

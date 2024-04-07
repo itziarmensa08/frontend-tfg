@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/aircraft_model.dart';
@@ -150,7 +152,7 @@ class FirstStep extends StatelessWidget {
                   ElevatedButton(onPressed: () {
                     controller.airportCorrect.value = true;
                     controller.newProcedure.value.airport = controller.selectedAirport.value!.id;
-                    print(controller.newProcedure.value.toJson());
+                    log('Procedure: ${controller.newProcedure.value.toJson()}');
                   }, child: Text('yes'.tr)),
                   const SizedBox(width: 20),
                   ElevatedButton(onPressed: () {
@@ -190,7 +192,7 @@ class FirstStep extends StatelessWidget {
                   ElevatedButton(onPressed: () {
                     controller.aircraftCorrect.value = true;
                     controller.newProcedure.value.aircraft = controller.selectedAircraft.value!.id;
-                    print(controller.newProcedure.value.toJson());
+                    log('Procedure: ${controller.newProcedure.value.toJson()}');
                   }, child: Text('yes'.tr)),
                   const SizedBox(width: 20),
                   ElevatedButton(onPressed: () {
@@ -285,9 +287,9 @@ class FirstStep extends StatelessWidget {
                             if (secureUrl != null) {
                               controller.newProcedure.value.sidDoc = secureUrl;
                               controller.sidDoc.value = secureUrl;
-                              print(controller.newProcedure.value.toJson());
+                              log('Procedure: ${controller.newProcedure.value.toJson()}');
                             } else {
-                              ToastUtils.showErrorToast(context, 'errorCloudinary'.tr);
+                              ToastUtils.showErrorToast('errorCloudinary'.tr);
                             }
                           }
                         }, child: Text('uploadSid'.tr)),
@@ -327,9 +329,9 @@ class FirstStep extends StatelessWidget {
                             if (secureUrl != null) {
                               controller.newProcedure.value.rwyDoc = secureUrl;
                               controller.rwyDoc.value = secureUrl;
-                              print(controller.newProcedure.value.toJson());
+                              log('Procedure: ${controller.newProcedure.value.toJson()}');
                             } else {
-                              ToastUtils.showErrorToast(context, 'errorCloudinary'.tr);
+                              ToastUtils.showErrorToast('errorCloudinary'.tr);
                             }
                           }
                         }, child: Text('uploadRWY'.tr)),
@@ -372,7 +374,7 @@ class FirstStep extends StatelessWidget {
                             controller: controller.sidName,
                             onChanged: (value) {
                               controller.newProcedure.value.sidName = value;
-                              print(controller.newProcedure.value.toJson());
+                              log('Procedure: ${controller.newProcedure.value.toJson()}');
                             },
                             decoration: InputDecoration(
                               labelText: 'sidName'.tr,
@@ -395,7 +397,7 @@ class FirstStep extends StatelessWidget {
                             controller: controller.rwyName,
                             onChanged: (value) {
                               controller.newProcedure.value.rwyName = value;
-                              print(controller.newProcedure.value.toJson());
+                              log('Procedure: ${controller.newProcedure.value.toJson()}');
                             },
                             decoration: InputDecoration(
                               labelText: 'rwyName'.tr,
@@ -418,7 +420,7 @@ class FirstStep extends StatelessWidget {
                             controller: controller.dpName,
                             onChanged: (value) {
                               controller.newProcedure.value.dpName = value;
-                              print(controller.newProcedure.value.toJson());
+                              log('Procedure: ${controller.newProcedure.value.toJson()}');
                             },
                             decoration: InputDecoration(
                               labelText: 'dpName'.tr,
@@ -447,7 +449,7 @@ class FirstStep extends StatelessWidget {
                             controller: controller.dpDistance,
                             onChanged: (value) {
                               controller.newProcedure.value.dpDistance = double.parse(value);
-                              print(controller.newProcedure.value.toJson());
+                              log('Procedure: ${controller.newProcedure.value.toJson()}');
                             },
                             decoration: InputDecoration(
                               labelText: 'dpDistance'.tr,
@@ -470,7 +472,7 @@ class FirstStep extends StatelessWidget {
                             controller: controller.weight,
                             onChanged: (value) {
                               controller.newProcedure.value.weight = double.parse(value);
-                              print(controller.newProcedure.value.toJson());
+                              log('Procedure: ${controller.newProcedure.value.toJson()}');
                             },
                             decoration: InputDecoration(
                               labelText: 'weight'.tr,

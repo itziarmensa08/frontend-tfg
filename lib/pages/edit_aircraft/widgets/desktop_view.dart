@@ -75,10 +75,10 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                         );
                         if (secureUrl != null) {
                           controller.aircraft.value.profileImage = secureUrl;
-                          await AircraftService.updateAircraft(context, controller.aircraft.value.id!, controller.aircraft.value);
+                          await AircraftService.updateAircraft(controller.aircraft.value.id!, controller.aircraft.value);
                           EditAircraftBinding.updateAircraftData();
                         } else {
-                          ToastUtils.showErrorToast(context, 'errorCloudinary'.tr);
+                          ToastUtils.showErrorToast('errorCloudinary'.tr);
                         }
                       }, child: Text('editPhoto'.tr)),
                     ],
@@ -94,7 +94,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                       const Color.fromRGBO(255, 0, 0, 1),
                       const Color.fromARGB(255, 255, 255, 255),
                       () async {
-                        await AircraftService.deleteAircraft(context, controller.aircraft.value.id!);
+                        await AircraftService.deleteAircraft(controller.aircraft.value.id!);
                         Get.toNamed(Routes.admin);
                       },
                       () {

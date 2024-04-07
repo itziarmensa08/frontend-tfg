@@ -131,7 +131,7 @@ class AddAirportForm extends Container {
                   referenceTemperature: double.parse(controller.referenceTemperature.text)
                 );
 
-                await AirportService.addAirport(airport, context);
+                await AirportService.addAirport(airport);
                 controller.name.clear();
                 controller.elevation.clear();
                 controller.oaciCode.clear();

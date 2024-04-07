@@ -177,7 +177,7 @@ class RegisterForm extends Container {
                   role: 'user',
                   language: prefs.getString('language') ?? 'es'
                 );
-                await UserService.register(user, context);
+                await UserService.register(user);
                 Get.toNamed(Routes.login);
               }
             },
