@@ -80,6 +80,7 @@ class Procedure {
 class ThirdSegment {
 
   double? velocityIAS;
+  double? density;
   double? velocityTAS;
   double? rateClimb;
   double? distanceToDP;
@@ -91,9 +92,11 @@ class ThirdSegment {
     this.rateClimb,
     this.distanceToDP,
     this.id,
+    this.density
   });
   ThirdSegment.fromJson(Map<String, dynamic> json) {
     velocityIAS = json['velocityIAS']?.toDouble();
+    density = json['density']?.toDouble();
     velocityTAS = json['velocityTAS']?.toDouble();
     rateClimb = json['rateClimb']?.toDouble();
     distanceToDP = json['distanceToDP']?.toDouble();
@@ -102,6 +105,7 @@ class ThirdSegment {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['velocityIAS'] = velocityIAS;
+    data['density'] = density;
     data['velocityTAS'] = velocityTAS;
     data['rateClimb'] = rateClimb;
     data['distanceToDP'] = distanceToDP;
@@ -113,6 +117,7 @@ class ThirdSegment {
 class SecondSegment {
 
   double? velocityIAS;
+  double? density;
   double? velocityTAS;
   double? rateClimb;
   double? distanceToDP;
@@ -124,9 +129,11 @@ class SecondSegment {
     this.rateClimb,
     this.distanceToDP,
     this.id,
+    this.density
   });
   SecondSegment.fromJson(Map<String, dynamic> json) {
     velocityIAS = json['velocityIAS']?.toDouble();
+    density = json['density']?.toDouble();
     velocityTAS = json['velocityTAS']?.toDouble();
     rateClimb = json['rateClimb']?.toDouble();
     distanceToDP = json['distanceToDP']?.toDouble();
@@ -135,6 +142,7 @@ class SecondSegment {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['velocityIAS'] = velocityIAS;
+    data['density'] = density;
     data['velocityTAS'] = velocityTAS;
     data['rateClimb'] = rateClimb;
     data['distanceToDP'] = distanceToDP;
@@ -146,6 +154,7 @@ class SecondSegment {
 class FirstSegment {
 
   double? velocityIAS;
+  double? density;
   double? velocityTAS;
   double? rateClimb;
   double? distanceToDP;
@@ -157,9 +166,11 @@ class FirstSegment {
     this.rateClimb,
     this.distanceToDP,
     this.id,
+    this.density
   });
   FirstSegment.fromJson(Map<String, dynamic> json) {
     velocityIAS = json['velocityIAS']?.toDouble();
+    density = json['density']?.toDouble();
     velocityTAS = json['velocityTAS']?.toDouble();
     rateClimb = json['rateClimb']?.toDouble();
     distanceToDP = json['distanceToDP']?.toDouble();
@@ -168,6 +179,7 @@ class FirstSegment {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['velocityIAS'] = velocityIAS;
+    data['density'] = density;
     data['velocityTAS'] = velocityTAS;
     data['rateClimb'] = rateClimb;
     data['distanceToDP'] = distanceToDP;

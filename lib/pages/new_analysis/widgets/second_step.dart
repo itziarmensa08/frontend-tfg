@@ -127,6 +127,61 @@ class SecondStep extends StatelessWidget {
         const SizedBox(height: 50),
         Center(child: Obx(() => ISATable(table: controller.isatable.value, obtainedData: controller.obtainedISAData))),
         const SizedBox(height: 50),
+        Row(
+          children: [
+            Text('finalDensity'.tr, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(width: 20),
+            Expanded(
+              child: TextFormField(
+                controller: controller.densityFirstSegment,
+                onChanged: (value) {
+                  controller.newProcedure.value.firstSegment!.density = double.parse(value);
+                },
+                decoration: InputDecoration(
+                  labelText: 'density'.tr,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 50),
+        Row(
+          children: [
+            Text('finalVelocityTAS'.tr, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(width: 20),
+            Expanded(
+              child: TextFormField(
+                controller: controller.velocityFirstSegmentTAS,
+                onChanged: (value) {
+                  controller.newProcedure.value.firstSegment!.velocityTAS = double.parse(value);
+                },
+                decoration: InputDecoration(
+                  labelText: 'velocity'.tr,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
 
       ],
     );

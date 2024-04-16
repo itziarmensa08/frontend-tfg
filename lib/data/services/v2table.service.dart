@@ -28,7 +28,7 @@ class V2TableService {
       }
 
     } catch (error) {
-      ToastUtils.showErrorToast('Error GetAircrafts: $error');
+      ToastUtils.showErrorToast('Error GetV2Table: $error');
     }
     return null;
   }
@@ -62,7 +62,7 @@ class V2TableService {
       }
 
     } catch (error) {
-      ToastUtils.showErrorToast('Error GetAircrafts: $error');
+      ToastUtils.showErrorToast('Error GetClosetDataV2: $error');
     }
     return null;
   }

@@ -143,6 +143,9 @@ final Map<String, String> es = {
   'reviewDataFirstSegment': 'Los datos introducidos necesarios para encontrar la velocidad en el primer segmento (V50) son:',
   'finalVelocityIAS': 'Velocidad (IAS) final encontrada:',
   'velocity': 'Velocidad',
+  'finalDensity': 'Densidad final encontrada:',
+  'density': 'Densidad',
+  'finalVelocityTAS': 'Velocidad (TAS) final encontrada:',
 
   'step3title': "Cálculos para N - 1 motores",
 

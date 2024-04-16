@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/procedure.model.dart';
 import 'package:frontend_tfg/data/services/isatable.service.dart';
@@ -39,11 +41,22 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   controller.velocityFirstSegment.text = obtainedData.velocityValue.toString();
                   FirstSegment firstSegment = FirstSegment(velocityIAS: obtainedData.velocityValue);
                   controller.newProcedure.value.firstSegment = firstSegment;
-                  print('Procedure First segment final: ${controller.newProcedure.value.toJson()}');
                 }
                 var isatableresponse = await ISATableService.getISATables();
                 if (isatableresponse != null) {
                   controller.isatable.value = isatableresponse;
+                }
+                var obtainedDataISA = await ISATableService.getObtainedData(controller.selectedAirport.value!.elevation!);
+                if (obtainedDataISA != null) {
+                  controller.obtainedISAData.value = obtainedDataISA.dataList;
+                  controller.densityFirstSegment.text = obtainedDataISA.densityValue.toString();
+                  controller.newProcedure.value.firstSegment!.density = obtainedDataISA.densityValue;
+                  print('Procedure First segment final: ${controller.newProcedure.value.toJson()}');
+                }
+                if (obtainedData != null && obtainedDataISA != null) {
+                  double velocityTAS = obtainedData.velocityValue / sqrt(obtainedDataISA.densityValue);
+                  controller.newProcedure.value.firstSegment!.velocityTAS = velocityTAS;
+                  controller.velocityFirstSegmentTAS.text = velocityTAS.toString();
                 }
               }
               final isLastSteo = controller.indexStepper.value == getSteps(controller).length - 1;

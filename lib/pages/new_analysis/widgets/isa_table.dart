@@ -65,15 +65,17 @@ class ISATable extends StatelessWidget {
     List<TableRow> rows = [];
     if (table.data != null) {
       for (var rowData in table.data!) {
+        bool isObtained = obtainedData.any((obtained) => obtained.id == rowData.id);
+        Color textColor = isObtained ? Colors.red : Colors.black;
         if (rowData.pressure != null) {
           List<Widget> rowWidgets = [
-            Text('${rowData.altitudeFeet}'),
+            Text('${rowData.altitudeFeet}', style: TextStyle(color: textColor)),
             Text('${rowData.temperature}'),
             Text('${rowData.pressure!.hPa}'),
             Text('${rowData.pressure!.PSI}'),
             Text('${rowData.pressure!.InHg}'),
             Text('${rowData.pressureRatio}'),
-            Text('${rowData.density}'),
+            Text('${rowData.density}', style: TextStyle(color: textColor)),
             Text('${rowData.speedSound}'),
             Text('${rowData.altitudeMeters}'),
           ];

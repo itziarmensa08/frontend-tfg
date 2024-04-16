@@ -44,6 +44,7 @@ class NewAnalaysisController extends GetxController {
 
   final Rx<ISATableModel> isatable = ISATableModel().obs;
   final RxList<ISATableData> obtainedISAData = RxList<ISATableData>();
+  final TextEditingController densityFirstSegment = TextEditingController();
   final TextEditingController velocityFirstSegmentTAS = TextEditingController();
 
 }
