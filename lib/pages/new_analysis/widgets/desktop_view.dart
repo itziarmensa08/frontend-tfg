@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/procedure.model.dart';
 import 'package:frontend_tfg/data/services/isatable.service.dart';
+import 'package:frontend_tfg/data/services/rateofclimbgraphic.service.dart';
 import 'package:frontend_tfg/data/services/v2table.service.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
@@ -57,6 +58,10 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   double velocityTAS = obtainedData.velocityValue / sqrt(obtainedDataISA.densityValue);
                   controller.newProcedure.value.firstSegment!.velocityTAS = velocityTAS;
                   controller.velocityFirstSegmentTAS.text = velocityTAS.toString();
+                }
+                var rateresponse = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!);
+                if (rateresponse != null) {
+                  controller.rateGraphic.value = rateresponse;
                 }
               }
               final isLastSteo = controller.indexStepper.value == getSteps(controller).length - 1;
