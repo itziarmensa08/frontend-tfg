@@ -117,6 +117,9 @@ final Map<String, String> en = {
   'confirmDeleteAirport': 'Are you shure you want to delete this airport?',
 
   // New analysis
+  'segment1': 'Segment 1',
+  'segment2': 'Segment 2',
+  'segment3': 'Segment 3',
   'step1Title': 'General data',
   'selectairport': 'Select the airport: ',
   'addAirportStep1': 'or add the details if you can\'t find it: '

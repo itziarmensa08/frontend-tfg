@@ -118,6 +118,9 @@ final Map<String, String> ca = {
   'confirmDeleteAirport': 'Estàs segur que vols borrar aquest aeroport?',
 
   // New analysis
+  'segment1': 'Segment 1',
+  'segment2': 'Segment 2',
+  'segment3': 'Segment 3',
   'step1Title': 'Dades generals',
   'selectairport': 'Selecciona l\'aeroport: ',
   'addAirportStep1': 'o afegeix les dades si no el trobes: '

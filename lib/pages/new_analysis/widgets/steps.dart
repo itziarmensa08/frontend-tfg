@@ -13,7 +13,7 @@ List<Step> getSteps (controller) => [
   Step(
     isActive: controller.indexStepper.value >= 1,
     title: Text('step2title'.tr),
-    content: SecondStep(controller: controller),
+    content: const SecondStep(),
   ),
   Step(
     isActive: controller.indexStepper.value >= 2,

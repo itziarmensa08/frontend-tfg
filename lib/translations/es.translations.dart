@@ -118,6 +118,9 @@ final Map<String, String> es = {
   'confirmDeleteAirport': '¿Estás seguro de que quieres borrar este aeropuerto?',
 
   // New analysis
+  'segment1': 'Segmento 1',
+  'segment2': 'Segmento 2',
+  'segment3': 'Segmento 3',
   'step1Title': 'Datos generales',
   'searchAirport': 'Buscar aeropuerto',
   'searchAircraft': 'Buscar avión',
