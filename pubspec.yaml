@@ -49,6 +49,7 @@ dependencies:
   cloudinary_public: ^0.23.1
   pdf_render: ^1.4.6
   uuid: ^4.3.3
+  syncfusion_flutter_charts: ^25.1.42+1
 
 dev_dependencies:
   flutter_test:

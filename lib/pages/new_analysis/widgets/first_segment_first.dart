@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/isa_table.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/v2_table.dart';
 import 'package:get/get.dart';
 
@@ -180,6 +181,9 @@ class FirstSegmentFirstStep extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 50),
+        Center(child: Obx(() => RateChart(rateGraphic: controller.rateGraphic.value))),
+        const SizedBox(height: 50),
       ],
     );
   }
