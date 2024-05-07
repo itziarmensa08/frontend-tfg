@@ -71,8 +71,12 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 controller.indexStepper.value += 1;
               }
             },
-            onStepTapped: (int index) {
+            onStepTapped: (int index) async {
               controller.indexStepper.value = index;
+              var rateresponse = await RateOfClimbGraphicService.getRateByAircraft('66090cf074d32ad66c70d769');
+              if (rateresponse != null) {
+                controller.rateGraphic.value = rateresponse;
+              }
             },
             steps: getSteps(controller)
           ))

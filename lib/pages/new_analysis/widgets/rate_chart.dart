@@ -21,70 +21,65 @@ class _RateChartState extends State<RateChart> {
           children: [
             SfCartesianChart(
               primaryXAxis: NumericAxis(
-                isVisible: false,
-                title: const AxisTitle(text: 'RATE OF CLIMB (FEET PER MINUTE)'),
-                minimum: widget.rateGraphic!.axis!.x![0].toDouble(),
-                maximum: widget.rateGraphic!.axis!.x![widget.rateGraphic!.axis!.x!.length - 1].toDouble(),
+                title: const AxisTitle(text: 'REFERENCE LINE', alignment: ChartAlignment.far),
+                minimum: widget.rateGraphic?.axis?.x?[0].toDouble() ?? 0.0,
+                maximum: widget.rateGraphic?.axis?.x?[widget.rateGraphic!.axis!.x!.length - 1].toDouble() ?? 0.0,
                 majorGridLines: MajorGridLines(
-                    width: 0,
-                    color: Colors.red,
-                    dashArray: <double>[5,5]
+                    width: 2,
+                    color: Colors.grey,
                 ),
                 minorGridLines: MinorGridLines(
-                    width: 0,
-                    color: Colors.green,
-                    dashArray: <double>[5,5]
+                    width: 1,
+                    color: Colors.grey,
                 ),
+                minorTicksPerInterval: 10
               ),
               primaryYAxis: NumericAxis(
                 title: const AxisTitle(text: 'OAT (ºC)'),
                 interval: 10,
-                minimum: widget.rateGraphic!.axis!.y![7].toDouble(),
-                maximum: widget.rateGraphic!.axis!.y![widget.rateGraphic!.axis!.y!.length - 1].toDouble(),
+                minimum: widget.rateGraphic?.axis?.y?[7].toDouble() ?? 0.0,
+                maximum: widget.rateGraphic?.axis?.y?[widget.rateGraphic!.axis!.y!.length - 1].toDouble() ?? 0.0,
                 majorGridLines: MajorGridLines(
-                    width: 0,
-                    color: Colors.red,
-                    dashArray: <double>[5,5]
+                    width: 2,
+                    color: Colors.grey,
                 ),
                 minorGridLines: MinorGridLines(
-                    width: 0,
-                    color: Colors.green,
-                    dashArray: <double>[5,5]
+                    width: 1,
+                    color: Colors.grey,
                 ),
+                minorTicksPerInterval: 10
               ),
               series: buildSecondSeries()
             ),
             SfCartesianChart(
               primaryXAxis: NumericAxis(
-                title: const AxisTitle(text: 'GROSS WEIGHT (1,000 POUNDS)'),
-                minimum: widget.rateGraphic!.axis!.x![0].toDouble(),
-                maximum: widget.rateGraphic!.axis!.x![widget.rateGraphic!.axis!.x!.length - 1].toDouble(),
+                title: const AxisTitle(text: 'RATE OF CLIMB (FEET PER MINUTE)'),
+                minimum: widget.rateGraphic?.axis?.x?[0].toDouble() ?? 0.0,
+                maximum: widget.rateGraphic?.axis?.x?[widget.rateGraphic!.axis!.x!.length - 1].toDouble() ?? 0.0,
                 majorGridLines: MajorGridLines(
-                    width: 0,
-                    color: Colors.red,
-                    dashArray: <double>[5,5]
+                    width: 2,
+                    color: Colors.grey,
                 ),
                 minorGridLines: MinorGridLines(
-                    width: 0,
-                    color: Colors.green,
-                    dashArray: <double>[5,5]
+                    width: 1,
+                    color: Colors.grey,
                 ),
+                minorTicksPerInterval: 10
               ),
               primaryYAxis: NumericAxis(
-                title: const AxisTitle(text: 'Eje Y'),
+                title: const AxisTitle(text: 'GROSS WEIGHT (1,000 POUNDS)'),
                 interval: 1,
-                minimum: widget.rateGraphic!.axis!.y![0].toDouble(),
-                maximum: widget.rateGraphic!.axis!.y![6].toDouble(),
+                minimum: widget.rateGraphic?.axis?.y?[0].toDouble() ?? 0.0,
+                maximum: widget.rateGraphic?.axis?.y?[6].toDouble() ?? 0.0,
                 majorGridLines: MajorGridLines(
-                    width: 0,
-                    color: Colors.red,
-                    dashArray: <double>[5,5]
+                    width: 2,
+                    color: Colors.grey,
                 ),
                 minorGridLines: MinorGridLines(
-                    width: 0,
-                    color: Colors.green,
-                    dashArray: <double>[5,5]
+                    width: 1,
+                    color: Colors.grey,
                 ),
+                minorTicksPerInterval: 10
               ),
               series: buildFirstSeries()
             ),
