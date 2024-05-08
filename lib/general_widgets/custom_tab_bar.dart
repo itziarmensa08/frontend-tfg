@@ -44,7 +44,9 @@ List<ContentView> tabs = [
   ),
   ContentView(
     tab: CustomTab(title: 'tasks'.tr),
-    onTabPressed: () {},
+    onTabPressed: () {
+      Get.toNamed(Routes.tasks);
+    },
   ),
   ContentView(
     tab: CustomTab(title: 'profile'.tr),

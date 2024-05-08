@@ -30,6 +30,8 @@ import 'package:frontend_tfg/pages/register/register.binding.dart';
 import 'package:frontend_tfg/pages/register/register.page.dart';
 import 'package:frontend_tfg/pages/splash/splash.binding.dart';
 import 'package:frontend_tfg/pages/splash/splash.page.dart';
+import 'package:frontend_tfg/pages/tasks/tasks.binding.dart';
+import 'package:frontend_tfg/pages/tasks/tasks.page.dart';
 import 'package:get/get.dart';
 part './routes.dart';
 
@@ -60,6 +62,11 @@ abstract class AppPages {
       name: Routes.newAnalysis,
       page:() => const NewAnalysisPage(),
       binding: NewAnalysisBinding()
+    ),
+    GetPage(
+      name: Routes.tasks,
+      page:() => const TasksPage(),
+      binding: TasksBinding()
     ),
     GetPage(
       name: Routes.profile,
