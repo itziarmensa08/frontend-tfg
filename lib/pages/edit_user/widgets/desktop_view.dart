@@ -103,6 +103,25 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                         Navigator.of(context).pop();
                       }
                     );
+                  }, child: Text('deleteUser'.tr)),
+                  const SizedBox(height: 20),
+                  ElevatedButton(onPressed: () async {
+                    showAlert(
+                      context,
+                      'deleteUser'.tr,
+                      'confirmDeleteUser'.tr,
+                      'yes'.tr,
+                      'no'.tr,
+                      const Color.fromRGBO(255, 0, 0, 1),
+                      const Color.fromARGB(255, 255, 255, 255),
+                      () async {
+                        await UserService.deleteUser(controller.user.value.id!);
+                        Get.toNamed(Routes.admin);
+                      },
+                      () {
+                        Navigator.of(context).pop();
+                      }
+                    );
                   }, child: Text('deleteUser'.tr, style: const TextStyle(color: Color.fromRGBO(255, 0, 0, 1)),)),
                 ],
               ),

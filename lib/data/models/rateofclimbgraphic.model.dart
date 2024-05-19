@@ -113,7 +113,7 @@ class PressureLinesPoints {
 
 class PressureLines {
 
-  int? altitud;
+  dynamic altitud;
   List<PressureLinesPoints>? points;
   String? id;
 
@@ -123,7 +123,7 @@ class PressureLines {
     this.id,
   });
   PressureLines.fromJson(Map<String, dynamic> json) {
-    altitud = json['altitud']?.toInt();
+    altitud = json['altitud'];
     if (json['points'] != null) {
       final v = json['points'];
       final arr0 = <PressureLinesPoints>[];
