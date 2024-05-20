@@ -3,9 +3,10 @@ import 'package:frontend_tfg/data/models/rateofclimbgraphic.model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class RateChart extends StatefulWidget {
-  const RateChart({super.key, required this.rateGraphic});
+  const RateChart({super.key, required this.rateGraphic, required this.resultRate});
 
   final RateOfClimbGraphic? rateGraphic;
+  final Map<String, dynamic>? resultRate;
 
   @override
   State<RateChart> createState() => _RateChartState();
@@ -27,11 +28,11 @@ class _RateChartState extends State<RateChart> {
                   title: const AxisTitle(text: 'REFERENCE LINE', alignment: ChartAlignment.far),
                   minimum: widget.rateGraphic?.axis?.x?[0].toDouble() ?? 0.0,
                   maximum: widget.rateGraphic?.axis?.x?[widget.rateGraphic!.axis!.x!.length - 1].toDouble() ?? 0.0,
-                  majorGridLines: MajorGridLines(
+                  majorGridLines: const MajorGridLines(
                     width: 2,
                     color: Colors.grey,
                   ),
-                  minorGridLines: MinorGridLines(
+                  minorGridLines: const MinorGridLines(
                     width: 1,
                     color: Colors.grey,
                   ),
@@ -40,13 +41,13 @@ class _RateChartState extends State<RateChart> {
                 primaryYAxis: NumericAxis(
                   title: const AxisTitle(text: 'OAT (ºC)'),
                   interval: 10,
-                  minimum: widget.rateGraphic?.axis?.y?[7].toDouble() ?? 0.0,
-                  maximum: widget.rateGraphic?.axis?.y?[widget.rateGraphic!.axis!.y!.length - 1].toDouble() ?? 0.0,
-                  majorGridLines: MajorGridLines(
+                  minimum: widget.rateGraphic?.axis?.yAltitud?[0].toDouble() ?? 0.0,
+                  maximum: widget.rateGraphic?.axis?.yAltitud?[widget.rateGraphic!.axis!.yAltitud!.length - 1].toDouble() ?? 0.0,
+                  majorGridLines: const MajorGridLines(
                     width: 2,
                     color: Colors.grey,
                   ),
-                  minorGridLines: MinorGridLines(
+                  minorGridLines: const MinorGridLines(
                     width: 1,
                     color: Colors.grey,
                   ),
@@ -63,11 +64,11 @@ class _RateChartState extends State<RateChart> {
                   title: const AxisTitle(text: 'RATE OF CLIMB (FEET PER MINUTE)'),
                   minimum: widget.rateGraphic?.axis?.x?[0].toDouble() ?? 0.0,
                   maximum: widget.rateGraphic?.axis?.x?[widget.rateGraphic!.axis!.x!.length - 1].toDouble() ?? 0.0,
-                  majorGridLines: MajorGridLines(
+                  majorGridLines: const MajorGridLines(
                     width: 2,
                     color: Colors.grey,
                   ),
-                  minorGridLines: MinorGridLines(
+                  minorGridLines: const MinorGridLines(
                     width: 1,
                     color: Colors.grey,
                   ),
@@ -76,13 +77,13 @@ class _RateChartState extends State<RateChart> {
                 primaryYAxis: NumericAxis(
                   title: const AxisTitle(text: 'GROSS WEIGHT (1,000 POUNDS)'),
                   interval: 1,
-                  minimum: widget.rateGraphic?.axis?.y?[0].toDouble() ?? 0.0,
-                  maximum: widget.rateGraphic?.axis?.y?[6].toDouble() ?? 0.0,
-                  majorGridLines: MajorGridLines(
+                  minimum: widget.rateGraphic?.axis?.yWeight?[0].toDouble() ?? 0.0,
+                  maximum: widget.rateGraphic?.axis?.yWeight?[widget.rateGraphic!.axis!.yWeight!.length - 1].toDouble() ?? 0.0,
+                  majorGridLines: const MajorGridLines(
                     width: 2,
                     color: Colors.grey,
                   ),
-                  minorGridLines: MinorGridLines(
+                  minorGridLines: const MinorGridLines(
                     width: 1,
                     color: Colors.grey,
                   ),
@@ -145,6 +146,22 @@ class _RateChartState extends State<RateChart> {
       }
     }
 
+    var rateData = widget.resultRate!.entries.map((entry) {
+      var point = entry.value;
+      return point;
+    }).toList();
+
+    if (rateData.isNotEmpty) {
+      seriesList.add(
+        LineSeries<dynamic, int>(
+          dataSource: rateData,
+          xValueMapper: (dynamic data, _) => data['x'].toInt(),
+          yValueMapper: (dynamic data, _) => data['y'].toInt(),
+          color: Colors.red,
+        ),
+      );
+    }
+
     return seriesList;
   }
 
@@ -165,10 +182,10 @@ class _RateChartState extends State<RateChart> {
                   opacity: 0.7,
                   child: Container(
                     color: Colors.white.withOpacity(0.7),
-                    padding: EdgeInsets.all(4.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Text(
                       '${pressureLine.altitud}',
-                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                      style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -184,8 +201,8 @@ class _RateChartState extends State<RateChart> {
         CartesianChartAnnotation(
           widget: Container(
             color: Colors.white.withOpacity(0.7),
-            padding: EdgeInsets.all(4.0),
-            child: Text(
+            padding: const EdgeInsets.all(4.0),
+            child: const Text(
               'PRESSURE ALTITUDE (FEET)',
               style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),

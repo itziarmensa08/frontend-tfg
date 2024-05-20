@@ -25,4 +25,31 @@ class RateOfClimbGraphicService {
     }
     return null;
   }
+
+  static Future<Map<String, dynamic>?> calculateRateOfClimb(String id, double temperature, double altitud, double weight) async {
+    ApiResponse response;
+
+    try {
+      response = await MyApi().post(
+        '/rateOfClimb/calculate/rate/$id',
+        data: {
+          "temperature": temperature,
+          "altitud": altitud,
+          "weight": weight
+        }
+      );
+
+      if (response.statusCode == 200) {
+
+        return response.data;
+
+      } else {
+        ToastUtils.showErrorToast(response.data);
+      }
+
+    } catch (error) {
+      ToastUtils.showErrorToast('Error GetRateOfClimbGraphic: $error');
+    }
+    return null;
+  }
 }

@@ -49,6 +49,7 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController velocityFirstSegmentTAS = TextEditingController();
 
   final Rx<RateOfClimbGraphic> rateGraphic = RateOfClimbGraphic().obs;
+  final RxMap<String, dynamic> resultRate = <String, dynamic>{}.obs;
 
 }
 

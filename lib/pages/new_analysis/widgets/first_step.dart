@@ -319,7 +319,7 @@ class FirstStep extends StatelessWidget {
                             final imagesSingleton = ImagesSingleton.getInstance();
                             final secureUrl = await imagesSingleton.uploadPdf(
                               file,
-                              'sids',
+                              'rwyAnalysis',
                               uuid.v1(),
                             );
                             if (secureUrl != null) {

@@ -153,12 +153,14 @@ class PressureLines {
 class Axis {
 
   List<int>? x;
-  List<int>? y;
+  List<int>? yWeight;
+  List<int>? yAltitud;
   String? id;
 
   Axis({
     this.x,
-    this.y,
+    this.yWeight,
+    this.yAltitud,
     this.id,
   });
   Axis.fromJson(Map<String, dynamic> json) {
@@ -170,13 +172,21 @@ class Axis {
       });
       x = arr0;
     }
-    if (json['y'] != null) {
-      final v = json['y'];
+    if (json['yWeight'] != null) {
+      final v = json['yWeight'];
       final arr0 = <int>[];
       v.forEach((v) {
         arr0.add(v.toInt());
       });
-      y = arr0;
+      yWeight = arr0;
+    }
+    if (json['yAltitud'] != null) {
+      final v = json['yAltitud'];
+      final arr0 = <int>[];
+      v.forEach((v) {
+        arr0.add(v.toInt());
+      });
+      yAltitud = arr0;
     }
     id = json['_id']?.toString();
   }
@@ -190,13 +200,21 @@ class Axis {
       });
       data['x'] = arr0;
     }
-    if (y != null) {
-      final v = y;
+    if (yAltitud != null) {
+      final v = yAltitud;
       final arr0 = [];
       v?.forEach((v) {
         arr0.add(v);
       });
-      data['y'] = arr0;
+      data['yAltitud'] = arr0;
+    }
+    if (yWeight != null) {
+      final v = yWeight;
+      final arr0 = [];
+      v?.forEach((v) {
+        arr0.add(v);
+      });
+      data['yWeight'] = arr0;
     }
     data['_id'] = id;
     return data;

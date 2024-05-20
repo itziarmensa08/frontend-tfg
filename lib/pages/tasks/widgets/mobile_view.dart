@@ -5,7 +5,7 @@ Widget mobileView(double width, GlobalKey<ScaffoldState> scaffoldKey, BuildConte
     padding: EdgeInsets.only(left: width * 0.05, right: width * 0.05 ),
     child: SizedBox(
       width: width,
-      child: Column(
+      child: const Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

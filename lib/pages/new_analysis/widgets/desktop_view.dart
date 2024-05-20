@@ -32,6 +32,11 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
             },
             onStepContinue: () async {
               if (controller.indexStepper.value == 0) {
+                controller.newProcedure.value.weight = double.parse(controller.weight.text);
+                controller.newProcedure.value.dpDistance = double.parse(controller.dpDistance.text);
+                controller.newProcedure.value.rwyName = controller.rwyName.text;
+                controller.newProcedure.value.dpName = controller.dpName.text;
+                controller.newProcedure.value.sidName = controller.sidName.text;
                 var response = await V2TableService.getV2tableByAircraft(controller.selectedAircraft.value!.id!);
                 if (response != null) {
                   controller.data.value = response;
@@ -52,7 +57,6 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   controller.obtainedISAData.value = obtainedDataISA.dataList;
                   controller.densityFirstSegment.text = obtainedDataISA.densityValue.toString();
                   controller.newProcedure.value.firstSegment!.density = obtainedDataISA.densityValue;
-                  print('Procedure First segment final: ${controller.newProcedure.value.toJson()}');
                 }
                 if (obtainedData != null && obtainedDataISA != null) {
                   double velocityTAS = obtainedData.velocityValue / sqrt(obtainedDataISA.densityValue);
@@ -62,6 +66,10 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 var rateresponse = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!);
                 if (rateresponse != null) {
                   controller.rateGraphic.value = rateresponse;
+                }
+                var resultrateresponse = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphic.value.id!, controller.selectedAirport.value!.referenceTemperature!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text));
+                if (resultrateresponse != null) {
+                  controller.resultRate.value = resultrateresponse;
                 }
               }
               final isLastSteo = controller.indexStepper.value == getSteps(controller).length - 1;

@@ -22,9 +22,11 @@ class FirstSegmentFirstStep extends StatelessWidget {
           final elevation = controller.selectedAirport.value?.elevation;
           final weight = controller.newProcedure.value.weight;
           final referenceTemperature = controller.selectedAirport.value?.referenceTemperature;
-          print('Procedure Second segment inicial: ${controller.newProcedure.value.toJson()}');
-
+          print('ELEVATION: $elevation');
+          print('WEIGHT: $weight');
+          print('REFERENCE TEMPERATURE: $referenceTemperature');
           if (elevation != null && weight != null && referenceTemperature != null) {
+            print ('INSIDE IF');
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -90,6 +92,7 @@ class FirstSegmentFirstStep extends StatelessWidget {
               ],
             );
           } else {
+            print('INSIDE ELSE');
             return const LinearProgressIndicator();
           }
         }),
@@ -182,7 +185,7 @@ class FirstSegmentFirstStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => RateChart(rateGraphic: controller.rateGraphic.value))),
+        Center(child: Obx(() => RateChart(rateGraphic: controller.rateGraphic.value, resultRate: controller.resultRate,))),
         const SizedBox(height: 50),
       ],
     );
