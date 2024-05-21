@@ -149,6 +149,8 @@ final Map<String, String> es = {
   'finalDensity': 'Densidad final encontrada:',
   'density': 'Densidad',
   'finalVelocityTAS': 'Velocidad (TAS) final encontrada:',
+  'finalRateOfClimb': 'Rate of climb (feet/minute) final encontrado:',
+  'rateOfClimb': 'Rate of climb',
 
   'step3title': "Cálculos para N - 1 motores",
 

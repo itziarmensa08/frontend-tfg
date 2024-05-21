@@ -51,6 +51,8 @@ class NewAnalaysisController extends GetxController {
   final Rx<RateOfClimbGraphic> rateGraphic = RateOfClimbGraphic().obs;
   final RxMap<String, dynamic> resultRate = <String, dynamic>{}.obs;
 
+  final TextEditingController rateOfClimbFirstSegment = TextEditingController();
+
 }
 
 asignAirportData (NewAnalaysisController controller) {

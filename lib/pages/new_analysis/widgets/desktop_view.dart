@@ -70,6 +70,8 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 var resultrateresponse = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphic.value.id!, controller.selectedAirport.value!.referenceTemperature!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text));
                 if (resultrateresponse != null) {
                   controller.resultRate.value = resultrateresponse;
+                  controller.newProcedure.value.firstSegment!.rateClimb = resultrateresponse['finalPoint']['x'];
+                  controller.rateOfClimbFirstSegment.text = resultrateresponse['finalPoint']['x'].toString();
                 }
               }
               final isLastSteo = controller.indexStepper.value == getSteps(controller).length - 1;

@@ -124,6 +124,28 @@ class _RateChartState extends State<RateChart> {
           );
         }
       }
+
+      if (widget.resultRate!.isNotEmpty) {
+
+        if (widget.resultRate!.containsKey('adjustedPoints')) {
+          List<dynamic> adjustedPoints = widget.resultRate!['adjustedPoints'];
+
+          if (widget.resultRate!.containsKey('finalPoint')) {
+            adjustedPoints.add(widget.resultRate!['finalPoint']);
+          }
+
+          if (adjustedPoints.isNotEmpty) {
+            seriesList.add(
+              LineSeries<dynamic, double>(
+                dataSource: adjustedPoints,
+                xValueMapper: (dynamic data, _) => data['x'],
+                yValueMapper: (dynamic data, _) => data['y'],
+                color: Colors.red,
+              ),
+            );
+          }
+        }
+      }
     }
 
     return seriesList;
@@ -146,17 +168,18 @@ class _RateChartState extends State<RateChart> {
       }
     }
 
-    var rateData = widget.resultRate!.entries.map((entry) {
-      var point = entry.value;
-      return point;
-    }).toList();
+    if (widget.resultRate!.isNotEmpty) {
+      List<Map<String, double>> mainPoints = [
+        {"x": widget.resultRate!["firstPoint"]["x"], "y": widget.resultRate!["firstPoint"]["y"]},
+        {"x": widget.resultRate!["secondPoint"]["x"], "y": widget.resultRate!["secondPoint"]["y"]},
+        {"x": widget.resultRate!["thirdPoint"]["x"], "y": widget.resultRate!["thirdPoint"]["y"]}
+      ];
 
-    if (rateData.isNotEmpty) {
       seriesList.add(
-        LineSeries<dynamic, int>(
-          dataSource: rateData,
-          xValueMapper: (dynamic data, _) => data['x'].toInt(),
-          yValueMapper: (dynamic data, _) => data['y'].toInt(),
+        LineSeries<Map<String, double>, double>(
+          dataSource: mainPoints,
+          xValueMapper: (Map<String, double> data, _) => data['x'],
+          yValueMapper: (Map<String, double> data, _) => data['y'],
           color: Colors.red,
         ),
       );
@@ -171,7 +194,6 @@ class _RateChartState extends State<RateChart> {
       if (widget.rateGraphic!.pressureLines != null) {
         for (var pressureLine in widget.rateGraphic!.pressureLines!) {
           if (pressureLine.altitud != null && pressureLine.points!.length > 1) {
-            // Calculate the midpoint between the first two points
             var firstPoint = pressureLine.points![0];
             var secondPoint = pressureLine.points![1];
             var midPointX = (firstPoint.x! + secondPoint.x!) / 2;
