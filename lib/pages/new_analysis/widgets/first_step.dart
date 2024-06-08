@@ -435,7 +435,6 @@ class FirstStep extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const SizedBox(width: 20),
                         Expanded(
                           child: TextFormField(
                             controller: controller.dpDistance,
@@ -444,6 +443,28 @@ class FirstStep extends StatelessWidget {
                             },
                             decoration: InputDecoration(
                               labelText: 'dpDistance'.tr,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: TextFormField(
+                            controller: controller.dpAltitude,
+                            onChanged: (value) {
+                              controller.newProcedure.value.dpAltitude = double.parse(value);
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'dpAltitude'.tr,
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Theme.of(context).primaryColor,
@@ -479,7 +500,6 @@ class FirstStep extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 20),
                       ],
                     )
                   ],

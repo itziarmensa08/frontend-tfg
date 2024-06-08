@@ -72,6 +72,10 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   controller.resultRate.value = resultrateresponse;
                   controller.newProcedure.value.firstSegment!.rateClimb = resultrateresponse['finalPoint']['x'];
                   controller.rateOfClimbFirstSegment.text = resultrateresponse['finalPoint']['x'].toString();
+                  controller.newProcedure.value.firstSegment!.timeToFinish = (800 - 50) / resultrateresponse['finalPoint']['x'];
+                  controller.timeFirstSegment.text = ((800 - 50) / resultrateresponse['finalPoint']['x']).toString();
+                  controller.newProcedure.value.firstSegment!.distanceToFinish = controller.newProcedure.value.firstSegment!.velocityTAS! * (800 - 50) / resultrateresponse['finalPoint']['x'];
+                  controller.distanceFirstSegment.text = (controller.newProcedure.value.firstSegment!.velocityTAS! * (800 - 50) / resultrateresponse['finalPoint']['x']).toString();
                 }
               }
               final isLastSteo = controller.indexStepper.value == getSteps(controller).length - 1;

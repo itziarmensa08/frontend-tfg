@@ -9,6 +9,7 @@ class Procedure {
   String? rwyName;
   String? dpName;
   double? dpDistance;
+  double? dpAltitude;
   double? weight;
   FirstSegment? firstSegment;
   SecondSegment? secondSegment;
@@ -26,6 +27,7 @@ class Procedure {
     this.rwyName,
     this.dpName,
     this.dpDistance,
+    this.dpAltitude,
     this.weight,
     this.firstSegment,
     this.secondSegment,
@@ -43,6 +45,7 @@ class Procedure {
     rwyName = json['rwyName']?.toString();
     dpName = json['dpName']?.toString();
     dpDistance = json['dpDistance']?.toDouble();
+    dpAltitude = json['dpAltitude']?.toDouble();
     weight = json['weight']?.toDouble();
     firstSegment = (json['firstSegment'] != null) ? FirstSegment.fromJson(json['firstSegment']) : null;
     secondSegment = (json['secondSegment'] != null) ? SecondSegment.fromJson(json['secondSegment']) : null;
@@ -61,6 +64,7 @@ class Procedure {
     data['rwyName'] = rwyName;
     data['dpName'] = dpName;
     data['dpDistance'] = dpDistance;
+    data['dpAltitude'] = dpAltitude;
     data['weight'] = weight;
     if (firstSegment != null) {
       data['firstSegment'] = firstSegment?.toJson();
@@ -158,6 +162,8 @@ class FirstSegment {
   double? velocityTAS;
   double? rateClimb;
   double? distanceToDP;
+  double? timeToFinish;
+  double? distanceToFinish;
   String? id;
 
   FirstSegment({
@@ -166,7 +172,9 @@ class FirstSegment {
     this.rateClimb,
     this.distanceToDP,
     this.id,
-    this.density
+    this.density,
+    this.timeToFinish,
+    this.distanceToFinish
   });
   FirstSegment.fromJson(Map<String, dynamic> json) {
     velocityIAS = json['velocityIAS']?.toDouble();
@@ -174,6 +182,8 @@ class FirstSegment {
     velocityTAS = json['velocityTAS']?.toDouble();
     rateClimb = json['rateClimb']?.toDouble();
     distanceToDP = json['distanceToDP']?.toDouble();
+    timeToFinish = json['timeToFinish']?.toDouble();
+    distanceToFinish = json['distanceToFinish']?.toDouble();
     id = json['_id']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -183,6 +193,8 @@ class FirstSegment {
     data['velocityTAS'] = velocityTAS;
     data['rateClimb'] = rateClimb;
     data['distanceToDP'] = distanceToDP;
+    data['timeToFinish'] = timeToFinish;
+    data['distanceToFinish'] = distanceToFinish;
     data['_id'] = id;
     return data;
   }

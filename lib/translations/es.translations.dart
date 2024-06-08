@@ -141,6 +141,7 @@ final Map<String, String> es = {
   'sidName': "Nombre de la SID",
   'dpName': "Nombre del decision point",
   'dpDistance': "Distancia desde el DER hasta el DP",
+  'dpAltitude': "Altitud del decision point",
   "weight": "Peso del avión en el peor caso",
   'step2title': "Cáculos para N motores",
   'reviewDataFirstSegment': 'Los datos introducidos necesarios para encontrar la velocidad en el primer segmento (V50) son:',
@@ -151,6 +152,12 @@ final Map<String, String> es = {
   'finalVelocityTAS': 'Velocidad (TAS) final encontrada:',
   'finalRateOfClimb': 'Rate of climb (feet/minute) final encontrado:',
   'rateOfClimb': 'Rate of climb',
+  'timeFirstSegment': 'Tiempo que tarda la aeronave a alcanzar los 800ft (t = h / rate)',
+  'time': 'Tiempo (min)',
+  'distanceFirstSegment': 'Distancia recorrida por la aeronave hasta alcanzar 800ft (d = TAS * t)',
+  'distance': "Distancia (ft)",
+  'noArrive': "En este punto la aeronave aún no ha alcanzado el punto crítico, por lo tanto debemos hacer los cálculos para el siguiente segmento.",
+  'yesArrive': "En este punto la aeronave ha alcanzado el punto crítico, vamos a calcular si es capaz de sobrepasarlo:",
 
   'step3title': "Cálculos para N - 1 motores",
 

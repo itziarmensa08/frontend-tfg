@@ -37,6 +37,7 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController sidName = TextEditingController();
   final TextEditingController dpName = TextEditingController();
   final TextEditingController dpDistance = TextEditingController();
+  final TextEditingController dpAltitude = TextEditingController();
   final TextEditingController weight = TextEditingController();
 
   final Rx<V2TableModel> data = V2TableModel().obs;
@@ -50,6 +51,8 @@ class NewAnalaysisController extends GetxController {
 
   final Rx<RateOfClimbGraphic> rateGraphic = RateOfClimbGraphic().obs;
   final RxMap<String, dynamic> resultRate = <String, dynamic>{}.obs;
+  final TextEditingController timeFirstSegment = TextEditingController();
+  final TextEditingController distanceFirstSegment = TextEditingController();
 
   final TextEditingController rateOfClimbFirstSegment = TextEditingController();
 
