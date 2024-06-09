@@ -53,6 +53,8 @@ class NewAnalaysisController extends GetxController {
   final RxMap<String, dynamic> resultRate = <String, dynamic>{}.obs;
   final TextEditingController timeFirstSegment = TextEditingController();
   final TextEditingController distanceFirstSegment = TextEditingController();
+  final TextEditingController timeToDPFirstSegment = TextEditingController();
+  final TextEditingController altitudeInDPFirstSegment = TextEditingController();
 
   final TextEditingController rateOfClimbFirstSegment = TextEditingController();
 

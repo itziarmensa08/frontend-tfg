@@ -258,14 +258,97 @@ class FirstSegmentFirstStep extends StatelessWidget {
         ),
         const SizedBox(height: 50),
         Obx(() {
-          if (controller.newProcedure.value.firstSegment != null && controller.newProcedure.value.firstSegment!.distanceToFinish != null && controller.newProcedure.value.firstSegment!.distanceToDP != null) {
-            if (controller.newProcedure.value.firstSegment!.distanceToFinish! > controller.newProcedure.value.firstSegment!.distanceToDP!) {
+          if (controller.newProcedure.value.firstSegment != null) {
+            if (controller.newProcedure.value.firstSegment!.distanceToFinish! < controller.newProcedure.value.dpDistance!) {
               return Text('noArrive'.tr, style: Theme.of(context).textTheme.titleMedium);
             } else {
-              return Text('yesArrive'.tr, style: Theme.of(context).textTheme.titleMedium);
+              controller.newProcedure.value.firstSegment!.reachDP = true;
+              controller.newProcedure.value.firstSegment!.timeToDP = controller.newProcedure.value.dpDistance! / controller.newProcedure.value.firstSegment!.velocityTAS!;
+              controller.timeToDPFirstSegment.text = (controller.newProcedure.value.dpDistance! / controller.newProcedure.value.firstSegment!.velocityTAS!).toString();
+
+              controller.newProcedure.value.firstSegment!.altitudeInDP = controller.newProcedure.value.firstSegment!.timeToDP! * controller.newProcedure.value.firstSegment!.rateClimb!;
+              controller.altitudeInDPFirstSegment.text = (controller.newProcedure.value.firstSegment!.timeToDP! * controller.newProcedure.value.firstSegment!.rateClimb!).toString();
+
+              if (controller.newProcedure.value.firstSegment!.altitudeInDP! > controller.newProcedure.value.dpAltitude!) {
+                controller.newProcedure.value.firstSegment!.clearDP = true;
+              } else {
+                controller.newProcedure.value.firstSegment!.clearDP = false;
+              }
+
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('yesArrive'.tr, style: Theme.of(context).textTheme.titleMedium),
+                  const SizedBox(height: 50),
+                  Row(
+                    children: [
+                      Text('timeToDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: TextFormField(
+                          controller: controller.timeToDPFirstSegment,
+                          onChanged: (value) {
+                            controller.newProcedure.value.firstSegment!.timeToDP = double.parse(value);
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'time'.tr,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 50),
+                  Row(
+                    children: [
+                      Text('altitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: TextFormField(
+                          controller: controller.altitudeInDPFirstSegment,
+                          onChanged: (value) {
+                            controller.newProcedure.value.firstSegment!.altitudeInDP = double.parse(value);
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'altitude'.tr,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
             }
           } else {
             return const CircularProgressIndicator();
+          }
+        }),
+        const SizedBox(height: 50),
+        Obx(() {
+          if (controller.newProcedure.value.firstSegment != null && controller.newProcedure.value.firstSegment!.clearDP == true) {
+            return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green));
+          } else {
+            return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red));
           }
         })
       ],

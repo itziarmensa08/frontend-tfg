@@ -64,10 +64,10 @@ List<Item> items = [
   ),
   Item(
     headerValue: 'segment2'.tr,
-    body: FirstSegmentFirstStep()
+    body: Container()
   ),
   Item(
     headerValue: 'segment3'.tr,
-    body: FirstSegmentFirstStep()
+    body: Container()
   ),
 ];
