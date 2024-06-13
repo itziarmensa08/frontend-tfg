@@ -6,6 +6,7 @@ import 'package:frontend_tfg/data/models/isatable.model.dart';
 import 'package:frontend_tfg/data/models/procedure.model.dart';
 import 'package:frontend_tfg/data/models/rateofclimbgraphic.model.dart';
 import 'package:frontend_tfg/data/models/v2table.model.dart';
+import 'package:frontend_tfg/data/models/vytable.model.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -57,6 +58,9 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController altitudeInDPFirstSegment = TextEditingController();
 
   final TextEditingController rateOfClimbFirstSegment = TextEditingController();
+
+  final Rx<VYTableModel> vYtableN = VYTableModel().obs;
+  final RxList<VYtableRowsPressures> obtainedDataVYN = RxList<VYtableRowsPressures>();
 
 }
 

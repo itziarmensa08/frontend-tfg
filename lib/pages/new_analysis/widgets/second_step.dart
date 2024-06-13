@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/first_segment_first.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/second_segment_first.dart';
 import 'package:get/get.dart';
 
 class SecondStep extends StatefulWidget {
@@ -64,7 +65,7 @@ List<Item> items = [
   ),
   Item(
     headerValue: 'segment2'.tr,
-    body: Container()
+    body: SecondSegmentFirstStep()
   ),
   Item(
     headerValue: 'segment3'.tr,

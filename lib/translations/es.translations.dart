@@ -164,6 +164,8 @@ final Map<String, String> es = {
   'clearDP': "La aeronave es capaz de sobrepasar el punto crítico",
   'noClearDP': "La aeronave no es capaz de sobrepasar el punto crítico",
 
+  'reviewDataSecondSegment': 'Los datos introducidos necesarios para encontrar la velocidad en el segundo segmento (VY) son:',
+
   'step3title': "Cálculos para N - 1 motores",
 
   'step4title': "Conclusión"

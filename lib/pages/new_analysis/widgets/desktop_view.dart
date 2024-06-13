@@ -6,6 +6,7 @@ import 'package:frontend_tfg/data/models/procedure.model.dart';
 import 'package:frontend_tfg/data/services/isatable.service.dart';
 import 'package:frontend_tfg/data/services/rateofclimbgraphic.service.dart';
 import 'package:frontend_tfg/data/services/v2table.service.dart';
+import 'package:frontend_tfg/data/services/vYtable.service.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/steps.dart';
@@ -32,6 +33,8 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
             },
             onStepContinue: () async {
               if (controller.indexStepper.value == 0) {
+
+                // ---------------------- N MOTORES - 1 SEGMENTO -------------------------------------------
                 controller.newProcedure.value.weight = double.parse(controller.weight.text);
                 controller.newProcedure.value.dpDistance = double.parse(controller.dpDistance.text);
                 controller.newProcedure.value.rwyName = controller.rwyName.text;
@@ -76,6 +79,20 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   controller.timeFirstSegment.text = ((800 - 50) / resultrateresponse['finalPoint']['x']).toString();
                   controller.newProcedure.value.firstSegment!.distanceToFinish = controller.newProcedure.value.firstSegment!.velocityTAS! * (800 - 50) / resultrateresponse['finalPoint']['x'];
                   controller.distanceFirstSegment.text = (controller.newProcedure.value.firstSegment!.velocityTAS! * (800 - 50) / resultrateresponse['finalPoint']['x']).toString();
+                }
+
+                // ---------------------- N MOTORES - 2 SEGMENTO -------------------------------------------
+
+                var responseVY = await VYTableService.getVYtableByAircraft(controller.selectedAircraft.value!.id!);
+                if (responseVY != null) {
+                  controller.vYtableN.value = responseVY;
+                }
+                var obtainedDataVY = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text));
+                if (obtainedDataVY != null) {
+                  controller.obtainedDataVYN.value = obtainedDataVY.dataList;
+                  /*controller.velocityFirstSegment.text = obtainedData.velocityValue.toString();
+                  FirstSegment firstSegment = FirstSegment(velocityIAS: obtainedData.velocityValue);
+                  controller.newProcedure.value.firstSegment = firstSegment;*/
                 }
               }
               final isLastSteo = controller.indexStepper.value == getSteps(controller).length - 1;
