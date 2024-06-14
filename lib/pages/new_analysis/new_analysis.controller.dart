@@ -56,11 +56,40 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController distanceFirstSegment = TextEditingController();
   final TextEditingController timeToDPFirstSegment = TextEditingController();
   final TextEditingController altitudeInDPFirstSegment = TextEditingController();
-
   final TextEditingController rateOfClimbFirstSegment = TextEditingController();
 
   final Rx<VYTableModel> vYtableN = VYTableModel().obs;
   final RxList<VYtableRowsPressures> obtainedDataVYN = RxList<VYtableRowsPressures>();
+  final TextEditingController velocitySecondSegmentN = TextEditingController();
+  final RxList<ISATableData> obtainedISADataSecondSegmentN = RxList<ISATableData>();
+  final TextEditingController densitySecondSegmentN = TextEditingController();
+  final TextEditingController velocitySecondSegmentTASN = TextEditingController();
+  final Rx<RateOfClimbGraphic> rateGraphicSecondSegmentN = RateOfClimbGraphic().obs;
+  final RxMap<String, dynamic> resultRateSecondSegmentN = <String, dynamic>{}.obs;
+  final TextEditingController timeSecondSegmentN = TextEditingController();
+  final TextEditingController distancSecondSegmentN = TextEditingController();
+  final TextEditingController timeToDPSecondSegmentN = TextEditingController();
+  final TextEditingController altitudeInDPSecondSegmentN = TextEditingController();
+  final TextEditingController rateOfClimbSecondSegmentN = TextEditingController();
+
+  final RxList<VYtableRowsPressures> obtainedDataVYThirdSegmentN = RxList<VYtableRowsPressures>();
+  final TextEditingController velocityThirdSegmentN = TextEditingController();
+  final RxList<ISATableData> obtainedISADataThirdSegmentN = RxList<ISATableData>();
+  final TextEditingController densityThirdSegmentN = TextEditingController();
+  final TextEditingController velocityThirdSegmentTASN = TextEditingController();
+  final Rx<RateOfClimbGraphic> rateGraphicThirdSegmentN = RateOfClimbGraphic().obs;
+  final RxMap<String, dynamic> resultRateThirdSegmentN = <String, dynamic>{}.obs;
+  final TextEditingController timeThirdSegmentN = TextEditingController();
+  final TextEditingController distancThirdSegmentN = TextEditingController();
+  final TextEditingController timeToDPThirdSegmentN = TextEditingController();
+  final TextEditingController altitudeInDPThirdSegmentN = TextEditingController();
+  final TextEditingController rateOfClimbThirdSegmentN = TextEditingController();
+
+
+  // ----------------------- N -1 MOTORS ----------------------------------------
+
+  final RxList<V2TableRowData> obtainedDataN1 = RxList<V2TableRowData>();
+  final TextEditingController velocityFirstSegmentN1 = TextEditingController();
 
 }
 

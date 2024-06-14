@@ -5,8 +5,8 @@ import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/vy_table.dart';
 import 'package:get/get.dart';
 
-class SecondSegmentFirstStep extends StatelessWidget {
-  SecondSegmentFirstStep({super.key});
+class SecondSegmentSecondStep extends StatelessWidget {
+  SecondSegmentSecondStep({super.key});
 
   final controller = Get.put(NewAnalaysisController());
 

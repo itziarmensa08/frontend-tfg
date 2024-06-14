@@ -66,7 +66,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   controller.newProcedure.value.firstSegment!.velocityTAS = velocityTAS;
                   controller.velocityFirstSegmentTAS.text = velocityTAS.toString();
                 }
-                var rateresponse = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!);
+                var rateresponse = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 1);
                 if (rateresponse != null) {
                   controller.rateGraphic.value = rateresponse;
                 }
@@ -87,12 +87,66 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 if (responseVY != null) {
                   controller.vYtableN.value = responseVY;
                 }
-                var obtainedDataVY = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text));
+                var obtainedDataVY = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, (controller.selectedAirport.value!.elevation! + 800), double.parse(controller.weight.text));
                 if (obtainedDataVY != null) {
                   controller.obtainedDataVYN.value = obtainedDataVY.dataList;
-                  /*controller.velocityFirstSegment.text = obtainedData.velocityValue.toString();
-                  FirstSegment firstSegment = FirstSegment(velocityIAS: obtainedData.velocityValue);
-                  controller.newProcedure.value.firstSegment = firstSegment;*/
+                  controller.velocitySecondSegmentN.text = obtainedDataVY.velocityValue.toString();
+                  SecondSegment secondSegment = SecondSegment(velocityIAS: obtainedDataVY.velocityValue);
+                  controller.newProcedure.value.secondSegment = secondSegment;
+                }
+                var obtainedDataISASecondSegment = await ISATableService.getObtainedData((controller.selectedAirport.value!.elevation! + 800));
+                if (obtainedDataISASecondSegment != null) {
+                  controller.obtainedISADataSecondSegmentN.value = obtainedDataISASecondSegment.dataList;
+                  controller.densitySecondSegmentN.text = obtainedDataISASecondSegment.densityValue.toString();
+                  controller.newProcedure.value.secondSegment!.density = obtainedDataISASecondSegment.densityValue;
+                }
+                if (obtainedDataVY != null && obtainedDataISASecondSegment != null) {
+                  double velocityTAS = obtainedDataVY.velocityValue / sqrt(obtainedDataISASecondSegment.densityValue);
+                  controller.newProcedure.value.secondSegment!.velocityTAS = velocityTAS;
+                  controller.velocitySecondSegmentTASN.text = velocityTAS.toString();
+                }
+                var rateresponseSecondSegment = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 2);
+                if (rateresponseSecondSegment != null) {
+                  controller.rateGraphicSecondSegmentN.value = rateresponseSecondSegment;
+                }
+                var resultrateresponseSecondSegment = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicSecondSegmentN.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.selectedAirport.value!.elevation! + 800), double.parse(controller.weight.text));
+                if (resultrateresponseSecondSegment != null) {
+                  controller.resultRateSecondSegmentN.value = resultrateresponseSecondSegment;
+                  controller.newProcedure.value.secondSegment!.rateClimb = resultrateresponseSecondSegment['finalPoint']['x']; // Rate of climb second segment
+                  controller.rateOfClimbSecondSegmentN.text = resultrateresponseSecondSegment['finalPoint']['x'].toString();
+                  controller.newProcedure.value.secondSegment!.timeToFinish = (3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']; // Temps que tarda d'anar de 800ft a 3000ft
+                  controller.timeSecondSegmentN.text = ((3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']).toString();
+                  controller.newProcedure.value.secondSegment!.distanceToFinish = controller.newProcedure.value.secondSegment!.velocityTAS! * (3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']; // Distància que recórre de 800ft a 3000ft
+                  controller.distancSecondSegmentN.text = (controller.newProcedure.value.secondSegment!.velocityTAS! * (3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']).toString();
+                }
+
+                // ---------------------- N MOTORES - 3 SEGMENTO -------------------------------------------
+
+                var obtainedDataVYThirdSegment = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, (controller.selectedAirport.value!.elevation! + 3000), double.parse(controller.weight.text));
+                if (obtainedDataVYThirdSegment != null) {
+                  controller.obtainedDataVYThirdSegmentN.value = obtainedDataVYThirdSegment.dataList;
+                  controller.velocityThirdSegmentN.text = obtainedDataVYThirdSegment.velocityValue.toString();
+                  ThirdSegment thirdSegment = ThirdSegment(velocityIAS: obtainedDataVYThirdSegment.velocityValue);
+                  controller.newProcedure.value.thirdSegment = thirdSegment;
+                }
+                var obtainedDataISAThirdSegment = await ISATableService.getObtainedData((controller.selectedAirport.value!.elevation! + 3000));
+                if (obtainedDataISAThirdSegment != null) {
+                  controller.obtainedISADataThirdSegmentN.value = obtainedDataISAThirdSegment.dataList;
+                  controller.densityThirdSegmentN.text = obtainedDataISAThirdSegment.densityValue.toString();
+                  controller.newProcedure.value.thirdSegment!.density = obtainedDataISAThirdSegment.densityValue;
+                }
+                if (obtainedDataVYThirdSegment != null && obtainedDataISAThirdSegment != null) {
+                  double velocityTAS = obtainedDataVYThirdSegment.velocityValue / sqrt(obtainedDataISAThirdSegment.densityValue);
+                  controller.newProcedure.value.thirdSegment!.velocityTAS = velocityTAS;
+                  controller.velocityThirdSegmentTASN.text = velocityTAS.toString();
+                }
+              } else if (controller.indexStepper.value == 1) {
+                var obtainedData = await V2TableService.getObtainedData(controller.selectedAircraft.value!.id!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text), controller.selectedAirport.value!.referenceTemperature!, "V2");
+                if (obtainedData != null) {
+                  controller.obtainedDataN1.value = obtainedData.dataList;
+                  controller.velocityFirstSegmentN1.text = obtainedData.velocityValue.toString();
+                  //FirstSegment firstSegment = FirstSegment(velocityIAS: obtainedData.velocityValue);
+                  //controller.newProcedure.value.firstSegment = firstSegment;
                 }
               }
               final isLastSteo = controller.indexStepper.value == getSteps(controller).length - 1;
@@ -104,10 +158,6 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
             },
             onStepTapped: (int index) async {
               controller.indexStepper.value = index;
-              var rateresponse = await RateOfClimbGraphicService.getRateByAircraft('66090cf074d32ad66c70d769');
-              if (rateresponse != null) {
-                controller.rateGraphic.value = rateresponse;
-              }
             },
             steps: getSteps(controller)
           ))

@@ -5,8 +5,8 @@ import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/vy_table.dart';
 import 'package:get/get.dart';
 
-class SecondSegmentFirstStep extends StatelessWidget {
-  SecondSegmentFirstStep({super.key});
+class ThirdSegmentFirstStep extends StatelessWidget {
+  ThirdSegmentFirstStep({super.key});
 
   final controller = Get.put(NewAnalaysisController());
 
@@ -63,7 +63,7 @@ class SecondSegmentFirstStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => VyTable(table: controller.vYtableN.value, obtainedData: controller.obtainedDataVYN))),
+        Center(child: Obx(() => VyTable(table: controller.vYtableN.value, obtainedData: controller.obtainedDataVYThirdSegmentN))),
         const SizedBox(height: 50),
         Row(
           children: [
@@ -71,9 +71,9 @@ class SecondSegmentFirstStep extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.velocitySecondSegmentN,
+                controller: controller.velocityThirdSegmentN,
                 onChanged: (value) {
-                  controller.newProcedure.value.secondSegment!.velocityIAS = double.parse(value);
+                  controller.newProcedure.value.thirdSegment!.velocityIAS = double.parse(value);
                 },
                 decoration: InputDecoration(
                   labelText: 'velocity'.tr,
@@ -93,7 +93,7 @@ class SecondSegmentFirstStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => ISATable(table: controller.isatable.value, obtainedData: controller.obtainedISADataSecondSegmentN))),
+        Center(child: Obx(() => ISATable(table: controller.isatable.value, obtainedData: controller.obtainedISADataThirdSegmentN))),
         const SizedBox(height: 50),
         Row(
           children: [
@@ -101,7 +101,7 @@ class SecondSegmentFirstStep extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.densitySecondSegmentN,
+                controller: controller.densityThirdSegmentN,
                 onChanged: (value) {
                   controller.newProcedure.value.secondSegment!.density = double.parse(value);
                 },
@@ -129,9 +129,9 @@ class SecondSegmentFirstStep extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.velocitySecondSegmentTASN,
+                controller: controller.velocityThirdSegmentTASN,
                 onChanged: (value) {
-                  controller.newProcedure.value.secondSegment!.velocityTAS = double.parse(value);
+                  controller.newProcedure.value.thirdSegment!.velocityTAS = double.parse(value);
                 },
                 decoration: InputDecoration(
                   labelText: 'velocity'.tr,
@@ -238,7 +238,7 @@ class SecondSegmentFirstStep extends StatelessWidget {
         ),
         const SizedBox(height: 50),
         Obx(() {
-          if (controller.newProcedure.value.secondSegment != null && controller.newProcedure.value.firstSegment != null) {
+          if (controller.newProcedure.value.secondSegment != null) {
             if ((controller.newProcedure.value.secondSegment!.distanceToFinish! + controller.newProcedure.value.firstSegment!.distanceToFinish!) < controller.newProcedure.value.dpDistance!) {
               return Text('noArrive'.tr, style: Theme.of(context).textTheme.titleMedium);
             } else {

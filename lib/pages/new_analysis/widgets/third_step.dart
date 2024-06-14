@@ -1,20 +1,20 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/first_segment_first.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/second_segment_first.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/third_segment_first.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/first_segment_second.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/second_segment_second.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/third_segment_second.dart';
 import 'package:get/get.dart';
 
-class SecondStep extends StatefulWidget {
-  const SecondStep({super.key});
+class ThirdStep extends StatefulWidget {
+  const ThirdStep({super.key});
 
   @override
-  State<SecondStep> createState() =>
-      SecondStepState();
+  State<ThirdStep> createState() =>
+      ThirdStepState();
 }
 
-class SecondStepState extends State<SecondStep> {
+class ThirdStepState extends State<ThirdStep> {
 
   @override
   Widget build(BuildContext context) {
@@ -62,14 +62,14 @@ class Item {
 List<Item> items = [
   Item(
     headerValue: 'segment1'.tr,
-    body: FirstSegmentFirstStep()
+    body: FirstSegmentSecondStep()
   ),
   Item(
     headerValue: 'segment2'.tr,
-    body: SecondSegmentFirstStep()
+    body: SecondSegmentSecondStep()
   ),
   Item(
     headerValue: 'segment3'.tr,
-    body: ThirdSegmentFirstStep()
+    body: ThirdSegmentSecondStep()
   ),
 ];

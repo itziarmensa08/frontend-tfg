@@ -47,8 +47,6 @@ class VYTableService {
 
       if (response.statusCode == 200) {
 
-        print(response.data);
-
         List<VYtableRowsPressures> dataList = (response.data['cells'] as List<dynamic>)
           .map((item) => VYtableRowsPressures.fromJson(item))
           .toList();

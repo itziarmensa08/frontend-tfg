@@ -269,7 +269,7 @@ class FirstSegmentFirstStep extends StatelessWidget {
               controller.newProcedure.value.firstSegment!.altitudeInDP = controller.newProcedure.value.firstSegment!.timeToDP! * controller.newProcedure.value.firstSegment!.rateClimb!;
               controller.altitudeInDPFirstSegment.text = (controller.newProcedure.value.firstSegment!.timeToDP! * controller.newProcedure.value.firstSegment!.rateClimb!).toString();
 
-              if (controller.newProcedure.value.firstSegment!.altitudeInDP! > controller.newProcedure.value.dpAltitude!) {
+              if ((controller.newProcedure.value.firstSegment!.altitudeInDP! + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
                 controller.newProcedure.value.firstSegment!.clearDP = true;
               } else {
                 controller.newProcedure.value.firstSegment!.clearDP = false;
@@ -347,8 +347,10 @@ class FirstSegmentFirstStep extends StatelessWidget {
         Obx(() {
           if (controller.newProcedure.value.firstSegment != null && controller.newProcedure.value.firstSegment!.clearDP == true) {
             return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green));
-          } else {
+          } else if (controller.newProcedure.value.firstSegment != null && controller.newProcedure.value.firstSegment!.clearDP == false) {
             return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red));
+          } else {
+            return const CircularProgressIndicator();
           }
         })
       ],
