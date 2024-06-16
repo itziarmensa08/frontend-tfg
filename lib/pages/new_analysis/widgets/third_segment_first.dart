@@ -65,7 +65,7 @@ class ThirdSegmentFirstStep extends StatelessWidget {
         const SizedBox(height: 50),
         Center(child: Obx(() => VyTable(table: controller.vYtableN.value, obtainedData: controller.obtainedDataVYThirdSegmentN))),
         const SizedBox(height: 50),
-        Row(
+        /*Row(
           children: [
             Text('finalVelocityIAS'.tr, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(width: 20),
@@ -334,7 +334,7 @@ class ThirdSegmentFirstStep extends StatelessWidget {
           } else {
             return const CircularProgressIndicator();
           }
-        })
+        })*/
       ],
     );
   }

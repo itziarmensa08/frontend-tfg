@@ -85,7 +85,7 @@ class FirstSegmentSecondStep extends StatelessWidget {
         const SizedBox(height: 50),
         Center(child: Obx(() => SpeedTable(table: controller.data.value, obtainedData: controller.obtainedDataN1))),
         const SizedBox(height: 50),
-        Row(
+        /*Row(
           children: [
             Text('finalVelocityIAS'.tr, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(width: 20),
@@ -352,7 +352,7 @@ class FirstSegmentSecondStep extends StatelessWidget {
           } else {
             return const CircularProgressIndicator();
           }
-        })
+        })*/
       ],
     );
   }

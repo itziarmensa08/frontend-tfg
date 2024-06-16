@@ -73,7 +73,9 @@ class SecondSegmentSecondStep extends StatelessWidget {
               child: TextFormField(
                 controller: controller.velocitySecondSegmentN,
                 onChanged: (value) {
-                  controller.newProcedure.value.secondSegment!.velocityIAS = double.parse(value);
+                  controller.secondSegmentN.value.velocityIAS = double.parse(value);
+                  controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
+                  controller.newProcedure.value.nMotors = controller.nMotors.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'velocity'.tr,
@@ -103,7 +105,9 @@ class SecondSegmentSecondStep extends StatelessWidget {
               child: TextFormField(
                 controller: controller.densitySecondSegmentN,
                 onChanged: (value) {
-                  controller.newProcedure.value.secondSegment!.density = double.parse(value);
+                  controller.secondSegmentN.value.density = double.parse(value);
+                  controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
+                  controller.newProcedure.value.nMotors = controller.nMotors.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'density'.tr,
@@ -131,7 +135,9 @@ class SecondSegmentSecondStep extends StatelessWidget {
               child: TextFormField(
                 controller: controller.velocitySecondSegmentTASN,
                 onChanged: (value) {
-                  controller.newProcedure.value.secondSegment!.velocityTAS = double.parse(value);
+                  controller.secondSegmentN.value.velocityTAS = double.parse(value);
+                  controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
+                  controller.newProcedure.value.nMotors = controller.nMotors.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'velocity'.tr,
@@ -161,7 +167,9 @@ class SecondSegmentSecondStep extends StatelessWidget {
               child: TextFormField(
                 controller: controller.rateOfClimbSecondSegmentN,
                 onChanged: (value) {
-                  controller.newProcedure.value.secondSegment!.rateClimb = double.parse(value);
+                  controller.secondSegmentN.value.rateClimb = double.parse(value);
+                  controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
+                  controller.newProcedure.value.nMotors = controller.nMotors.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'rateOfClimb'.tr,
@@ -189,7 +197,9 @@ class SecondSegmentSecondStep extends StatelessWidget {
               child: TextFormField(
                 controller: controller.timeSecondSegmentN,
                 onChanged: (value) {
-                  controller.newProcedure.value.secondSegment!.timeToFinish = double.parse(value);
+                  controller.secondSegmentN.value.timeToFinish = double.parse(value);
+                  controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
+                  controller.newProcedure.value.nMotors = controller.nMotors.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'time'.tr,
@@ -217,7 +227,9 @@ class SecondSegmentSecondStep extends StatelessWidget {
               child: TextFormField(
                 controller: controller.distancSecondSegmentN,
                 onChanged: (value) {
-                  controller.newProcedure.value.secondSegment!.distanceToFinish = double.parse(value);
+                  controller.secondSegmentN.value.distanceToFinish = double.parse(value);
+                  controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
+                  controller.newProcedure.value.nMotors = controller.nMotors.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'distance'.tr,
@@ -238,24 +250,27 @@ class SecondSegmentSecondStep extends StatelessWidget {
         ),
         const SizedBox(height: 50),
         Obx(() {
-          if (controller.newProcedure.value.secondSegment != null && controller.newProcedure.value.firstSegment != null) {
-            if ((controller.newProcedure.value.secondSegment!.distanceToFinish! + controller.newProcedure.value.firstSegment!.distanceToFinish!) < controller.newProcedure.value.dpDistance!) {
+
+            if ((controller.secondSegmentN.value.distanceToFinish! + controller.firstSegmentN.value.distanceToFinish!) < controller.newProcedure.value.dpDistance!) {
               return Text('noArrive'.tr, style: Theme.of(context).textTheme.titleMedium);
             } else {
-              controller.newProcedure.value.secondSegment!.reachDP = true;
+              controller.secondSegmentN.value.reachDP = true;
               // Temps que tarda desde 800 ft fins al descision point
-              controller.newProcedure.value.secondSegment!.timeToDP = (controller.newProcedure.value.dpDistance! - controller.newProcedure.value.firstSegment!.distanceToFinish!) / controller.newProcedure.value.secondSegment!.velocityTAS!;
-              controller.timeToDPSecondSegmentN.text = ((controller.newProcedure.value.dpDistance! - controller.newProcedure.value.firstSegment!.distanceToFinish!) / controller.newProcedure.value.secondSegment!.velocityTAS!).toString();
+              controller.secondSegmentN.value.timeToDP = (controller.newProcedure.value.dpDistance! - controller.firstSegmentN.value.distanceToFinish!) / controller.secondSegmentN.value.velocityTAS!;
+              controller.timeToDPSecondSegmentN.text = ((controller.newProcedure.value.dpDistance! - controller.firstSegmentN.value.distanceToFinish!) / controller.secondSegmentN.value.velocityTAS!).toString();
 
               // Altitud desde 800ft fins al decision point
-              controller.newProcedure.value.secondSegment!.altitudeInDP = controller.newProcedure.value.secondSegment!.timeToDP! * controller.newProcedure.value.secondSegment!.rateClimb!;
-              controller.altitudeInDPFirstSegment.text = (controller.newProcedure.value.secondSegment!.timeToDP! * controller.newProcedure.value.secondSegment!.rateClimb!).toString();
+              controller.secondSegmentN.value.altitudeInDP = controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!;
+              controller.altitudeInDPFirstSegment.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!).toString();
 
-              if ((controller.newProcedure.value.secondSegment!.altitudeInDP! + 800 + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
-                controller.newProcedure.value.firstSegment!.clearDP = true;
+              if ((controller.secondSegmentN.value.altitudeInDP! + 800 + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
+                controller.secondSegmentN.value.clearDP = true;
               } else {
-                controller.newProcedure.value.firstSegment!.clearDP = false;
+                controller.secondSegmentN.value.clearDP = false;
               }
+
+              controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
+              controller.newProcedure.value.nMotors = controller.nMotors.value;
 
               return Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -271,7 +286,9 @@ class SecondSegmentSecondStep extends StatelessWidget {
                         child: TextFormField(
                           controller: controller.timeToDPSecondSegmentN,
                           onChanged: (value) {
-                            controller.newProcedure.value.secondSegment!.timeToDP = double.parse(value);
+                            controller.secondSegmentN.value.timeToDP = double.parse(value);
+                            controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
+                            controller.newProcedure.value.nMotors = controller.nMotors.value;
                           },
                           decoration: InputDecoration(
                             labelText: 'time'.tr,
@@ -299,7 +316,9 @@ class SecondSegmentSecondStep extends StatelessWidget {
                         child: TextFormField(
                           controller: controller.altitudeInDPSecondSegmentN,
                           onChanged: (value) {
-                            controller.newProcedure.value.secondSegment!.altitudeInDP = double.parse(value);
+                            controller.secondSegmentN.value.altitudeInDP = double.parse(value);
+                            controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
+                            controller.newProcedure.value.nMotors = controller.nMotors.value;
                           },
                           decoration: InputDecoration(
                             labelText: 'altitude'.tr,
@@ -321,18 +340,13 @@ class SecondSegmentSecondStep extends StatelessWidget {
                 ],
               );
             }
-          } else {
-            return const CircularProgressIndicator();
-          }
         }),
         const SizedBox(height: 50),
         Obx(() {
-          if (controller.newProcedure.value.secondSegment != null && controller.newProcedure.value.secondSegment!.clearDP == true) {
+          if (controller.secondSegmentN.value.clearDP == true) {
             return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green));
-          } else if (controller.newProcedure.value.secondSegment != null && controller.newProcedure.value.secondSegment!.clearDP == false) {
-            return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red));
           } else {
-            return const CircularProgressIndicator();
+            return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red));
           }
         })
       ],

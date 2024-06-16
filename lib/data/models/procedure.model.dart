@@ -11,9 +11,8 @@ class Procedure {
   double? dpDistance;
   double? dpAltitude;
   double? weight;
-  FirstSegment? firstSegment;
-  SecondSegment? secondSegment;
-  ThirdSegment? thirdSegment;
+  NMotors? nMotors;
+  Failure? failure;
   String? createdAt;
   String? updatedAt;
 
@@ -29,9 +28,8 @@ class Procedure {
     this.dpDistance,
     this.dpAltitude,
     this.weight,
-    this.firstSegment,
-    this.secondSegment,
-    this.thirdSegment,
+    this.nMotors,
+    this.failure,
     this.createdAt,
     this.updatedAt,
   });
@@ -47,9 +45,8 @@ class Procedure {
     dpDistance = json['dpDistance']?.toDouble();
     dpAltitude = json['dpAltitude']?.toDouble();
     weight = json['weight']?.toDouble();
-    firstSegment = (json['firstSegment'] != null) ? FirstSegment.fromJson(json['firstSegment']) : null;
-    secondSegment = (json['secondSegment'] != null) ? SecondSegment.fromJson(json['secondSegment']) : null;
-    thirdSegment = (json['thirdSegment'] != null) ? ThirdSegment.fromJson(json['thirdSegment']) : null;
+    nMotors = (json['nMotors'] != null) ? NMotors.fromJson(json['nMotors']) : null;
+    failure = (json['failure'] != null) ? Failure.fromJson(json['failure']) : null;
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
   }
@@ -66,6 +63,96 @@ class Procedure {
     data['dpDistance'] = dpDistance;
     data['dpAltitude'] = dpAltitude;
     data['weight'] = weight;
+    if (nMotors != null) {
+      data['nMotors'] = nMotors?.toJson();
+    }
+    if (failure != null) {
+      data['failure'] = failure?.toJson();
+    }
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    return data;
+  }
+}
+
+class Segment {
+
+  double? velocityIAS;
+  double? density;
+  double? velocityTAS;
+  double? rateClimb;
+  double? altitudeInDP;
+  double? timeToDP;
+  double? timeToFinish;
+  double? distanceToFinish;
+  bool? reachDP;
+  bool? clearDP;
+  String? id;
+
+  Segment({
+    this.velocityIAS,
+    this.velocityTAS,
+    this.rateClimb,
+    this.altitudeInDP,
+    this.id,
+    this.density,
+    this.timeToFinish,
+    this.distanceToFinish,
+    this.timeToDP,
+    this.reachDP,
+    this.clearDP
+  });
+  Segment.fromJson(Map<String, dynamic> json) {
+    velocityIAS = json['velocityIAS']?.toDouble();
+    density = json['density']?.toDouble();
+    velocityTAS = json['velocityTAS']?.toDouble();
+    rateClimb = json['rateClimb']?.toDouble();
+    altitudeInDP = json['altitudeInDP']?.toDouble();
+    timeToDP = json['timeToDP']?.toDouble();
+    timeToFinish = json['timeToFinish']?.toDouble();
+    distanceToFinish = json['distanceToFinish']?.toDouble();
+    reachDP = json['reachDP'];
+    clearDP = json['clearDP'];
+    id = json['_id']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['velocityIAS'] = velocityIAS;
+    data['density'] = density;
+    data['velocityTAS'] = velocityTAS;
+    data['rateClimb'] = rateClimb;
+    data['altitudeInDP'] = altitudeInDP;
+    data['timeToDP'] = timeToDP;
+    data['timeToFinish'] = timeToFinish;
+    data['distanceToFinish'] = distanceToFinish;
+    data['reachDP'] = reachDP;
+    data['clearDP'] = clearDP;
+    data['_id'] = id;
+    return data;
+  }
+}
+
+class NMotors {
+
+  Segment? firstSegment;
+  Segment? secondSegment;
+  Segment? thirdSegment;
+  String? id;
+
+  NMotors({
+    this.id,
+    this.firstSegment,
+    this.secondSegment,
+    this.thirdSegment
+  });
+  NMotors.fromJson(Map<String, dynamic> json) {
+    firstSegment = (json['firstSegment'] != null) ? Segment.fromJson(json['firstSegment']) : null;
+    secondSegment = (json['secondSegment'] != null) ? Segment.fromJson(json['secondSegment']) : null;
+    thirdSegment = (json['thirdSegment'] != null) ? Segment.fromJson(json['thirdSegment']) : null;
+    id = json['_id']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
     if (firstSegment != null) {
       data['firstSegment'] = firstSegment?.toJson();
     }
@@ -75,161 +162,43 @@ class Procedure {
     if (thirdSegment != null) {
       data['thirdSegment'] = thirdSegment?.toJson();
     }
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    return data;
-  }
-}
-
-class ThirdSegment {
-
-  double? velocityIAS;
-  double? density;
-  double? velocityTAS;
-  double? rateClimb;
-  double? altitudeInDP;
-  String? id;
-
-  ThirdSegment({
-    this.velocityIAS,
-    this.velocityTAS,
-    this.rateClimb,
-    this.altitudeInDP,
-    this.id,
-    this.density
-  });
-  ThirdSegment.fromJson(Map<String, dynamic> json) {
-    velocityIAS = json['velocityIAS']?.toDouble();
-    density = json['density']?.toDouble();
-    velocityTAS = json['velocityTAS']?.toDouble();
-    rateClimb = json['rateClimb']?.toDouble();
-    altitudeInDP = json['altitudeInDP']?.toDouble();
-    id = json['_id']?.toString();
-  }
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['velocityIAS'] = velocityIAS;
-    data['density'] = density;
-    data['velocityTAS'] = velocityTAS;
-    data['rateClimb'] = rateClimb;
-    data['altitudeInDP'] = altitudeInDP;
     data['_id'] = id;
     return data;
   }
 }
 
-class SecondSegment {
+class Failure {
 
-  double? velocityIAS;
-  double? density;
-  double? velocityTAS;
-  double? rateClimb;
-  double? altitudeInDP;
-  double? timeToDP;
-  double? timeToFinish;
-  double? distanceToFinish;
-  bool? reachDP;
-  bool? clearDP;
+  Segment? firstSegment;
+  Segment? secondSegment;
+  Segment? thirdSegment;
   String? id;
 
-  SecondSegment({
-    this.velocityIAS,
-    this.velocityTAS,
-    this.rateClimb,
-    this.altitudeInDP,
+  Failure({
     this.id,
-    this.density,
-    this.timeToFinish,
-    this.distanceToFinish,
-    this.timeToDP,
-    this.reachDP,
-    this.clearDP
+    this.firstSegment,
+    this.secondSegment,
+    this.thirdSegment
   });
-  SecondSegment.fromJson(Map<String, dynamic> json) {
-    velocityIAS = json['velocityIAS']?.toDouble();
-    density = json['density']?.toDouble();
-    velocityTAS = json['velocityTAS']?.toDouble();
-    rateClimb = json['rateClimb']?.toDouble();
-    altitudeInDP = json['altitudeInDP']?.toDouble();
-    timeToDP = json['timeToDP']?.toDouble();
-    timeToFinish = json['timeToFinish']?.toDouble();
-    distanceToFinish = json['distanceToFinish']?.toDouble();
-    reachDP = json['reachDP'];
-    clearDP = json['clearDP'];
+  Failure.fromJson(Map<String, dynamic> json) {
+    firstSegment = (json['firstSegment'] != null) ? Segment.fromJson(json['firstSegment']) : null;
+    secondSegment = (json['secondSegment'] != null) ? Segment.fromJson(json['secondSegment']) : null;
+    thirdSegment = (json['thirdSegment'] != null) ? Segment.fromJson(json['thirdSegment']) : null;
     id = json['_id']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['velocityIAS'] = velocityIAS;
-    data['density'] = density;
-    data['velocityTAS'] = velocityTAS;
-    data['rateClimb'] = rateClimb;
-    data['altitudeInDP'] = altitudeInDP;
-    data['timeToDP'] = timeToDP;
-    data['timeToFinish'] = timeToFinish;
-    data['distanceToFinish'] = distanceToFinish;
-    data['reachDP'] = reachDP;
-    data['clearDP'] = clearDP;
+    if (firstSegment != null) {
+      data['firstSegment'] = firstSegment?.toJson();
+    }
+    if (secondSegment != null) {
+      data['secondSegment'] = secondSegment?.toJson();
+    }
+    if (thirdSegment != null) {
+      data['thirdSegment'] = thirdSegment?.toJson();
+    }
     data['_id'] = id;
     return data;
   }
 }
-
-class FirstSegment {
-
-  double? velocityIAS;
-  double? density;
-  double? velocityTAS;
-  double? rateClimb;
-  double? altitudeInDP;
-  double? timeToDP;
-  double? timeToFinish;
-  double? distanceToFinish;
-  bool? reachDP;
-  bool? clearDP;
-  String? id;
-
-  FirstSegment({
-    this.velocityIAS,
-    this.velocityTAS,
-    this.rateClimb,
-    this.altitudeInDP,
-    this.id,
-    this.density,
-    this.timeToFinish,
-    this.distanceToFinish,
-    this.timeToDP,
-    this.reachDP,
-    this.clearDP
-  });
-  FirstSegment.fromJson(Map<String, dynamic> json) {
-    velocityIAS = json['velocityIAS']?.toDouble();
-    density = json['density']?.toDouble();
-    velocityTAS = json['velocityTAS']?.toDouble();
-    rateClimb = json['rateClimb']?.toDouble();
-    altitudeInDP = json['altitudeInDP']?.toDouble();
-    timeToDP = json['timeToDP']?.toDouble();
-    timeToFinish = json['timeToFinish']?.toDouble();
-    distanceToFinish = json['distanceToFinish']?.toDouble();
-    reachDP = json['reachDP'];
-    clearDP = json['clearDP'];
-    id = json['_id']?.toString();
-  }
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['velocityIAS'] = velocityIAS;
-    data['density'] = density;
-    data['velocityTAS'] = velocityTAS;
-    data['rateClimb'] = rateClimb;
-    data['altitudeInDP'] = altitudeInDP;
-    data['timeToDP'] = timeToDP;
-    data['timeToFinish'] = timeToFinish;
-    data['distanceToFinish'] = distanceToFinish;
-    data['reachDP'] = reachDP;
-    data['clearDP'] = clearDP;
-    data['_id'] = id;
-    return data;
-  }
-}
-
 

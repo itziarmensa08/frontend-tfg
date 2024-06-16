@@ -2,7 +2,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:frontend_tfg/data/models/procedure.model.dart';
 import 'package:frontend_tfg/data/services/isatable.service.dart';
 import 'package:frontend_tfg/data/services/rateofclimbgraphic.service.dart';
 import 'package:frontend_tfg/data/services/v2table.service.dart';
@@ -48,8 +47,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 if (obtainedData != null) {
                   controller.obtainedData.value = obtainedData.dataList;
                   controller.velocityFirstSegment.text = obtainedData.velocityValue.toString();
-                  FirstSegment firstSegment = FirstSegment(velocityIAS: obtainedData.velocityValue);
-                  controller.newProcedure.value.firstSegment = firstSegment;
+                  controller.firstSegmentN.value.velocityIAS = obtainedData.velocityValue;
                 }
                 var isatableresponse = await ISATableService.getISATables();
                 if (isatableresponse != null) {
@@ -59,11 +57,11 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 if (obtainedDataISA != null) {
                   controller.obtainedISAData.value = obtainedDataISA.dataList;
                   controller.densityFirstSegment.text = obtainedDataISA.densityValue.toString();
-                  controller.newProcedure.value.firstSegment!.density = obtainedDataISA.densityValue;
+                  controller.firstSegmentN.value.density = obtainedDataISA.densityValue;
                 }
                 if (obtainedData != null && obtainedDataISA != null) {
                   double velocityTAS = obtainedData.velocityValue / sqrt(obtainedDataISA.densityValue);
-                  controller.newProcedure.value.firstSegment!.velocityTAS = velocityTAS;
+                  controller.firstSegmentN.value.velocityTAS = velocityTAS;
                   controller.velocityFirstSegmentTAS.text = velocityTAS.toString();
                 }
                 var rateresponse = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 1);
@@ -73,13 +71,16 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 var resultrateresponse = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphic.value.id!, controller.selectedAirport.value!.referenceTemperature!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text));
                 if (resultrateresponse != null) {
                   controller.resultRate.value = resultrateresponse;
-                  controller.newProcedure.value.firstSegment!.rateClimb = resultrateresponse['finalPoint']['x'];
+                  controller.firstSegmentN.value.rateClimb = resultrateresponse['finalPoint']['x'];
                   controller.rateOfClimbFirstSegment.text = resultrateresponse['finalPoint']['x'].toString();
-                  controller.newProcedure.value.firstSegment!.timeToFinish = (800 - 50) / resultrateresponse['finalPoint']['x'];
+                  controller.firstSegmentN.value.timeToFinish = (800 - 50) / resultrateresponse['finalPoint']['x'];
                   controller.timeFirstSegment.text = ((800 - 50) / resultrateresponse['finalPoint']['x']).toString();
-                  controller.newProcedure.value.firstSegment!.distanceToFinish = controller.newProcedure.value.firstSegment!.velocityTAS! * (800 - 50) / resultrateresponse['finalPoint']['x'];
-                  controller.distanceFirstSegment.text = (controller.newProcedure.value.firstSegment!.velocityTAS! * (800 - 50) / resultrateresponse['finalPoint']['x']).toString();
+                  if (controller.firstSegmentN.value.velocityTAS != null) {
+                    controller.firstSegmentN.value.distanceToFinish = controller.firstSegmentN.value.velocityTAS! * (800 - 50) / resultrateresponse['finalPoint']['x'];
+                    controller.distanceFirstSegment.text = (controller.firstSegmentN.value.velocityTAS! * (800 - 50) / resultrateresponse['finalPoint']['x']).toString();
+                  }
                 }
+                controller.nMotors.value.firstSegment = controller.firstSegmentN.value;
 
                 // ---------------------- N MOTORES - 2 SEGMENTO -------------------------------------------
 
@@ -91,18 +92,17 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 if (obtainedDataVY != null) {
                   controller.obtainedDataVYN.value = obtainedDataVY.dataList;
                   controller.velocitySecondSegmentN.text = obtainedDataVY.velocityValue.toString();
-                  SecondSegment secondSegment = SecondSegment(velocityIAS: obtainedDataVY.velocityValue);
-                  controller.newProcedure.value.secondSegment = secondSegment;
+                  controller.secondSegmentN.value.velocityIAS = obtainedDataVY.velocityValue;
                 }
                 var obtainedDataISASecondSegment = await ISATableService.getObtainedData((controller.selectedAirport.value!.elevation! + 800));
                 if (obtainedDataISASecondSegment != null) {
                   controller.obtainedISADataSecondSegmentN.value = obtainedDataISASecondSegment.dataList;
                   controller.densitySecondSegmentN.text = obtainedDataISASecondSegment.densityValue.toString();
-                  controller.newProcedure.value.secondSegment!.density = obtainedDataISASecondSegment.densityValue;
+                  controller.secondSegmentN.value.density = obtainedDataISASecondSegment.densityValue;
                 }
                 if (obtainedDataVY != null && obtainedDataISASecondSegment != null) {
                   double velocityTAS = obtainedDataVY.velocityValue / sqrt(obtainedDataISASecondSegment.densityValue);
-                  controller.newProcedure.value.secondSegment!.velocityTAS = velocityTAS;
+                  controller.secondSegmentN.value.velocityTAS = velocityTAS;
                   controller.velocitySecondSegmentTASN.text = velocityTAS.toString();
                 }
                 var rateresponseSecondSegment = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 2);
@@ -112,13 +112,17 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 var resultrateresponseSecondSegment = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicSecondSegmentN.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.selectedAirport.value!.elevation! + 800), double.parse(controller.weight.text));
                 if (resultrateresponseSecondSegment != null) {
                   controller.resultRateSecondSegmentN.value = resultrateresponseSecondSegment;
-                  controller.newProcedure.value.secondSegment!.rateClimb = resultrateresponseSecondSegment['finalPoint']['x']; // Rate of climb second segment
+                  controller.secondSegmentN.value.rateClimb = resultrateresponseSecondSegment['finalPoint']['x'];
                   controller.rateOfClimbSecondSegmentN.text = resultrateresponseSecondSegment['finalPoint']['x'].toString();
-                  controller.newProcedure.value.secondSegment!.timeToFinish = (3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']; // Temps que tarda d'anar de 800ft a 3000ft
+                  controller.secondSegmentN.value.timeToFinish = (3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']; // Temps que tarda d'anar de 800ft a 3000ft
                   controller.timeSecondSegmentN.text = ((3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']).toString();
-                  controller.newProcedure.value.secondSegment!.distanceToFinish = controller.newProcedure.value.secondSegment!.velocityTAS! * (3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']; // Distància que recórre de 800ft a 3000ft
-                  controller.distancSecondSegmentN.text = (controller.newProcedure.value.secondSegment!.velocityTAS! * (3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']).toString();
+                  if (controller.secondSegmentN.value.velocityTAS != null) {
+                    controller.secondSegmentN.value.distanceToFinish = controller.secondSegmentN.value.velocityTAS! * (3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']; // Distància que recórre de 800ft a 3000ft
+                    controller.distancSecondSegmentN.text = (controller.secondSegmentN.value.velocityTAS! * (3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']).toString();
+                  }
                 }
+
+                controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
 
                 // ---------------------- N MOTORES - 3 SEGMENTO -------------------------------------------
 
@@ -126,20 +130,43 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 if (obtainedDataVYThirdSegment != null) {
                   controller.obtainedDataVYThirdSegmentN.value = obtainedDataVYThirdSegment.dataList;
                   controller.velocityThirdSegmentN.text = obtainedDataVYThirdSegment.velocityValue.toString();
-                  ThirdSegment thirdSegment = ThirdSegment(velocityIAS: obtainedDataVYThirdSegment.velocityValue);
-                  controller.newProcedure.value.thirdSegment = thirdSegment;
+                  controller.thirdSegmentN.value.velocityIAS = obtainedDataVYThirdSegment.velocityValue;
                 }
                 var obtainedDataISAThirdSegment = await ISATableService.getObtainedData((controller.selectedAirport.value!.elevation! + 3000));
                 if (obtainedDataISAThirdSegment != null) {
                   controller.obtainedISADataThirdSegmentN.value = obtainedDataISAThirdSegment.dataList;
                   controller.densityThirdSegmentN.text = obtainedDataISAThirdSegment.densityValue.toString();
-                  controller.newProcedure.value.thirdSegment!.density = obtainedDataISAThirdSegment.densityValue;
+                  controller.thirdSegmentN.value.density = obtainedDataISAThirdSegment.densityValue;
                 }
                 if (obtainedDataVYThirdSegment != null && obtainedDataISAThirdSegment != null) {
                   double velocityTAS = obtainedDataVYThirdSegment.velocityValue / sqrt(obtainedDataISAThirdSegment.densityValue);
-                  controller.newProcedure.value.thirdSegment!.velocityTAS = velocityTAS;
+                  controller.thirdSegmentN.value.velocityTAS = velocityTAS;
                   controller.velocityThirdSegmentTASN.text = velocityTAS.toString();
                 }
+                if (controller.selectedAircraft.value?.metro == 'SA227AC 16000' || controller.selectedAircraft.value?.metro == 'SA227AC' || controller.selectedAircraft.value?.metro == 'SA227BC') {
+                  var rateresponseThirdSegment = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 2);
+                  if (rateresponseThirdSegment != null) {
+                    controller.rateGraphicThirdSegmentN.value = rateresponseThirdSegment;
+                  }
+                  var resultrateresponseThirdSegment = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicThirdSegmentN.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.selectedAirport.value!.elevation! + 3000), double.parse(controller.weight.text));
+                  if (resultrateresponseThirdSegment != null) {
+                    controller.resultRateThirdSegmentN.value = resultrateresponseThirdSegment;
+                    controller.thirdSegmentN.value.rateClimb = resultrateresponseThirdSegment['finalPoint']['x'];
+                    controller.rateOfClimbSecondSegmentN.text = resultrateresponseThirdSegment['finalPoint']['x'].toString();
+                    controller.secondSegmentN.value.timeToFinish = (3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']; // Temps que tarda d'anar de 3000ft
+                    controller.timeSecondSegmentN.text = ((3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']).toString();
+                    if (controller.secondSegmentN.value.velocityTAS != null) {
+                      controller.secondSegmentN.value.distanceToFinish = controller.secondSegmentN.value.velocityTAS! * (3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']; // Distància que recórre de 800ft a 3000ft
+                      controller.distancSecondSegmentN.text = (controller.secondSegmentN.value.velocityTAS! * (3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']).toString();
+                    }
+                  }
+
+                  controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
+                } else {
+                  // -------------------------- RATE OF CLIMB SECCTION 6 FOR SA226 -----------------------
+                }
+
+                controller.newProcedure.value.nMotors = controller.nMotors.value;
               } else if (controller.indexStepper.value == 1) {
                 var obtainedData = await V2TableService.getObtainedData(controller.selectedAircraft.value!.id!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text), controller.selectedAirport.value!.referenceTemperature!, "V2");
                 if (obtainedData != null) {

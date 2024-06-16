@@ -16,6 +16,8 @@ class NewAnalaysisController extends GetxController {
 
   final RxInt indexStepper = RxInt(0);
 
+  // ------------------------- GENERAL DATA ----------------------------------
+
   final RxList<AircraftModel> aircrafts = RxList<AircraftModel>();
   final Rx<AircraftModel?> selectedAircraft = Rx<AircraftModel?>(null);
   final TextEditingController nameAircraft = TextEditingController();
@@ -41,6 +43,11 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController dpAltitude = TextEditingController();
   final TextEditingController weight = TextEditingController();
 
+  final Rx<NMotors> nMotors = NMotors().obs;
+
+  // ------------------------- FIRST SEGMENT N MOTORS ----------------------------------
+
+  final Rx<Segment> firstSegmentN = Segment().obs;
   final Rx<V2TableModel> data = V2TableModel().obs;
   final RxList<V2TableRowData> obtainedData = RxList<V2TableRowData>();
   final TextEditingController velocityFirstSegment = TextEditingController();
@@ -58,6 +65,9 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController altitudeInDPFirstSegment = TextEditingController();
   final TextEditingController rateOfClimbFirstSegment = TextEditingController();
 
+  // ------------------------- SECOND SEGMENT N MOTORS ----------------------------------
+
+  final Rx<Segment> secondSegmentN = Segment().obs;
   final Rx<VYTableModel> vYtableN = VYTableModel().obs;
   final RxList<VYtableRowsPressures> obtainedDataVYN = RxList<VYtableRowsPressures>();
   final TextEditingController velocitySecondSegmentN = TextEditingController();
@@ -72,6 +82,9 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController altitudeInDPSecondSegmentN = TextEditingController();
   final TextEditingController rateOfClimbSecondSegmentN = TextEditingController();
 
+  // ------------------------- THIRD SEGMENT N MOTORS ----------------------------------
+
+  final Rx<Segment> thirdSegmentN = Segment().obs;
   final RxList<VYtableRowsPressures> obtainedDataVYThirdSegmentN = RxList<VYtableRowsPressures>();
   final TextEditingController velocityThirdSegmentN = TextEditingController();
   final RxList<ISATableData> obtainedISADataThirdSegmentN = RxList<ISATableData>();
