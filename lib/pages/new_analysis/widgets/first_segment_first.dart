@@ -84,7 +84,13 @@ class FirstSegmentFirstStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => SpeedTable(table: controller.data.value, obtainedData: controller.obtainedData))),
+        Center(child: Obx(() {
+          if (controller.obtainedData.isNotEmpty) {
+            return SpeedTable(table: controller.data.value, obtainedData: controller.obtainedData);
+          } else {
+            return const LinearProgressIndicator();
+          }
+        })),
         const SizedBox(height: 50),
         Row(
           children: [
@@ -116,7 +122,13 @@ class FirstSegmentFirstStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => ISATable(table: controller.isatable.value, obtainedData: controller.obtainedISAData))),
+        Center(child: Obx(() {
+          if (controller.obtainedISAData.isNotEmpty) {
+            return ISATable(table: controller.isatable.value, obtainedData: controller.obtainedISAData);
+          } else {
+            return const LinearProgressIndicator();
+          }
+        })),
         const SizedBox(height: 50),
         Row(
           children: [
@@ -178,7 +190,13 @@ class FirstSegmentFirstStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => RateChart(rateGraphic: controller.rateGraphic.value, resultRate: controller.resultRate,))),
+        Center(child: Obx(() {
+          if (controller.resultRate.isNotEmpty) {
+            return RateChart(rateGraphic: controller.rateGraphic.value, resultRate: controller.resultRate);
+          } else {
+            return const LinearProgressIndicator();
+          }
+        })),
         const SizedBox(height: 50),
         Row(
           children: [
@@ -271,13 +289,14 @@ class FirstSegmentFirstStep extends StatelessWidget {
         ),
         const SizedBox(height: 50),
         Obx(() {
-
+          if (controller.firstSegmentN.value.distanceToFinish != null && controller.newProcedure.value.dpDistance != null) {
             if (controller.firstSegmentN.value.distanceToFinish! < controller.newProcedure.value.dpDistance!) {
+              controller.firstSegmentN.value.reachDP = true;
               return Text('noArrive'.tr, style: Theme.of(context).textTheme.titleMedium);
             } else {
               controller.firstSegmentN.value.reachDP = true;
-              controller.firstSegmentN.value.timeToDP = controller.newProcedure.value.dpDistance! / controller.firstSegmentN.value.velocityTAS!;
-              controller.timeToDPFirstSegment.text = (controller.newProcedure.value.dpDistance! / controller.firstSegmentN.value.velocityTAS!).toString();
+              controller.firstSegmentN.value.timeToDP = controller.newProcedure.value.dpDistance! / (controller.firstSegmentN.value.velocityTAS! * 60);
+              controller.timeToDPFirstSegment.text = (controller.newProcedure.value.dpDistance! / (controller.firstSegmentN.value.velocityTAS! * 60)).toString();
 
               controller.firstSegmentN.value.altitudeInDP = controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb!;
               controller.altitudeInDPFirstSegment.text = (controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb!).toString();
@@ -359,13 +378,18 @@ class FirstSegmentFirstStep extends StatelessWidget {
                 ],
               );
             }
+          } else {
+            return const LinearProgressIndicator();
+          }
         }),
         const SizedBox(height: 50),
         Obx(() {
-          if (controller.firstSegmentN.value.clearDP == true) {
+          if (controller.firstSegmentN.value.clearDP == true && controller.firstSegmentN.value.reachDP == true) {
             return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green));
-          } else {
+          } else if (controller.firstSegmentN.value.clearDP == false && controller.firstSegmentN.value.reachDP == true) {
             return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red));
+          } else {
+            return Container();
           }
         })
       ],

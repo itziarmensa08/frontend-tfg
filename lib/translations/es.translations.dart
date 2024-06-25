@@ -155,7 +155,7 @@ final Map<String, String> es = {
   'timeFirstSegment': 'Tiempo que tarda la aeronave a alcanzar los 800ft (t = h / rate):',
   'time': 'Tiempo (min)',
   'distanceFirstSegment': 'Distancia recorrida por la aeronave hasta alcanzar 800ft (d = TAS * t)',
-  'distance': "Distancia (ft)",
+  'distance': "Distancia (NM)",
   'noArrive': "En este punto la aeronave aún no ha alcanzado el punto crítico, por lo tanto debemos hacer los cálculos para el siguiente segmento.",
   'yesArrive': "En este punto la aeronave ha alcanzado el punto crítico, vamos a calcular si es capaz de sobrepasarlo:",
   'timeToDP': "Tiempo que tarda en llegar al punto crítico (t = d / TAS):",

@@ -1,13 +1,16 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/first_segment_second.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/second_segment_second.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/third_segment_second.dart';
 import 'package:get/get.dart';
 
 class ThirdStep extends StatefulWidget {
-  const ThirdStep({super.key});
+  const ThirdStep({super.key, required this.controller});
+
+  final NewAnalaysisController controller;
 
   @override
   State<ThirdStep> createState() =>
@@ -18,11 +21,15 @@ class ThirdStepState extends State<ThirdStep> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        child: _buildPanel(),
-      ),
-    );
+    if (widget.controller.indexStepper.value == 1) {
+      return SingleChildScrollView(
+        child: Container(
+          child: _buildPanel(),
+        ),
+      );
+    } else {
+      return const LinearProgressIndicator();
+    }
   }
 
   Widget _buildPanel() {

@@ -250,7 +250,7 @@ class SecondSegmentSecondStep extends StatelessWidget {
         ),
         const SizedBox(height: 50),
         Obx(() {
-
+          if (controller.secondSegmentN.value.distanceToFinish != null && controller.firstSegmentN.value.distanceToFinish != null && controller.newProcedure.value.dpDistance != null) {
             if ((controller.secondSegmentN.value.distanceToFinish! + controller.firstSegmentN.value.distanceToFinish!) < controller.newProcedure.value.dpDistance!) {
               return Text('noArrive'.tr, style: Theme.of(context).textTheme.titleMedium);
             } else {
@@ -340,6 +340,9 @@ class SecondSegmentSecondStep extends StatelessWidget {
                 ],
               );
             }
+          } else {
+            return const LinearProgressIndicator();
+          }
         }),
         const SizedBox(height: 50),
         Obx(() {

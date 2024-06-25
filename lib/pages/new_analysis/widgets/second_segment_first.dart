@@ -250,13 +250,14 @@ class SecondSegmentFirstStep extends StatelessWidget {
         ),
         const SizedBox(height: 50),
         Obx(() {
-
+          if (controller.secondSegmentN.value.distanceToFinish != null && controller.firstSegmentN.value.distanceToFinish != null && controller.newProcedure.value.dpDistance != null) {
             if ((controller.secondSegmentN.value.distanceToFinish! + controller.firstSegmentN.value.distanceToFinish!) < controller.newProcedure.value.dpDistance!) {
+              controller.secondSegmentN.value.reachDP = false;
               return Text('noArrive'.tr, style: Theme.of(context).textTheme.titleMedium);
             } else {
               controller.secondSegmentN.value.reachDP = true;
               // Temps que tarda desde 800 ft fins al descision point
-              controller.secondSegmentN.value.timeToDP = (controller.newProcedure.value.dpDistance! - controller.firstSegmentN.value.distanceToFinish!) / controller.secondSegmentN.value.velocityTAS!;
+              controller.secondSegmentN.value.timeToDP = (controller.newProcedure.value.dpDistance! - controller.firstSegmentN.value.distanceToFinish!) / (controller.secondSegmentN.value.velocityTAS! * 60);
               controller.timeToDPSecondSegmentN.text = ((controller.newProcedure.value.dpDistance! - controller.firstSegmentN.value.distanceToFinish!) / controller.secondSegmentN.value.velocityTAS!).toString();
 
               // Altitud desde 800ft fins al decision point
@@ -340,13 +341,18 @@ class SecondSegmentFirstStep extends StatelessWidget {
                 ],
               );
             }
+          } else {
+            return const LinearProgressIndicator();
+          }
         }),
         const SizedBox(height: 50),
         Obx(() {
-          if (controller.secondSegmentN.value.clearDP == true) {
+          if (controller.secondSegmentN.value.clearDP == true && controller.secondSegmentN.value.reachDP == true) {
             return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green));
-          } else {
+          } else if (controller.secondSegmentN.value.clearDP == false && controller.secondSegmentN.value.reachDP == true) {
             return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red));
+          } else {
+            return Container();
           }
         })
       ],

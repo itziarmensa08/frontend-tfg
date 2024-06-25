@@ -71,13 +71,13 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 var resultrateresponse = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphic.value.id!, controller.selectedAirport.value!.referenceTemperature!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text));
                 if (resultrateresponse != null) {
                   controller.resultRate.value = resultrateresponse;
-                  controller.firstSegmentN.value.rateClimb = resultrateresponse['finalPoint']['x'];
+                  controller.firstSegmentN.value.rateClimb = resultrateresponse['finalPoint']['x']; // feet / minute
                   controller.rateOfClimbFirstSegment.text = resultrateresponse['finalPoint']['x'].toString();
-                  controller.firstSegmentN.value.timeToFinish = (800 - 50) / resultrateresponse['finalPoint']['x'];
+                  controller.firstSegmentN.value.timeToFinish = (800 - 50) / resultrateresponse['finalPoint']['x']; // minutes
                   controller.timeFirstSegment.text = ((800 - 50) / resultrateresponse['finalPoint']['x']).toString();
                   if (controller.firstSegmentN.value.velocityTAS != null) {
-                    controller.firstSegmentN.value.distanceToFinish = controller.firstSegmentN.value.velocityTAS! * (800 - 50) / resultrateresponse['finalPoint']['x'];
-                    controller.distanceFirstSegment.text = (controller.firstSegmentN.value.velocityTAS! * (800 - 50) / resultrateresponse['finalPoint']['x']).toString();
+                    controller.firstSegmentN.value.distanceToFinish = controller.firstSegmentN.value.velocityTAS! * (((800 - 50) / resultrateresponse['finalPoint']['x'])/60);
+                    controller.distanceFirstSegment.text = (controller.firstSegmentN.value.velocityTAS! * (((800 - 50) / resultrateresponse['finalPoint']['x'])/60)).toString();
                   }
                 }
                 controller.nMotors.value.firstSegment = controller.firstSegmentN.value;
@@ -117,8 +117,8 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   controller.secondSegmentN.value.timeToFinish = (3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']; // Temps que tarda d'anar de 800ft a 3000ft
                   controller.timeSecondSegmentN.text = ((3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']).toString();
                   if (controller.secondSegmentN.value.velocityTAS != null) {
-                    controller.secondSegmentN.value.distanceToFinish = controller.secondSegmentN.value.velocityTAS! * (3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']; // Distància que recórre de 800ft a 3000ft
-                    controller.distancSecondSegmentN.text = (controller.secondSegmentN.value.velocityTAS! * (3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']).toString();
+                    controller.secondSegmentN.value.distanceToFinish = controller.secondSegmentN.value.velocityTAS! * ((3000 - 800) / (resultrateresponseSecondSegment['finalPoint']['x']/60)); // Distància que recórre de 800ft a 3000ft
+                    controller.distancSecondSegmentN.text = (controller.secondSegmentN.value.velocityTAS! * ((3000 - 800) / (resultrateresponseSecondSegment['finalPoint']['x']/60))).toString();
                   }
                 }
 
@@ -167,6 +167,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 }
 
                 controller.newProcedure.value.nMotors = controller.nMotors.value;
+
               } else if (controller.indexStepper.value == 1) {
                 var obtainedData = await V2TableService.getObtainedData(controller.selectedAircraft.value!.id!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text), controller.selectedAirport.value!.referenceTemperature!, "V2");
                 if (obtainedData != null) {
@@ -175,6 +176,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   //FirstSegment firstSegment = FirstSegment(velocityIAS: obtainedData.velocityValue);
                   //controller.newProcedure.value.firstSegment = firstSegment;
                 }
+
               }
               final isLastSteo = controller.indexStepper.value == getSteps(controller).length - 1;
               if (isLastSteo) {

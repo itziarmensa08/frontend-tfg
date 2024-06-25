@@ -14,12 +14,12 @@ List<Step> getSteps (controller) => [
   Step(
     isActive: controller.indexStepper.value >= 1,
     title: Text('step2title'.tr),
-    content: const SecondStep(),
+    content: SecondStep(controller: controller),
   ),
   Step(
     isActive: controller.indexStepper.value >= 2,
     title: Text('step3title'.tr),
-    content: const ThirdStep(),
+    content: ThirdStep(controller: controller),
   ),
   Step(
     isActive: controller.indexStepper.value >= 3,
