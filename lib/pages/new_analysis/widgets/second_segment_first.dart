@@ -257,12 +257,13 @@ class SecondSegmentFirstStep extends StatelessWidget {
             } else {
               controller.secondSegmentN.value.reachDP = true;
               // Temps que tarda desde 800 ft fins al descision point
-              controller.secondSegmentN.value.timeToDP = (controller.newProcedure.value.dpDistance! - controller.firstSegmentN.value.distanceToFinish!) / (controller.secondSegmentN.value.velocityTAS! * 60);
-              controller.timeToDPSecondSegmentN.text = ((controller.newProcedure.value.dpDistance! - controller.firstSegmentN.value.distanceToFinish!) / controller.secondSegmentN.value.velocityTAS!).toString();
+              controller.secondSegmentN.value.timeToDP = ((controller.newProcedure.value.dpDistance! - controller.firstSegmentN.value.distanceToFinish!) / controller.secondSegmentN.value.velocityTAS!) * 60;
+              controller.timeToDPSecondSegmentN.text = (((controller.newProcedure.value.dpDistance! - controller.firstSegmentN.value.distanceToFinish!) / controller.secondSegmentN.value.velocityTAS!) * 60).toString();
 
               // Altitud desde 800ft fins al decision point
               controller.secondSegmentN.value.altitudeInDP = controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!;
-              controller.altitudeInDPFirstSegment.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!).toString();
+              controller.altitudeInDPSecondSegmentN.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!).toString();
+              controller.totalAltitudeInDPSecondSegmentN.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + 800 + controller.selectedAirport.value!.elevation!).toString();
 
               if ((controller.secondSegmentN.value.altitudeInDP! + 800 + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
                 controller.secondSegmentN.value.clearDP = true;
@@ -320,6 +321,34 @@ class SecondSegmentFirstStep extends StatelessWidget {
                             controller.secondSegmentN.value.altitudeInDP = double.parse(value);
                             controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
                             controller.newProcedure.value.nMotors = controller.nMotors.value;
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'altitude'.tr,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 50),
+                  Row(
+                    children: [
+                      Text('totalAltitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: TextFormField(
+                          controller: controller.totalAltitudeInDPSecondSegmentN,
+                          onChanged: (value) {
+
                           },
                           decoration: InputDecoration(
                             labelText: 'altitude'.tr,

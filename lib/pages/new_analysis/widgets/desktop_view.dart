@@ -112,13 +112,13 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 var resultrateresponseSecondSegment = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicSecondSegmentN.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.selectedAirport.value!.elevation! + 800), double.parse(controller.weight.text));
                 if (resultrateresponseSecondSegment != null) {
                   controller.resultRateSecondSegmentN.value = resultrateresponseSecondSegment;
-                  controller.secondSegmentN.value.rateClimb = resultrateresponseSecondSegment['finalPoint']['x'];
+                  controller.secondSegmentN.value.rateClimb = resultrateresponseSecondSegment['finalPoint']['x']; // rate of climb
                   controller.rateOfClimbSecondSegmentN.text = resultrateresponseSecondSegment['finalPoint']['x'].toString();
                   controller.secondSegmentN.value.timeToFinish = (3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']; // Temps que tarda d'anar de 800ft a 3000ft
                   controller.timeSecondSegmentN.text = ((3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']).toString();
                   if (controller.secondSegmentN.value.velocityTAS != null) {
-                    controller.secondSegmentN.value.distanceToFinish = controller.secondSegmentN.value.velocityTAS! * ((3000 - 800) / (resultrateresponseSecondSegment['finalPoint']['x']/60)); // Distància que recórre de 800ft a 3000ft
-                    controller.distancSecondSegmentN.text = (controller.secondSegmentN.value.velocityTAS! * ((3000 - 800) / (resultrateresponseSecondSegment['finalPoint']['x']/60))).toString();
+                    controller.secondSegmentN.value.distanceToFinish = controller.secondSegmentN.value.velocityTAS! * (((3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x'])/60); // Distància que recórre de 800ft a 3000ft
+                    controller.distancSecondSegmentN.text = (controller.secondSegmentN.value.velocityTAS! * (((3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x'])/60)).toString();
                   }
                 }
 
@@ -152,16 +152,16 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   if (resultrateresponseThirdSegment != null) {
                     controller.resultRateThirdSegmentN.value = resultrateresponseThirdSegment;
                     controller.thirdSegmentN.value.rateClimb = resultrateresponseThirdSegment['finalPoint']['x'];
-                    controller.rateOfClimbSecondSegmentN.text = resultrateresponseThirdSegment['finalPoint']['x'].toString();
-                    controller.secondSegmentN.value.timeToFinish = (3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']; // Temps que tarda d'anar de 3000ft
-                    controller.timeSecondSegmentN.text = ((3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']).toString();
-                    if (controller.secondSegmentN.value.velocityTAS != null) {
-                      controller.secondSegmentN.value.distanceToFinish = controller.secondSegmentN.value.velocityTAS! * (3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']; // Distància que recórre de 800ft a 3000ft
-                      controller.distancSecondSegmentN.text = (controller.secondSegmentN.value.velocityTAS! * (3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']).toString();
+                    controller.rateOfClimbThirdSegmentN.text = resultrateresponseThirdSegment['finalPoint']['x'].toString();
+                    controller.thirdSegmentN.value.timeToFinish = (3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']; // Temps que tarda d'anar de 3000ft
+                    controller.timeThirdSegmentN.text = ((3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']).toString();
+                    if (controller.thirdSegmentN.value.velocityTAS != null) {
+                      controller.thirdSegmentN.value.distanceToFinish = controller.thirdSegmentN.value.velocityTAS! * (3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']; // Distància que recórre de 800ft a 3000ft
+                      controller.distancThirdSegmentN.text = (controller.thirdSegmentN.value.velocityTAS! * (3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']).toString();
                     }
                   }
 
-                  controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
+                  controller.nMotors.value.thirdSegment = controller.thirdSegmentN.value;
                 } else {
                   // -------------------------- RATE OF CLIMB SECCTION 6 FOR SA226 -----------------------
                 }

@@ -63,7 +63,7 @@ class SecondSegmentSecondStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => VyTable(table: controller.vYtableN.value, obtainedData: controller.obtainedDataVYN))),
+        /*Center(child: Obx(() => VyTable(table: controller.vYtableN.value, obtainedData: controller.obtainedDataVYN))),
         const SizedBox(height: 50),
         Row(
           children: [
@@ -351,7 +351,7 @@ class SecondSegmentSecondStep extends StatelessWidget {
           } else {
             return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red));
           }
-        })
+        })*/
       ],
     );
   }
