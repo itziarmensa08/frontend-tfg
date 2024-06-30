@@ -65,7 +65,7 @@ class ThirdSegmentFirstStep extends StatelessWidget {
         const SizedBox(height: 50),
         Center(child: Obx(() => VyTable(table: controller.vYtableN.value, obtainedData: controller.obtainedDataVYThirdSegmentN))),
         const SizedBox(height: 50),
-        /*Row(
+        Row(
           children: [
             Text('finalVelocityIAS'.tr, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(width: 20),
@@ -73,7 +73,9 @@ class ThirdSegmentFirstStep extends StatelessWidget {
               child: TextFormField(
                 controller: controller.velocityThirdSegmentN,
                 onChanged: (value) {
-                  controller.newProcedure.value.thirdSegment!.velocityIAS = double.parse(value);
+                  controller.thirdSegmentN.value.velocityIAS = double.parse(value);
+                  controller.nMotors.value.thirdSegment = controller.thirdSegmentN.value;
+                  controller.newProcedure.value.nMotors = controller.nMotors.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'velocity'.tr,
@@ -103,7 +105,9 @@ class ThirdSegmentFirstStep extends StatelessWidget {
               child: TextFormField(
                 controller: controller.densityThirdSegmentN,
                 onChanged: (value) {
-                  controller.newProcedure.value.secondSegment!.density = double.parse(value);
+                  controller.thirdSegmentN.value.density = double.parse(value);
+                  controller.nMotors.value.thirdSegment = controller.thirdSegmentN.value;
+                  controller.newProcedure.value.nMotors = controller.nMotors.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'density'.tr,
@@ -131,7 +135,9 @@ class ThirdSegmentFirstStep extends StatelessWidget {
               child: TextFormField(
                 controller: controller.velocityThirdSegmentTASN,
                 onChanged: (value) {
-                  controller.newProcedure.value.thirdSegment!.velocityTAS = double.parse(value);
+                  controller.thirdSegmentN.value.velocityTAS = double.parse(value);
+                  controller.nMotors.value.thirdSegment = controller.thirdSegmentN.value;
+                  controller.newProcedure.value.nMotors = controller.nMotors.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'velocity'.tr,
@@ -151,7 +157,7 @@ class ThirdSegmentFirstStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => RateChart(rateGraphic: controller.rateGraphicSecondSegmentN.value, resultRate: controller.resultRateSecondSegmentN))),
+        Center(child: Obx(() => RateChart(rateGraphic: controller.rateGraphicSecondSegmentN.value, resultRate: controller.resultRateThirdSegmentN))),
         const SizedBox(height: 50),
         Row(
           children: [
@@ -159,9 +165,11 @@ class ThirdSegmentFirstStep extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.rateOfClimbSecondSegmentN,
+                controller: controller.rateOfClimbThirdSegmentN,
                 onChanged: (value) {
-                  controller.newProcedure.value.secondSegment!.rateClimb = double.parse(value);
+                  controller.thirdSegmentN.value.rateClimb = double.parse(value);
+                  controller.nMotors.value.thirdSegment = controller.thirdSegmentN.value;
+                  controller.newProcedure.value.nMotors = controller.nMotors.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'rateOfClimb'.tr,
@@ -181,125 +189,96 @@ class ThirdSegmentFirstStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Row(
-          children: [
-            Text('timeFirstSegment'.tr, style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(width: 20),
-            Expanded(
-              child: TextFormField(
-                controller: controller.timeSecondSegmentN,
-                onChanged: (value) {
-                  controller.newProcedure.value.secondSegment!.timeToFinish = double.parse(value);
-                },
-                decoration: InputDecoration(
-                  labelText: 'time'.tr,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 50),
-        Row(
-          children: [
-            Text('distanceFirstSegment'.tr, style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(width: 20),
-            Expanded(
-              child: TextFormField(
-                controller: controller.distancSecondSegmentN,
-                onChanged: (value) {
-                  controller.newProcedure.value.secondSegment!.distanceToFinish = double.parse(value);
-                },
-                decoration: InputDecoration(
-                  labelText: 'distance'.tr,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 50),
         Obx(() {
-          if (controller.newProcedure.value.secondSegment != null) {
-            if ((controller.newProcedure.value.secondSegment!.distanceToFinish! + controller.newProcedure.value.firstSegment!.distanceToFinish!) < controller.newProcedure.value.dpDistance!) {
-              return Text('noArrive'.tr, style: Theme.of(context).textTheme.titleMedium);
+          if (controller.newProcedure.value.dpDistance != null) {
+            controller.thirdSegmentN.value.reachDP = true;
+            controller.thirdSegmentN.value.timeToDP = ((controller.newProcedure.value.dpDistance! - (controller.firstSegmentN.value.distanceToFinish! + controller.secondSegmentN.value.distanceToFinish!)) / controller.thirdSegmentN.value.velocityTAS!) * 60;
+            controller.timeToDPThirdSegmentN.text = (((controller.newProcedure.value.dpDistance! - (controller.firstSegmentN.value.distanceToFinish! + controller.secondSegmentN.value.distanceToFinish!)) / controller.thirdSegmentN.value.velocityTAS!) * 60).toString();
+
+            controller.thirdSegmentN.value.altitudeInDP = controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb!;
+            controller.altitudeInDPThirdSegmentN.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb!).toString();
+            controller.totalAltitudeInDPThirdSegmentN.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + 3000 + controller.selectedAirport.value!.elevation!).toString();
+
+
+            if ((controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + 3000 + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
+              controller.thirdSegmentN.value.clearDP = true;
             } else {
-              controller.newProcedure.value.secondSegment!.reachDP = true;
-              // Temps que tarda desde 800 ft fins al descision point
-              controller.newProcedure.value.secondSegment!.timeToDP = (controller.newProcedure.value.dpDistance! - controller.newProcedure.value.firstSegment!.distanceToFinish!) / controller.newProcedure.value.secondSegment!.velocityTAS!;
-              controller.timeToDPSecondSegmentN.text = ((controller.newProcedure.value.dpDistance! - controller.newProcedure.value.firstSegment!.distanceToFinish!) / controller.newProcedure.value.secondSegment!.velocityTAS!).toString();
+              controller.thirdSegmentN.value.clearDP = false;
+            }
 
-              // Altitud desde 800ft fins al decision point
-              controller.newProcedure.value.secondSegment!.altitudeInDP = controller.newProcedure.value.secondSegment!.timeToDP! * controller.newProcedure.value.secondSegment!.rateClimb!;
-              controller.altitudeInDPFirstSegment.text = (controller.newProcedure.value.secondSegment!.timeToDP! * controller.newProcedure.value.secondSegment!.rateClimb!).toString();
-
-              if ((controller.newProcedure.value.secondSegment!.altitudeInDP! + 800 + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
-                controller.newProcedure.value.firstSegment!.clearDP = true;
-              } else {
-                controller.newProcedure.value.firstSegment!.clearDP = false;
-              }
-
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('yesArrive'.tr, style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 50),
-                  Row(
-                    children: [
-                      Text('timeToDP'.tr, style: Theme.of(context).textTheme.titleMedium),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: TextFormField(
-                          controller: controller.timeToDPSecondSegmentN,
-                          onChanged: (value) {
-                            controller.newProcedure.value.secondSegment!.timeToDP = double.parse(value);
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'time'.tr,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text('timeToDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.timeToDPThirdSegmentN,
+                        onChanged: (value) {
+                          controller.thirdSegmentN.value.timeToDP = double.parse(value);
+                          controller.nMotors.value.thirdSegment = controller.thirdSegmentN.value;
+                          controller.newProcedure.value.nMotors = controller.nMotors.value;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'time'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 50),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 50),
+                Row(
+                  children: [
+                    Text('altitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.altitudeInDPThirdSegmentN,
+                        onChanged: (value) {
+                          controller.thirdSegmentN.value.altitudeInDP = double.parse(value);
+                          controller.nMotors.value.thirdSegment = controller.thirdSegmentN.value;
+                          controller.newProcedure.value.nMotors = controller.nMotors.value;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'altitude'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 50),
                   Row(
                     children: [
-                      Text('altitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                      Text('totalAltitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(width: 20),
                       Expanded(
                         child: TextFormField(
-                          controller: controller.altitudeInDPSecondSegmentN,
+                          controller: controller.totalAltitudeInDPThirdSegmentN,
                           onChanged: (value) {
-                            controller.newProcedure.value.secondSegment!.altitudeInDP = double.parse(value);
+
                           },
                           decoration: InputDecoration(
                             labelText: 'altitude'.tr,
@@ -318,23 +297,22 @@ class ThirdSegmentFirstStep extends StatelessWidget {
                       ),
                     ],
                   ),
-                ],
-              );
-            }
+              ],
+            );
           } else {
             return const CircularProgressIndicator();
           }
         }),
         const SizedBox(height: 50),
         Obx(() {
-          if (controller.newProcedure.value.secondSegment != null && controller.newProcedure.value.secondSegment!.clearDP == true) {
+          if (controller.thirdSegmentN.value.clearDP == true && controller.thirdSegmentN.value.reachDP == true) {
             return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green));
-          } else if (controller.newProcedure.value.secondSegment != null && controller.newProcedure.value.secondSegment!.clearDP == false) {
+          } else if (controller.thirdSegmentN.value.clearDP == false && controller.thirdSegmentN.value.reachDP == true) {
             return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red));
           } else {
-            return const CircularProgressIndicator();
+            return Container();
           }
-        })*/
+        })
       ],
     );
   }

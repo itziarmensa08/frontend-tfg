@@ -98,6 +98,7 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController timeToDPThirdSegmentN = TextEditingController();
   final TextEditingController altitudeInDPThirdSegmentN = TextEditingController();
   final TextEditingController rateOfClimbThirdSegmentN = TextEditingController();
+  final TextEditingController totalAltitudeInDPThirdSegmentN = TextEditingController();
 
 
   // ----------------------- N -1 MOTORS ----------------------------------------

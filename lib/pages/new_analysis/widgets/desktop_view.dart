@@ -153,12 +153,6 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                     controller.resultRateThirdSegmentN.value = resultrateresponseThirdSegment;
                     controller.thirdSegmentN.value.rateClimb = resultrateresponseThirdSegment['finalPoint']['x'];
                     controller.rateOfClimbThirdSegmentN.text = resultrateresponseThirdSegment['finalPoint']['x'].toString();
-                    controller.thirdSegmentN.value.timeToFinish = (3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']; // Temps que tarda d'anar de 3000ft
-                    controller.timeThirdSegmentN.text = ((3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']).toString();
-                    if (controller.thirdSegmentN.value.velocityTAS != null) {
-                      controller.thirdSegmentN.value.distanceToFinish = controller.thirdSegmentN.value.velocityTAS! * (3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']; // Distància que recórre de 800ft a 3000ft
-                      controller.distancThirdSegmentN.text = (controller.thirdSegmentN.value.velocityTAS! * (3000 - 800) / resultrateresponseThirdSegment['finalPoint']['x']).toString();
-                    }
                   }
 
                   controller.nMotors.value.thirdSegment = controller.thirdSegmentN.value;
