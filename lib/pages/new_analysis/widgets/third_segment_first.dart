@@ -190,7 +190,104 @@ class ThirdSegmentFirstStep extends StatelessWidget {
         ),
         const SizedBox(height: 50),
         Obx(() {
-          if (controller.newProcedure.value.dpDistance != null) {
+          if (controller.thirdSegmentN.value.reachDP == true) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text('timeToDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.timeToDPThirdSegmentN,
+                        onChanged: (value) {
+                          controller.thirdSegmentN.value.timeToDP = double.parse(value);
+                          controller.nMotors.value.thirdSegment = controller.thirdSegmentN.value;
+                          controller.newProcedure.value.nMotors = controller.nMotors.value;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'time'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 50),
+                Row(
+                  children: [
+                    Text('altitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.altitudeInDPThirdSegmentN,
+                        onChanged: (value) {
+                          controller.thirdSegmentN.value.altitudeInDP = double.parse(value);
+                          controller.nMotors.value.thirdSegment = controller.thirdSegmentN.value;
+                          controller.newProcedure.value.nMotors = controller.nMotors.value;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'altitude'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 50),
+                  Row(
+                    children: [
+                      Text('totalAltitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: TextFormField(
+                          controller: controller.totalAltitudeInDPThirdSegmentN,
+                          onChanged: (value) {
+
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'altitude'.tr,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            );
+          } else {
+            return const CircularProgressIndicator();
+          }
+          /*if (controller.newProcedure.value.dpDistance != null) {
             controller.thirdSegmentN.value.reachDP = true;
             controller.thirdSegmentN.value.timeToDP = ((controller.newProcedure.value.dpDistance! - (controller.firstSegmentN.value.distanceToFinish! + controller.secondSegmentN.value.distanceToFinish!)) / controller.thirdSegmentN.value.velocityTAS!) * 60;
             controller.timeToDPThirdSegmentN.text = (((controller.newProcedure.value.dpDistance! - (controller.firstSegmentN.value.distanceToFinish! + controller.secondSegmentN.value.distanceToFinish!)) / controller.thirdSegmentN.value.velocityTAS!) * 60).toString();
@@ -301,7 +398,7 @@ class ThirdSegmentFirstStep extends StatelessWidget {
             );
           } else {
             return const CircularProgressIndicator();
-          }
+          }*/
         }),
         const SizedBox(height: 50),
         Obx(() {

@@ -22,7 +22,7 @@ class SecondStepState extends State<SecondStep> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (widget.controller.indexStepper.value == 1) {
+      if (widget.controller.indexStepper.value == 1 && widget.controller.loadingAnalysisN.value == false && widget.controller.itemsNMotors.isNotEmpty) {
         return SingleChildScrollView(
           child: Container(
             child: _buildPanel(),
@@ -35,13 +35,13 @@ class SecondStepState extends State<SecondStep> {
   }
 
   Widget _buildPanel() {
-    return ExpansionPanelList(
+    return Obx(() => ExpansionPanelList(
       expansionCallback: (int index, bool isExpanded) {
         setState(() {
-          items[index].isExpanded = isExpanded;
+          widget.controller.itemsNMotors[index].isExpanded = isExpanded;
         });
       },
-      children: items.map<ExpansionPanel>((Item item) {
+      children: widget.controller.itemsNMotors.map<ExpansionPanel>((Item item) {
         return ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
             return ListTile(
@@ -51,34 +51,7 @@ class SecondStepState extends State<SecondStep> {
           body: item.body,
           isExpanded: item.isExpanded,
         );
-      }).toList(),
+      }).toList()),
     );
   }
 }
-
-class Item {
-  String headerValue;
-  Widget body;
-  bool isExpanded;
-
-  Item({
-    required this.headerValue,
-    required this.body,
-    this.isExpanded = false,
-  });
-}
-
-List<Item> items = [
-  Item(
-    headerValue: 'segment1'.tr,
-    body: FirstSegmentFirstStep()
-  ),
-  Item(
-    headerValue: 'segment2'.tr,
-    body: SecondSegmentFirstStep()
-  ),
-  Item(
-    headerValue: 'segment3'.tr,
-    body: ThirdSegmentFirstStep()
-  ),
-];

@@ -16,76 +16,15 @@ class FirstSegmentSecondStep extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('reviewDataFirstSegment'.tr, style: Theme.of(context).textTheme.titleMedium),
-        const SizedBox(height: 30),
+        Center(child: Obx(() {
+          if (controller.obtainedDataN1.isNotEmpty) {
+            return SpeedTable(table: controller.data.value, obtainedData: controller.obtainedDataN1);
+          } else {
+            return const LinearProgressIndicator();
+          }
+        })),
+        const SizedBox(height: 50),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: TextFormField(
-                controller: controller.elevation,
-                readOnly: true,
-                decoration: InputDecoration(
-                  labelText: 'elevation'.tr,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 20),
-            Expanded(
-              child: TextFormField(
-                controller: controller.weight,
-                readOnly: true,
-                decoration: InputDecoration(
-                  labelText: 'weight'.tr,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 20),
-            Expanded(
-              child: TextFormField(
-                controller: controller.referenceTemperature,
-                readOnly: true,
-                decoration: InputDecoration(
-                  labelText: 'referenceTemperature'.tr,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 50),
-        Center(child: Obx(() => SpeedTable(table: controller.data.value, obtainedData: controller.obtainedDataN1))),
-        const SizedBox(height: 50),
-        /*Row(
           children: [
             Text('finalVelocityIAS'.tr, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(width: 20),
@@ -93,7 +32,9 @@ class FirstSegmentSecondStep extends StatelessWidget {
               child: TextFormField(
                 controller: controller.velocityFirstSegmentN1,
                 onChanged: (value) {
-                  controller.newProcedure.value.firstSegment!.velocityIAS = double.parse(value);
+                  controller.firstSegmentN1.value.velocityIAS = double.parse(value);
+                  controller.failure.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'velocity'.tr,
@@ -113,7 +54,13 @@ class FirstSegmentSecondStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => ISATable(table: controller.isatable.value, obtainedData: controller.obtainedISAData))),
+        Center(child: Obx(() {
+          if (controller.obtainedISADataFirstSegmentN1.isNotEmpty) {
+            return ISATable(table: controller.isatable.value, obtainedData: controller.obtainedISADataFirstSegmentN1);
+          } else {
+            return const LinearProgressIndicator();
+          }
+        })),
         const SizedBox(height: 50),
         Row(
           children: [
@@ -121,9 +68,11 @@ class FirstSegmentSecondStep extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.densityFirstSegment,
+                controller: controller.densityFirstSegmentN1,
                 onChanged: (value) {
-                  controller.newProcedure.value.firstSegment!.density = double.parse(value);
+                  controller.firstSegmentN1.value.density = double.parse(value);
+                  controller.failure.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'density'.tr,
@@ -149,9 +98,11 @@ class FirstSegmentSecondStep extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.velocityFirstSegmentTAS,
+                controller: controller.velocityFirstSegmentTASN1,
                 onChanged: (value) {
-                  controller.newProcedure.value.firstSegment!.velocityTAS = double.parse(value);
+                  controller.firstSegmentN1.value.velocityTAS = double.parse(value);
+                  controller.failure.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'velocity'.tr,
@@ -171,7 +122,13 @@ class FirstSegmentSecondStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => RateChart(rateGraphic: controller.rateGraphic.value, resultRate: controller.resultRate,))),
+        Center(child: Obx(() {
+          if (controller.resultRateFirstSegmentN1.isNotEmpty) {
+            return RateChart(rateGraphic: controller.rateGraphicFirstSegmentN1.value, resultRate: controller.resultRateFirstSegmentN1);
+          } else {
+            return const LinearProgressIndicator();
+          }
+        })),
         const SizedBox(height: 50),
         Row(
           children: [
@@ -179,9 +136,11 @@ class FirstSegmentSecondStep extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.rateOfClimbFirstSegment,
+                controller: controller.rateOfClimbFirstSegmentN1,
                 onChanged: (value) {
-                  controller.newProcedure.value.firstSegment!.rateClimb = double.parse(value);
+                  controller.firstSegmentN1.value.rateClimb = double.parse(value);
+                  controller.failure.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'rateOfClimb'.tr,
@@ -207,9 +166,11 @@ class FirstSegmentSecondStep extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.timeFirstSegment,
+                controller: controller.timeFirstSegmentN1,
                 onChanged: (value) {
-                  controller.newProcedure.value.firstSegment!.timeToFinish = double.parse(value);
+                  controller.firstSegmentN1.value.timeToFinish = double.parse(value);
+                  controller.failure.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'time'.tr,
@@ -235,9 +196,11 @@ class FirstSegmentSecondStep extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.distanceFirstSegment,
+                controller: controller.distanceFirstSegmentN1,
                 onChanged: (value) {
-                  controller.newProcedure.value.firstSegment!.distanceToFinish = double.parse(value);
+                  controller.firstSegmentN1.value.distanceToFinish = double.parse(value);
+                  controller.failure.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'distance'.tr,
@@ -258,22 +221,26 @@ class FirstSegmentSecondStep extends StatelessWidget {
         ),
         const SizedBox(height: 50),
         Obx(() {
-          if (controller.newProcedure.value.firstSegment != null) {
-            if (controller.newProcedure.value.firstSegment!.distanceToFinish! < controller.newProcedure.value.dpDistance!) {
+          if (controller.firstSegmentN1.value.distanceToFinish != null && controller.newProcedure.value.dpDistance != null) {
+            if (controller.firstSegmentN1.value.distanceToFinish! < controller.newProcedure.value.dpDistance!) {
+              controller.firstSegmentN1.value.reachDP = false;
               return Text('noArrive'.tr, style: Theme.of(context).textTheme.titleMedium);
             } else {
-              controller.newProcedure.value.firstSegment!.reachDP = true;
-              controller.newProcedure.value.firstSegment!.timeToDP = controller.newProcedure.value.dpDistance! / controller.newProcedure.value.firstSegment!.velocityTAS!;
-              controller.timeToDPFirstSegment.text = (controller.newProcedure.value.dpDistance! / controller.newProcedure.value.firstSegment!.velocityTAS!).toString();
+              controller.firstSegmentN1.value.reachDP = true;
+              controller.firstSegmentN1.value.timeToDP = controller.newProcedure.value.dpDistance! / (controller.firstSegmentN.value.velocityTAS! * 60);
+              controller.timeToDPFirstSegment.text = (controller.newProcedure.value.dpDistance! / (controller.firstSegmentN.value.velocityTAS! * 60)).toString();
 
-              controller.newProcedure.value.firstSegment!.altitudeInDP = controller.newProcedure.value.firstSegment!.timeToDP! * controller.newProcedure.value.firstSegment!.rateClimb!;
-              controller.altitudeInDPFirstSegment.text = (controller.newProcedure.value.firstSegment!.timeToDP! * controller.newProcedure.value.firstSegment!.rateClimb!).toString();
+              controller.firstSegmentN.value.altitudeInDP = controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb!;
+              controller.altitudeInDPFirstSegment.text = (controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb!).toString();
 
-              if ((controller.newProcedure.value.firstSegment!.altitudeInDP! + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
-                controller.newProcedure.value.firstSegment!.clearDP = true;
+              if ((controller.firstSegmentN.value.altitudeInDP! + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
+                controller.firstSegmentN.value.clearDP = true;
               } else {
-                controller.newProcedure.value.firstSegment!.clearDP = false;
+                controller.firstSegmentN.value.clearDP = false;
               }
+
+              controller.nMotors.value.firstSegment = controller.firstSegmentN.value;
+              controller.newProcedure.value.nMotors = controller.nMotors.value;
 
               return Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -289,7 +256,9 @@ class FirstSegmentSecondStep extends StatelessWidget {
                         child: TextFormField(
                           controller: controller.timeToDPFirstSegment,
                           onChanged: (value) {
-                            controller.newProcedure.value.firstSegment!.timeToDP = double.parse(value);
+                            controller.firstSegmentN.value.timeToDP = double.parse(value);
+                            controller.nMotors.value.firstSegment = controller.firstSegmentN.value;
+                            controller.newProcedure.value.nMotors = controller.nMotors.value;
                           },
                           decoration: InputDecoration(
                             labelText: 'time'.tr,
@@ -317,7 +286,9 @@ class FirstSegmentSecondStep extends StatelessWidget {
                         child: TextFormField(
                           controller: controller.altitudeInDPFirstSegment,
                           onChanged: (value) {
-                            controller.newProcedure.value.firstSegment!.altitudeInDP = double.parse(value);
+                            controller.firstSegmentN.value.altitudeInDP = double.parse(value);
+                            controller.nMotors.value.firstSegment = controller.firstSegmentN.value;
+                            controller.newProcedure.value.nMotors = controller.nMotors.value;
                           },
                           decoration: InputDecoration(
                             labelText: 'altitude'.tr,
@@ -340,19 +311,19 @@ class FirstSegmentSecondStep extends StatelessWidget {
               );
             }
           } else {
-            return const CircularProgressIndicator();
+            return const LinearProgressIndicator();
           }
         }),
         const SizedBox(height: 50),
         Obx(() {
-          if (controller.newProcedure.value.firstSegment != null && controller.newProcedure.value.firstSegment!.clearDP == true) {
+          if (controller.firstSegmentN.value.clearDP == true && controller.firstSegmentN.value.reachDP == true) {
             return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green));
-          } else if (controller.newProcedure.value.firstSegment != null && controller.newProcedure.value.firstSegment!.clearDP == false) {
+          } else if (controller.firstSegmentN.value.clearDP == false && controller.firstSegmentN.value.reachDP == true) {
             return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red));
           } else {
-            return const CircularProgressIndicator();
+            return Container();
           }
-        })*/
+        })
       ],
     );
   }

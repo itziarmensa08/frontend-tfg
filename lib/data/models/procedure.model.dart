@@ -1,3 +1,4 @@
+
 class Procedure {
 
   String? id;
@@ -168,7 +169,8 @@ class NMotors {
 }
 
 class Failure {
-
+  double? initialElevation;
+  double? distanceToInitial;
   Segment? firstSegment;
   Segment? secondSegment;
   Segment? thirdSegment;
@@ -178,12 +180,16 @@ class Failure {
     this.id,
     this.firstSegment,
     this.secondSegment,
-    this.thirdSegment
+    this.thirdSegment,
+    this.initialElevation,
+    this.distanceToInitial
   });
   Failure.fromJson(Map<String, dynamic> json) {
     firstSegment = (json['firstSegment'] != null) ? Segment.fromJson(json['firstSegment']) : null;
     secondSegment = (json['secondSegment'] != null) ? Segment.fromJson(json['secondSegment']) : null;
     thirdSegment = (json['thirdSegment'] != null) ? Segment.fromJson(json['thirdSegment']) : null;
+    initialElevation = json['initialElevation']?.toDouble();
+    distanceToInitial = json['distanceToInitial']?.toDouble();
     id = json['_id']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -198,6 +204,8 @@ class Failure {
       data['thirdSegment'] = thirdSegment?.toJson();
     }
     data['_id'] = id;
+    data['initialElevation'] = initialElevation;
+    data['distanceToInitial'] = distanceToInitial;
     return data;
   }
 }

@@ -168,6 +168,10 @@ final Map<String, String> es = {
   'reviewDataSecondSegment': 'Los datos introducidos necesarios para encontrar la velocidad en el segundo segmento (VY) son:',
 
   'step3title': "Cálculos para N - 1 motores",
+  'reviewDataFirstSegment_N_1': 'Los datos introducidos son:',
+  'enter_initial_elevation': "Introduce la elevación a partir de la que se iniciaría el análisis: ",
+  "start_analysis": "Empezar análisi",
+
 
   'step4title': "Conclusión"
 

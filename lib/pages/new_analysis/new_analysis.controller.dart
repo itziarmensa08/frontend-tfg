@@ -47,6 +47,9 @@ class NewAnalaysisController extends GetxController {
 
   // ------------------------- FIRST SEGMENT N MOTORS ----------------------------------
 
+  final RxList<Item> itemsNMotors = <Item>[].obs;
+  final RxBool loadingAnalysisN = RxBool(false);
+
   final Rx<Segment> firstSegmentN = Segment().obs;
   final Rx<V2TableModel> data = V2TableModel().obs;
   final RxList<V2TableRowData> obtainedData = RxList<V2TableRowData>();
@@ -103,8 +106,26 @@ class NewAnalaysisController extends GetxController {
 
   // ----------------------- N -1 MOTORS ----------------------------------------
 
+  final Rx<Failure> failure = Failure().obs;
+
+  final TextEditingController initialElevation = TextEditingController();
+  final RxBool seeAnalysis = RxBool(false);
+  final RxBool loadingAnalysis = RxBool(false);
+
+  // ----------------------- N -1 MOTORS - 1st SEGMENT ----------------------------------------
+  final Rx<Segment> firstSegmentN1 = Segment().obs;
   final RxList<V2TableRowData> obtainedDataN1 = RxList<V2TableRowData>();
   final TextEditingController velocityFirstSegmentN1 = TextEditingController();
+  final RxList<ISATableData> obtainedISADataFirstSegmentN1 = RxList<ISATableData>();
+  final TextEditingController densityFirstSegmentN1 = TextEditingController();
+  final TextEditingController velocityFirstSegmentTASN1 = TextEditingController();
+  final Rx<RateOfClimbGraphic> rateGraphicFirstSegmentN1 = RateOfClimbGraphic().obs;
+  final RxMap<String, dynamic> resultRateFirstSegmentN1 = <String, dynamic>{}.obs;
+  final TextEditingController timeFirstSegmentN1 = TextEditingController();
+  final TextEditingController distanceFirstSegmentN1 = TextEditingController();
+  final TextEditingController timeToDPFirstSegmentN1 = TextEditingController();
+  final TextEditingController altitudeInDPFirstSegmentN1 = TextEditingController();
+  final TextEditingController rateOfClimbFirstSegmentN1 = TextEditingController();
 
 }
 
@@ -131,4 +152,16 @@ Future<void> launchForeFlight() async {
 
 Future<void> launchAPG() async {
   launchUrl(Uri.parse('https://atlas.apgdata.com/winplan5/Login.aspx'));
+}
+
+class Item {
+  String headerValue;
+  Widget body;
+  bool isExpanded;
+
+  Item({
+    required this.headerValue,
+    required this.body,
+    this.isExpanded = false,
+  });
 }
