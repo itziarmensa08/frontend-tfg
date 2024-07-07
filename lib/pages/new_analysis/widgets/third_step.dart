@@ -22,7 +22,7 @@ class ThirdStep extends StatefulWidget {
 class ThirdStepState extends State<ThirdStep> {
   List<Item> items = [];
 
-  void generateItems() {
+  void generateItems(bool reachDP1, bool reachDP2, bool reachDP3) {
     setState(() {
       items = [
         if (double.parse(widget.controller.initialElevation.text) < 400)
@@ -48,9 +48,13 @@ class ThirdStepState extends State<ThirdStep> {
   Widget build(BuildContext context) {
     if (widget.controller.indexStepper.value == 2) {
       return SingleChildScrollView(
-        child: Container(
-          child: _buildPanel(widget.controller),
-        ),
+        child: Obx(() {
+          if (widget.controller.firstSegmentN.value.clearDP != false && widget.controller.secondSegmentN.value.clearDP != false && widget.controller.thirdSegmentN.value.clearDP != false) {
+            return Text('not_necessary'.tr, style: Theme.of(context).textTheme.titleMedium);
+          } else {
+            return _buildPanel(widget.controller);
+          }
+        }),
       );
     } else {
       return const LinearProgressIndicator();
@@ -155,8 +159,29 @@ class ThirdStepState extends State<ThirdStep> {
           ],
         ),
         const SizedBox(height: 30),
+        Row(
+          children: [
+            Text('select_restriction'.tr, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(width: 20),
+            ElevatedButton(
+              onPressed: () async {
+              },
+              child: Text('minimum_altitude'.tr),
+            ),
+            const SizedBox(width: 20),
+            ElevatedButton(
+              onPressed: () async {
+              },
+              child: Text('minimum_gradient'.tr),
+            ),
+          ],
+        ),
+        /*const SizedBox(height: 30),
         ElevatedButton(
           onPressed: () async {
+            var reachDP1 = false;
+            var reachDP2 = false;
+            var reachDP3 = false;
             if (double.parse(widget.controller.initialElevation.text) < 400){
               controller.loadingAnalysis.value = true;
               var resultrateresponseN = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphic.value.id!, controller.selectedAirport.value!.referenceTemperature!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text));
@@ -204,6 +229,7 @@ class ThirdStepState extends State<ThirdStep> {
                   controller.firstSegmentN1.value.reachDP = false;
                 } else {
                   controller.firstSegmentN1.value.reachDP = true;
+                  reachDP1 = true;
                   controller.firstSegmentN1.value.timeToDP = (controller.newProcedure.value.dpDistance! - controller.failure.value.distanceToInitial!) / (controller.firstSegmentN1.value.velocityTAS! * 60);
                   controller.timeToDPFirstSegmentN1.text = ((controller.newProcedure.value.dpDistance! - controller.failure.value.distanceToInitial!) / (controller.firstSegmentN1.value.velocityTAS! * 60)).toString();
 
@@ -223,10 +249,11 @@ class ThirdStepState extends State<ThirdStep> {
             } else {
 
             }
-            generateItems();
+            generateItems(reachDP1, reachDP2, reachDP3);
             controller.newProcedure.value.failure = controller.failure.value;
             widget.controller.seeAnalysis.value = true;
             controller.loadingAnalysis.value = false;
+            print(controller.newProcedure.value.toJson());
           },
           child: Text('start_analysis'.tr),
         ),
@@ -256,7 +283,7 @@ class ThirdStepState extends State<ThirdStep> {
           } else {
             return Container();
           }
-        }),
+        }),*/
       ],
     );
   }

@@ -168,32 +168,37 @@ class NMotors {
   }
 }
 
-class Failure {
-  double? initialElevation;
-  double? distanceToInitial;
+class Altitude {
+  bool? state;
+  double? dpDistance;
+  double? dpElevation;
   Segment? firstSegment;
   Segment? secondSegment;
   Segment? thirdSegment;
-  String? id;
 
-  Failure({
-    this.id,
+  Altitude({
+    this.state,
+    this.dpDistance,
+    this.dpElevation,
     this.firstSegment,
     this.secondSegment,
     this.thirdSegment,
-    this.initialElevation,
-    this.distanceToInitial
   });
-  Failure.fromJson(Map<String, dynamic> json) {
+
+  Altitude.fromJson(Map<String, dynamic> json) {
+    state = json['state'];
+    dpDistance = json['dpDistance']?.toDouble();
+    dpElevation = json['dpElevation']?.toDouble();
     firstSegment = (json['firstSegment'] != null) ? Segment.fromJson(json['firstSegment']) : null;
     secondSegment = (json['secondSegment'] != null) ? Segment.fromJson(json['secondSegment']) : null;
     thirdSegment = (json['thirdSegment'] != null) ? Segment.fromJson(json['thirdSegment']) : null;
-    initialElevation = json['initialElevation']?.toDouble();
-    distanceToInitial = json['distanceToInitial']?.toDouble();
-    id = json['_id']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
+    data['state'] = state;
+    data['dpDistance'] = dpDistance;
+    data['dpElevation'] = dpElevation;
     if (firstSegment != null) {
       data['firstSegment'] = firstSegment?.toJson();
     }
@@ -203,9 +208,70 @@ class Failure {
     if (thirdSegment != null) {
       data['thirdSegment'] = thirdSegment?.toJson();
     }
-    data['_id'] = id;
+    return data;
+  }
+}
+
+class Gradient {
+  bool? state;
+  double? dpDistance;
+  double? gradientValue;
+
+  Gradient({
+    this.state,
+    this.dpDistance,
+    this.gradientValue,
+  });
+
+  Gradient.fromJson(Map<String, dynamic> json) {
+    state = json['state'];
+    dpDistance = json['dpDistance']?.toDouble();
+    gradientValue = json['gradientValue']?.toDouble();
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['state'] = state;
+    data['dpDistance'] = dpDistance;
+    data['gradientValue'] = gradientValue;
+    return data;
+  }
+}
+
+class Failure {
+  double? initialElevation;
+  double? distanceToInitial;
+  Altitude? altitude;
+  Gradient? gradient;
+  String? id;
+
+  Failure({
+    this.id,
+    this.altitude,
+    this.gradient,
+    this.initialElevation,
+    this.distanceToInitial
+  });
+
+  Failure.fromJson(Map<String, dynamic> json) {
+    initialElevation = json['initialElevation']?.toDouble();
+    distanceToInitial = json['distanceToInitial']?.toDouble();
+    altitude = (json['altitude'] != null) ? Altitude.fromJson(json['altitude']) : null;
+    gradient = (json['gradient'] != null) ? Gradient.fromJson(json['gradient']) : null;
+    id = json['_id']?.toString();
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
     data['initialElevation'] = initialElevation;
     data['distanceToInitial'] = distanceToInitial;
+    if (altitude != null) {
+      data['altitude'] = altitude?.toJson();
+    }
+    if (gradient != null) {
+      data['gradient'] = gradient?.toJson();
+    }
+    data['_id'] = id;
     return data;
   }
 }

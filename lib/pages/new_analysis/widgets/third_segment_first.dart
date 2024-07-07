@@ -16,14 +16,14 @@ class ThirdSegmentFirstStep extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('reviewDataSecondSegment'.tr, style: Theme.of(context).textTheme.titleMedium),
+        Text('reviewDataThirdSegment'.tr, style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: 30),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: TextFormField(
-                controller: controller.elevation,
+                controller: controller.elevationThirdSegmentN,
                 readOnly: true,
                 decoration: InputDecoration(
                   labelText: 'elevation'.tr,
@@ -287,125 +287,13 @@ class ThirdSegmentFirstStep extends StatelessWidget {
           } else {
             return const CircularProgressIndicator();
           }
-          /*if (controller.newProcedure.value.dpDistance != null) {
-            controller.thirdSegmentN.value.reachDP = true;
-            controller.thirdSegmentN.value.timeToDP = ((controller.newProcedure.value.dpDistance! - (controller.firstSegmentN.value.distanceToFinish! + controller.secondSegmentN.value.distanceToFinish!)) / controller.thirdSegmentN.value.velocityTAS!) * 60;
-            controller.timeToDPThirdSegmentN.text = (((controller.newProcedure.value.dpDistance! - (controller.firstSegmentN.value.distanceToFinish! + controller.secondSegmentN.value.distanceToFinish!)) / controller.thirdSegmentN.value.velocityTAS!) * 60).toString();
-
-            controller.thirdSegmentN.value.altitudeInDP = controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb!;
-            controller.altitudeInDPThirdSegmentN.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb!).toString();
-            controller.totalAltitudeInDPThirdSegmentN.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + 3000 + controller.selectedAirport.value!.elevation!).toString();
-
-
-            if ((controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + 3000 + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
-              controller.thirdSegmentN.value.clearDP = true;
-            } else {
-              controller.thirdSegmentN.value.clearDP = false;
-            }
-
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text('timeToDP'.tr, style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: TextFormField(
-                        controller: controller.timeToDPThirdSegmentN,
-                        onChanged: (value) {
-                          controller.thirdSegmentN.value.timeToDP = double.parse(value);
-                          controller.nMotors.value.thirdSegment = controller.thirdSegmentN.value;
-                          controller.newProcedure.value.nMotors = controller.nMotors.value;
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'time'.tr,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 50),
-                Row(
-                  children: [
-                    Text('altitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: TextFormField(
-                        controller: controller.altitudeInDPThirdSegmentN,
-                        onChanged: (value) {
-                          controller.thirdSegmentN.value.altitudeInDP = double.parse(value);
-                          controller.nMotors.value.thirdSegment = controller.thirdSegmentN.value;
-                          controller.newProcedure.value.nMotors = controller.nMotors.value;
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'altitude'.tr,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 50),
-                  Row(
-                    children: [
-                      Text('totalAltitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: TextFormField(
-                          controller: controller.totalAltitudeInDPThirdSegmentN,
-                          onChanged: (value) {
-
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'altitude'.tr,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-              ],
-            );
-          } else {
-            return const CircularProgressIndicator();
-          }*/
         }),
         const SizedBox(height: 50),
         Obx(() {
           if (controller.thirdSegmentN.value.clearDP == true && controller.thirdSegmentN.value.reachDP == true) {
-            return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green));
+            return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green, fontSize: 20));
           } else if (controller.thirdSegmentN.value.clearDP == false && controller.thirdSegmentN.value.reachDP == true) {
-            return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red));
+            return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red, fontSize: 20));
           } else {
             return Container();
           }

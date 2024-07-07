@@ -67,10 +67,12 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController timeToDPFirstSegment = TextEditingController();
   final TextEditingController altitudeInDPFirstSegment = TextEditingController();
   final TextEditingController rateOfClimbFirstSegment = TextEditingController();
+  final TextEditingController totalAltitudeInDPFirstSegmentN = TextEditingController();
 
   // ------------------------- SECOND SEGMENT N MOTORS ----------------------------------
 
   final Rx<Segment> secondSegmentN = Segment().obs;
+  final TextEditingController elevationSecondSegmentN = TextEditingController();
   final Rx<VYTableModel> vYtableN = VYTableModel().obs;
   final RxList<VYtableRowsPressures> obtainedDataVYN = RxList<VYtableRowsPressures>();
   final TextEditingController velocitySecondSegmentN = TextEditingController();
@@ -89,6 +91,7 @@ class NewAnalaysisController extends GetxController {
   // ------------------------- THIRD SEGMENT N MOTORS ----------------------------------
 
   final Rx<Segment> thirdSegmentN = Segment().obs;
+  final TextEditingController elevationThirdSegmentN = TextEditingController();
   final RxList<VYtableRowsPressures> obtainedDataVYThirdSegmentN = RxList<VYtableRowsPressures>();
   final TextEditingController velocityThirdSegmentN = TextEditingController();
   final RxList<ISATableData> obtainedISADataThirdSegmentN = RxList<ISATableData>();

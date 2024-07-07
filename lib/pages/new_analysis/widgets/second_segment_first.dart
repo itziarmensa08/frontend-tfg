@@ -23,7 +23,7 @@ class SecondSegmentFirstStep extends StatelessWidget {
           children: [
             Expanded(
               child: TextFormField(
-                controller: controller.elevation,
+                controller: controller.elevationSecondSegmentN,
                 readOnly: true,
                 decoration: InputDecoration(
                   labelText: 'elevation'.tr,
@@ -349,136 +349,13 @@ class SecondSegmentFirstStep extends StatelessWidget {
               ],
             );
           }
-          /*if (controller.secondSegmentN.value.distanceToFinish != null && controller.firstSegmentN.value.distanceToFinish != null && controller.newProcedure.value.dpDistance != null) {
-            if ((controller.secondSegmentN.value.distanceToFinish! + controller.firstSegmentN.value.distanceToFinish!) < controller.newProcedure.value.dpDistance!) {
-              controller.secondSegmentN.value.reachDP = false;
-              return Text('noArrive'.tr, style: Theme.of(context).textTheme.titleMedium);
-            } else {
-              controller.secondSegmentN.value.reachDP = true;
-              // Temps que tarda desde 800 ft fins al descision point
-              controller.secondSegmentN.value.timeToDP = ((controller.newProcedure.value.dpDistance! - controller.firstSegmentN.value.distanceToFinish!) / controller.secondSegmentN.value.velocityTAS!) * 60;
-              controller.timeToDPSecondSegmentN.text = (((controller.newProcedure.value.dpDistance! - controller.firstSegmentN.value.distanceToFinish!) / controller.secondSegmentN.value.velocityTAS!) * 60).toString();
-
-              // Altitud desde 800ft fins al decision point
-              controller.secondSegmentN.value.altitudeInDP = controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!;
-              controller.altitudeInDPSecondSegmentN.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!).toString();
-              controller.totalAltitudeInDPSecondSegmentN.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + 800 + controller.selectedAirport.value!.elevation!).toString();
-
-              if ((controller.secondSegmentN.value.altitudeInDP! + 800 + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
-                controller.secondSegmentN.value.clearDP = true;
-              } else {
-                controller.secondSegmentN.value.clearDP = false;
-              }
-
-              controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
-              controller.newProcedure.value.nMotors = controller.nMotors.value;
-
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('yesArrive'.tr, style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 50),
-                  Row(
-                    children: [
-                      Text('timeToDP'.tr, style: Theme.of(context).textTheme.titleMedium),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: TextFormField(
-                          controller: controller.timeToDPSecondSegmentN,
-                          onChanged: (value) {
-                            controller.secondSegmentN.value.timeToDP = double.parse(value);
-                            controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
-                            controller.newProcedure.value.nMotors = controller.nMotors.value;
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'time'.tr,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 50),
-                  Row(
-                    children: [
-                      Text('altitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: TextFormField(
-                          controller: controller.altitudeInDPSecondSegmentN,
-                          onChanged: (value) {
-                            controller.secondSegmentN.value.altitudeInDP = double.parse(value);
-                            controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
-                            controller.newProcedure.value.nMotors = controller.nMotors.value;
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'altitude'.tr,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 50),
-                  Row(
-                    children: [
-                      Text('totalAltitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: TextFormField(
-                          controller: controller.totalAltitudeInDPSecondSegmentN,
-                          onChanged: (value) {
-
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'altitude'.tr,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            }
-          } else {
-            return const LinearProgressIndicator();
-          }*/
         }),
         const SizedBox(height: 50),
         Obx(() {
           if (controller.secondSegmentN.value.clearDP == true && controller.secondSegmentN.value.reachDP == true) {
-            return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green));
+            return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green, fontSize: 20));
           } else if (controller.secondSegmentN.value.clearDP == false && controller.secondSegmentN.value.reachDP == true) {
-            return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red));
+            return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red, fontSize: 20));
           } else {
             return Container();
           }
