@@ -162,20 +162,172 @@ class ThirdStepState extends State<ThirdStep> {
         Row(
           children: [
             Text('select_restriction'.tr, style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(width: 20),
+          ],
+        ),
+        const SizedBox(height: 30),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
             ElevatedButton(
-              onPressed: () async {
+              onPressed: () {
+                controller.altitudeRestriction.value = true;
+                controller.gradientRestriction.value = false;
+                controller.altitude.value.state = true;
+                controller.gradient.value.state = false;
+                controller.failure.value.altitude = controller.altitude.value;
+                controller.failure.value.gradient = controller.gradient.value;
+                controller.newProcedure.value.failure = controller.failure.value;
               },
               child: Text('minimum_altitude'.tr),
             ),
             const SizedBox(width: 20),
             ElevatedButton(
-              onPressed: () async {
+              onPressed: () {
+                controller.altitudeRestriction.value = false;
+                controller.gradientRestriction.value = true;
+                controller.altitude.value.state = false;
+                controller.gradient.value.state = true;
+                controller.failure.value.altitude = controller.altitude.value;
+                controller.failure.value.gradient = controller.gradient.value;
+                controller.newProcedure.value.failure = controller.failure.value;
               },
               child: Text('minimum_gradient'.tr),
             ),
           ],
         ),
+        const SizedBox(height: 30),
+        Obx(() {
+          if (controller.gradientRestriction.value == true) {
+            return Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.dpDistanceGradient,
+                        onChanged: (value) {
+                          controller.gradient.value.dpDistance = double.parse(value);
+                          controller.failure.value.gradient = controller.gradient.value;
+                          controller.newProcedure.value.failure = controller.failure.value;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'dpDistance'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.gradientRestrictionValue,
+                        onChanged: (value) {
+                          controller.gradient.value.dpDistance = double.parse(value);
+                          controller.failure.value.gradient = controller.gradient.value;
+                          controller.newProcedure.value.failure = controller.failure.value;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'gradient'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+
+                  },
+                  child: Text('start_analysis'.tr),
+                ),
+              ],
+            );
+          } else if (controller.altitudeRestriction.value == true) {
+            return Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.dpDistanceAltitude,
+                        onChanged: (value) {
+                          controller.altitude.value.dpDistance = double.parse(value);
+                          controller.failure.value.altitude = controller.altitude.value;
+                          controller.newProcedure.value.failure = controller.failure.value;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'dpDistance'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.dpAltitudeRestriction,
+                        onChanged: (value) {
+                          controller.altitude.value.dpElevation = double.parse(value);
+                          controller.failure.value.altitude = controller.altitude.value;
+                          controller.newProcedure.value.failure = controller.failure.value;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'dpAltitude'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+
+                  },
+                  child: Text('start_analysis'.tr),
+                ),
+              ],
+            );
+          } else {
+            return Container();
+          }
+        })
         /*const SizedBox(height: 30),
         ElevatedButton(
           onPressed: () async {

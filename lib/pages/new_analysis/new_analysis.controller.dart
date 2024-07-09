@@ -110,10 +110,20 @@ class NewAnalaysisController extends GetxController {
   // ----------------------- N -1 MOTORS ----------------------------------------
 
   final Rx<Failure> failure = Failure().obs;
+  final Rx<GradientModel> gradient = GradientModel().obs;
+  final Rx<Altitude> altitude = Altitude().obs;
+  final RxBool gradientRestriction = RxBool(false);
+  final RxBool altitudeRestriction = RxBool(false);
 
   final TextEditingController initialElevation = TextEditingController();
   final RxBool seeAnalysis = RxBool(false);
   final RxBool loadingAnalysis = RxBool(false);
+
+  final TextEditingController dpDistanceGradient = TextEditingController();
+  final TextEditingController gradientRestrictionValue = TextEditingController();
+
+  final TextEditingController dpDistanceAltitude = TextEditingController();
+  final TextEditingController dpAltitudeRestriction = TextEditingController();
 
   // ----------------------- N -1 MOTORS - 1st SEGMENT ----------------------------------------
   final Rx<Segment> firstSegmentN1 = Segment().obs;

@@ -212,18 +212,18 @@ class Altitude {
   }
 }
 
-class Gradient {
+class GradientModel {
   bool? state;
   double? dpDistance;
   double? gradientValue;
 
-  Gradient({
+  GradientModel({
     this.state,
     this.dpDistance,
     this.gradientValue,
   });
 
-  Gradient.fromJson(Map<String, dynamic> json) {
+  GradientModel.fromJson(Map<String, dynamic> json) {
     state = json['state'];
     dpDistance = json['dpDistance']?.toDouble();
     gradientValue = json['gradientValue']?.toDouble();
@@ -242,7 +242,7 @@ class Failure {
   double? initialElevation;
   double? distanceToInitial;
   Altitude? altitude;
-  Gradient? gradient;
+  GradientModel? gradient;
   String? id;
 
   Failure({
@@ -257,7 +257,7 @@ class Failure {
     initialElevation = json['initialElevation']?.toDouble();
     distanceToInitial = json['distanceToInitial']?.toDouble();
     altitude = (json['altitude'] != null) ? Altitude.fromJson(json['altitude']) : null;
-    gradient = (json['gradient'] != null) ? Gradient.fromJson(json['gradient']) : null;
+    gradient = (json['gradient'] != null) ? GradientModel.fromJson(json['gradient']) : null;
     id = json['_id']?.toString();
   }
 

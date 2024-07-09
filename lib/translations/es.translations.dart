@@ -172,10 +172,12 @@ final Map<String, String> es = {
   'not_necessary': "Cómo hemos librado el decision point con N motores, no debemos realizar cálculos para N - 1, clica siguiente para ver las conclusiones.",
   'reviewDataFirstSegment_N_1': 'Los datos introducidos son:',
   'enter_initial_elevation': "Elevación a partir de la que se iniciará el análisis, la cual corresponde a la que no ha librado el decision point con N motores: ",
-  'select_restriction': "Selecciona la restricción de la SID con la que quieres realizar el análisis",
+  'select_restriction': "Selecciona la restricción de la SID con la que quieres realizar el análisi:",
   'minimum_altitude': "Altitud mínima requerida",
   'minimum_gradient': "Gradiente mínimo requerido",
   "start_analysis": "Empezar análisi",
+
+  "gradient": "Gradiente (%)",
 
 
   'step4title': "Conclusión"
