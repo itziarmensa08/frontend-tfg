@@ -11,11 +11,11 @@ class ObtainedDataVYWithVelocity {
 }
 
 class VYTableService {
-  static Future<VYTableModel?> getVYtableByAircraft(String id) async {
+  static Future<VYTableModel?> getVYtableByAircraft(String id, String state) async {
     ApiResponse response;
 
     try {
-      response = await MyApi().get('/vYtables/aircraft/$id');
+      response = await MyApi().get('/vYtables/aircraft/$id/$state');
 
       if (response.statusCode == 200) {
 

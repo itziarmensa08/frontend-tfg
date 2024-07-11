@@ -125,7 +125,9 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController dpDistanceAltitude = TextEditingController();
   final TextEditingController dpAltitudeRestriction = TextEditingController();
 
-  // ----------------------- N -1 MOTORS - 1st SEGMENT ----------------------------------------
+  // ----------------------- ALTITUDE RESTRICTION ----------------------------------------
+
+  // ----------------------- N - 1 MOTORS - 1st SEGMENT ----------------------------------------
   final Rx<Segment> firstSegmentN1 = Segment().obs;
   final RxList<V2TableRowData> obtainedDataN1 = RxList<V2TableRowData>();
   final TextEditingController velocityFirstSegmentN1 = TextEditingController();

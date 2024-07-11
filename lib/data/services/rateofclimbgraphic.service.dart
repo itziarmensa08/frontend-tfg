@@ -4,11 +4,11 @@ import 'package:frontend_tfg/data/provider/api.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
 
 class RateOfClimbGraphicService {
-  static Future<RateOfClimbGraphic?> getRateByAircraft(String id, int segment) async {
+  static Future<RateOfClimbGraphic?> getRateByAircraft(String id, int segment, String state) async {
     ApiResponse response;
 
     try {
-      response = await MyApi().get('/rateOfClimb/aircraft/$id/$segment');
+      response = await MyApi().get('/rateOfClimb/aircraft/$id/$segment/$state');
 
       if (response.statusCode == 200) {
 

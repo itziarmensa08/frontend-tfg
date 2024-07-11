@@ -68,7 +68,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   controller.firstSegmentN.value.velocityTAS = velocityTAS;
                   controller.velocityFirstSegmentTAS.text = velocityTAS.toStringAsFixed(2);
                 }
-                var rateresponse = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 1);
+                var rateresponse = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 1, 'nMotors');
                 if (rateresponse != null) {
                   controller.rateGraphic.value = rateresponse;
                 }
@@ -116,7 +116,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 controller.elevationSecondSegmentN.text = (controller.selectedAirport.value!.elevation! + 800).toString();
 
                 if (controller.firstSegmentN.value.reachDP == false) {
-                  var responseVY = await VYTableService.getVYtableByAircraft(controller.selectedAircraft.value!.id!);
+                  var responseVY = await VYTableService.getVYtableByAircraft(controller.selectedAircraft.value!.id!, "nMotors");
                   if (responseVY != null) {
                     controller.vYtableN.value = responseVY;
                   }
@@ -137,7 +137,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                     controller.secondSegmentN.value.velocityTAS = velocityTAS;
                     controller.velocitySecondSegmentTASN.text = velocityTAS.toStringAsFixed(2);
                   }
-                  var rateresponseSecondSegment = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 2);
+                  var rateresponseSecondSegment = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 2, 'nMotors');
                   if (rateresponseSecondSegment != null) {
                     controller.rateGraphicSecondSegmentN.value = rateresponseSecondSegment;
                   }
@@ -204,7 +204,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                     controller.velocityThirdSegmentTASN.text = velocityTAS.toStringAsFixed(2);
                   }
                   if (controller.selectedAircraft.value?.metro == 'SA227AC 16000' || controller.selectedAircraft.value?.metro == 'SA227AC' || controller.selectedAircraft.value?.metro == 'SA227BC') {
-                    var rateresponseThirdSegment = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 2);
+                    var rateresponseThirdSegment = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 2, 'nMotors');
                     if (rateresponseThirdSegment != null) {
                       controller.rateGraphicThirdSegmentN.value = rateresponseThirdSegment;
                     }
