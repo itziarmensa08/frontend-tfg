@@ -3,8 +3,8 @@
 ///
 class ReferenceLine {
 
-  int? x;
-  int? y;
+  double? x;
+  double? y;
   String? id;
 
   ReferenceLine({
@@ -13,8 +13,8 @@ class ReferenceLine {
     this.id,
   });
   ReferenceLine.fromJson(Map<String, dynamic> json) {
-    x = json['x']?.toInt();
-    y = json['y']?.toInt();
+    x = json['x']?.toDouble();
+    y = json['y']?.toDouble();
     id = json['_id']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -28,7 +28,7 @@ class ReferenceLine {
 
 class WeightLinesPoints {
 
-  int? x;
+  double? x;
   double? y;
   String? id;
 
@@ -38,7 +38,7 @@ class WeightLinesPoints {
     this.id,
   });
   WeightLinesPoints.fromJson(Map<String, dynamic> json) {
-    x = json['x']?.toInt();
+    x = json['x']?.toDouble();
     y = json['y']?.toDouble();
     id = json['_id']?.toString();
   }
@@ -88,8 +88,8 @@ class WeightLines {
 
 class PressureLinesPoints {
 
-  int? x;
-  int? y;
+  double? x;
+  double? y;
   String? id;
 
   PressureLinesPoints({
@@ -98,8 +98,8 @@ class PressureLinesPoints {
     this.id,
   });
   PressureLinesPoints.fromJson(Map<String, dynamic> json) {
-    x = json['x']?.toInt();
-    y = json['y']?.toInt();
+    x = json['x']?.toDouble();
+    y = json['y']?.toDouble();
     id = json['_id']?.toString();
   }
   Map<String, dynamic> toJson() {

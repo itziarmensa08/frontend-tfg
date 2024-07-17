@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/aircraft_model.dart';
 import 'package:frontend_tfg/data/models/airport_model.dart';
+import 'package:frontend_tfg/data/models/gradientgraphic.model.dart';
 import 'package:frontend_tfg/data/models/isatable.model.dart';
 import 'package:frontend_tfg/data/models/procedure.model.dart';
 import 'package:frontend_tfg/data/models/rateofclimbgraphic.model.dart';
@@ -135,12 +136,15 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController densityFirstSegmentN1 = TextEditingController();
   final TextEditingController velocityFirstSegmentTASN1 = TextEditingController();
   final Rx<RateOfClimbGraphic> rateGraphicFirstSegmentN1 = RateOfClimbGraphic().obs;
+  final Rx<GradientGraphic> gradientGraphicFirstSegmentN1 = GradientGraphic().obs;
   final RxMap<String, dynamic> resultRateFirstSegmentN1 = <String, dynamic>{}.obs;
+  final RxMap<String, dynamic> resultGradientFirstSegmentN1 = <String, dynamic>{}.obs;
   final TextEditingController timeFirstSegmentN1 = TextEditingController();
   final TextEditingController distanceFirstSegmentN1 = TextEditingController();
   final TextEditingController timeToDPFirstSegmentN1 = TextEditingController();
   final TextEditingController altitudeInDPFirstSegmentN1 = TextEditingController();
-  final TextEditingController rateOfClimbFirstSegmentN1 = TextEditingController();
+  final TextEditingController gradientFirstSegmentN1 = TextEditingController();
+  final TextEditingController totalAltitudeInDPFirstSegmentN1 = TextEditingController();
 
 }
 

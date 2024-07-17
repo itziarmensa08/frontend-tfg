@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/rateofclimbgraphic.model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class RateChart extends StatefulWidget {
-  const RateChart({super.key, required this.rateGraphic, required this.resultRate});
+class RateChartGradient extends StatefulWidget {
+  const RateChartGradient({super.key, required this.rateGraphic, required this.resultRate});
 
   final RateOfClimbGraphic? rateGraphic;
   final Map<String, dynamic>? resultRate;
 
   @override
-  State<RateChart> createState() => _RateChartState();
+  State<RateChartGradient> createState() => _RateChartGradientState();
 }
 
-class _RateChartState extends State<RateChart> {
+class _RateChartGradientState extends State<RateChartGradient> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -61,7 +61,7 @@ class _RateChartState extends State<RateChart> {
               flex: 4,
               child: SfCartesianChart(
                 primaryXAxis: NumericAxis(
-                  title: const AxisTitle(text: 'RATE OF CLIMB (FEET PER MINUTE)'),
+                  title: const AxisTitle(text: 'NET CLIMB GRADIENT (PERCENT)'),
                   minimum: widget.rateGraphic?.axis?.x?[0].toDouble() ?? 0.0,
                   maximum: widget.rateGraphic?.axis?.x?[widget.rateGraphic!.axis!.x!.length - 1].toDouble() ?? 0.0,
                   majorGridLines: const MajorGridLines(

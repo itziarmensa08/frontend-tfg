@@ -2,9 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/first_segment_first.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/second_segment_first.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/third_segment_first.dart';
 import 'package:get/get.dart';
 
 class SecondStep extends StatefulWidget {

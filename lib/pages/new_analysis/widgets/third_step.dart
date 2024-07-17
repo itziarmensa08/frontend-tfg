@@ -1,13 +1,17 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:frontend_tfg/data/services/gradientgraphic.service.dart';
 import 'package:frontend_tfg/data/services/isatable.service.dart';
 import 'package:frontend_tfg/data/services/rateofclimbgraphic.service.dart';
 import 'package:frontend_tfg/data/services/v2table.service.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/first_segment_second.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/second_segment_second.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/third_segment_second.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/first_segment_second_altitude.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/first_segment_second_gradient.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/second_segment_second_altitude.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/second_segment_second_gradient.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/third_segment_second_altitude.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/third_segment_second_gradient.dart';
 import 'package:get/get.dart';
 
 class ThirdStep extends StatefulWidget {
@@ -22,24 +26,48 @@ class ThirdStep extends StatefulWidget {
 class ThirdStepState extends State<ThirdStep> {
   List<Item> items = [];
 
-  void generateItems(bool reachDP1, bool reachDP2, bool reachDP3) {
+  void generateItemsAltitude(bool reachDP1, bool reachDP2, bool reachDP3) {
     setState(() {
       items = [
         if (double.parse(widget.controller.initialElevation.text) < 400)
           Item(
             headerValue: 'segment1'.tr,
-            body: FirstSegmentSecondStep(),
+            body: FirstSegmentSecondStepAltitude(),
           ),
-        if (double.parse(widget.controller.initialElevation.text) < 400 ||
-            (double.parse(widget.controller.initialElevation.text) > 400 && double.parse(widget.controller.initialElevation.text) < 1500))
+        if ((double.parse(widget.controller.initialElevation.text) < 400 ||
+            (double.parse(widget.controller.initialElevation.text) > 400 && double.parse(widget.controller.initialElevation.text) < 1500)) && !reachDP1)
           Item(
             headerValue: 'segment2'.tr,
-            body: SecondSegmentSecondStep(),
+            body: SecondSegmentSecondStepAltitude(),
           ),
-        Item(
-          headerValue: 'segment3'.tr,
-          body: ThirdSegmentSecondStep(),
-        ),
+        if (!reachDP1 && ! reachDP2)
+          Item(
+            headerValue: 'segment3'.tr,
+            body: ThirdSegmentSecondStepAltitude(),
+          ),
+      ];
+    });
+  }
+
+  void generateItemsGradient(bool reachDP1, bool reachDP2, bool reachDP3) {
+    setState(() {
+      items = [
+        if (double.parse(widget.controller.initialElevation.text) < 400)
+          Item(
+            headerValue: 'segment1'.tr,
+            body: FirstSegmentSecondStepGradient(),
+          ),
+        if ((double.parse(widget.controller.initialElevation.text) < 400 ||
+            (double.parse(widget.controller.initialElevation.text) > 400 && double.parse(widget.controller.initialElevation.text) < 1500))  && !reachDP1)
+          Item(
+            headerValue: 'segment2'.tr,
+            body: SecondSegmentSecondStepGradient(),
+          ),
+        if (!reachDP1 && ! reachDP2)
+          Item(
+            headerValue: 'segment3'.tr,
+            body: ThirdSegmentSecondStepGradient(),
+          ),
       ];
     });
   }
@@ -350,31 +378,34 @@ class ThirdStepState extends State<ThirdStep> {
                         if (rateresponse != null) {
                           controller.rateGraphicFirstSegmentN1.value = rateresponse;
                         }
-                        var resultrateresponse = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphic.value.id!, controller.selectedAirport.value!.referenceTemperature!, controller.failure.value.initialElevation!, double.parse(controller.weight.text));
+                        var gradientresponse = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 1);
+                        if (gradientresponse != null) {
+                          controller.gradientGraphicFirstSegmentN1.value = gradientresponse;
+                        }
+                        var resultrateresponse = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicFirstSegmentN1.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.failure.value.initialElevation! + controller.selectedAirport.value!.elevation!), double.parse(controller.weight.text));
                         if (resultrateresponse != null) {
                           controller.resultRateFirstSegmentN1.value = resultrateresponse;
                           controller.firstSegmentN1.value.rateClimb = resultrateresponse['finalPoint']['x'];
-                          controller.rateOfClimbFirstSegmentN1.text = resultrateresponse['finalPoint']['x'].toString();
-                          controller.firstSegmentN1.value.timeToFinish = (400 - 35 - controller.failure.value.initialElevation!) / resultrateresponse['finalPoint']['x'];
-                          controller.timeFirstSegmentN1.text = ((400 - 35 - controller.failure.value.initialElevation!) / resultrateresponse['finalPoint']['x']).toString();
-                          if (controller.firstSegmentN1.value.velocityTAS != null) {
-                            controller.firstSegmentN1.value.distanceToFinish = controller.firstSegmentN1.value.velocityTAS! * (((400 - 35 - controller.failure.value.initialElevation!) / resultrateresponse['finalPoint']['x'])/60);
-                            controller.distanceFirstSegmentN1.text = (controller.firstSegmentN1.value.velocityTAS! * (((400 - 35 - controller.failure.value.initialElevation!) / resultrateresponse['finalPoint']['x'])/60)).toString();
+                          controller.gradientFirstSegmentN1.text = resultrateresponse['finalPoint']['x'].toString();
+                          var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicFirstSegmentN1.value.id!, resultrateresponse['finalPoint']['x'], 400 - 35);
+                          if (resultgradientresponse != null) {
+                            controller.resultGradientFirstSegmentN1.value = resultgradientresponse;
+                            controller.firstSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
+                            controller.distanceFirstSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
                           }
                         }
-                        if (controller.firstSegmentN1.value.distanceToFinish != null && controller.newProcedure.value.dpDistance != null) {
-                          if (controller.firstSegmentN1.value.distanceToFinish! < controller.newProcedure.value.dpDistance!) {
+                        if (controller.firstSegmentN1.value.distanceToFinish != null && controller.altitude.value.dpDistance != null) {
+                          if (controller.firstSegmentN1.value.distanceToFinish! < controller.altitude.value.dpDistance!) {
                             controller.firstSegmentN1.value.reachDP = false;
                           } else {
                             controller.firstSegmentN1.value.reachDP = true;
                             reachDP1 = true;
-                            controller.firstSegmentN1.value.timeToDP = (controller.newProcedure.value.dpDistance! - controller.failure.value.distanceToInitial!) / (controller.firstSegmentN1.value.velocityTAS! * 60);
-                            controller.timeToDPFirstSegmentN1.text = ((controller.newProcedure.value.dpDistance! - controller.failure.value.distanceToInitial!) / (controller.firstSegmentN1.value.velocityTAS! * 60)).toString();
 
-                            controller.firstSegmentN1.value.altitudeInDP = (controller.firstSegmentN1.value.timeToDP! * controller.firstSegmentN1.value.rateClimb!) + controller.failure.value.initialElevation!;
-                            controller.altitudeInDPFirstSegmentN1.text = ((controller.firstSegmentN1.value.timeToDP! * controller.firstSegmentN1.value.rateClimb!) + controller.failure.value.initialElevation!).toString();
+                            controller.firstSegmentN1.value.altitudeInDP = controller.altitude.value.dpDistance! * 100 / controller.firstSegmentN1.value.rateClimb!;
+                            controller.altitudeInDPFirstSegmentN1.text = (controller.altitude.value.dpDistance! * 100 / controller.firstSegmentN1.value.rateClimb!).toString();
+                            controller.totalAltitudeInDPFirstSegmentN1.text = (controller.firstSegmentN1.value.altitudeInDP! + controller.selectedAirport.value!.elevation!).toString();
 
-                            if ((controller.firstSegmentN1.value.altitudeInDP! + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
+                            if ((controller.firstSegmentN1.value.altitudeInDP! + controller.selectedAirport.value!.elevation!) > controller.altitude.value.dpElevation!) {
                               controller.firstSegmentN1.value.clearDP = true;
                             } else {
                               controller.firstSegmentN1.value.clearDP = false;
@@ -385,6 +416,11 @@ class ThirdStepState extends State<ThirdStep> {
                         controller.failure.value.altitude = controller.altitude.value;
                       }
                     }
+                    generateItemsAltitude(reachDP1, reachDP2, reachDP3);
+                    controller.newProcedure.value.failure = controller.failure.value;
+                    widget.controller.seeAnalysis.value = true;
+                    controller.loadingAnalysis.value = false;
+                    print(controller.newProcedure.value.toJson());
                   },
                   child: Text('start_analysis'.tr),
                 ),
@@ -393,7 +429,7 @@ class ThirdStepState extends State<ThirdStep> {
           } else {
             return Container();
           }
-        })
+        }),
         /*const SizedBox(height: 30),
         ElevatedButton(
           onPressed: () async {
@@ -474,7 +510,7 @@ class ThirdStepState extends State<ThirdStep> {
             print(controller.newProcedure.value.toJson());
           },
           child: Text('start_analysis'.tr),
-        ),
+        ),*/
         const SizedBox(height: 30),
         Obx(() {
           if (controller.loadingAnalysis.value == true) {
@@ -501,7 +537,7 @@ class ThirdStepState extends State<ThirdStep> {
           } else {
             return Container();
           }
-        }),*/
+        }),
       ],
     );
   }

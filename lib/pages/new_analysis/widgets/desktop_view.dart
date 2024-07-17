@@ -99,8 +99,8 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                     controller.firstSegmentN.value.altitudeInDP = controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb!;
                     controller.altitudeInDPFirstSegment.text = (controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb!).toStringAsFixed(2);
                     controller.totalAltitudeInDPFirstSegmentN.text = (controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb! + controller.selectedAirport.value!.elevation!).toStringAsFixed(2);
-                    controller.initialElevation.text = (controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb! + controller.selectedAirport.value!.elevation!).toStringAsFixed(2);
-                    controller.failure.value.initialElevation = controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb! + controller.selectedAirport.value!.elevation!;
+                    controller.initialElevation.text = (controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb!).toStringAsFixed(2);
+                    controller.failure.value.initialElevation = controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb!;
 
                     if ((controller.firstSegmentN.value.altitudeInDP! + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
                       controller.firstSegmentN.value.clearDP = true;
@@ -167,8 +167,8 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                       controller.secondSegmentN.value.altitudeInDP = controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!;
                       controller.altitudeInDPSecondSegmentN.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!).toStringAsFixed(2);
                       controller.totalAltitudeInDPSecondSegmentN.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + 800 + controller.selectedAirport.value!.elevation!).toStringAsFixed(2);
-                      controller.initialElevation.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + 800 + controller.selectedAirport.value!.elevation!).toStringAsFixed(2);
-                      controller.failure.value.initialElevation = controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + 800 + controller.selectedAirport.value!.elevation!;
+                      controller.initialElevation.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + 800).toStringAsFixed(2);
+                      controller.failure.value.initialElevation = controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + 800;
 
                       if ((controller.secondSegmentN.value.altitudeInDP! + 800 + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
                         controller.secondSegmentN.value.clearDP = true;
@@ -226,8 +226,8 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                     controller.thirdSegmentN.value.altitudeInDP = controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb!;
                     controller.altitudeInDPThirdSegmentN.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb!).toStringAsFixed(2);
                     controller.totalAltitudeInDPThirdSegmentN.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + 3000 + controller.selectedAirport.value!.elevation!).toStringAsFixed(2);
-                    controller.initialElevation.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + 3000 + controller.selectedAirport.value!.elevation!).toStringAsFixed(2);
-                    controller.failure.value.initialElevation = controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + 3000 + controller.selectedAirport.value!.elevation!;
+                    controller.initialElevation.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + 3000).toStringAsFixed(2);
+                    controller.failure.value.initialElevation = controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + 3000;
 
 
                     if ((controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + 3000 + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
