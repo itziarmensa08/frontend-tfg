@@ -33,7 +33,7 @@ class VYTableService {
     return null;
   }
 
-  static Future<ObtainedDataVYWithVelocity?> getObtainedData(String id, double pressure, double grossWeight) async {
+  static Future<ObtainedDataVYWithVelocity?> getObtainedData(String id, double pressure, double grossWeight, String state) async {
     ApiResponse response;
 
     try {
@@ -41,7 +41,8 @@ class VYTableService {
         data: {
           "pressure": pressure,
           "grossWeight": grossWeight,
-          "idAircraft": id
+          "idAircraft": id,
+          "state": state
         }
       );
 

@@ -130,6 +130,7 @@ class NewAnalaysisController extends GetxController {
 
   // ----------------------- N - 1 MOTORS - 1st SEGMENT ----------------------------------------
   final Rx<Segment> firstSegmentN1 = Segment().obs;
+  final TextEditingController elevationFirstSegmentN1 = TextEditingController();
   final RxList<V2TableRowData> obtainedDataN1 = RxList<V2TableRowData>();
   final TextEditingController velocityFirstSegmentN1 = TextEditingController();
   final RxList<ISATableData> obtainedISADataFirstSegmentN1 = RxList<ISATableData>();
@@ -145,6 +146,47 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController altitudeInDPFirstSegmentN1 = TextEditingController();
   final TextEditingController gradientFirstSegmentN1 = TextEditingController();
   final TextEditingController totalAltitudeInDPFirstSegmentN1 = TextEditingController();
+
+  // ----------------------- N - 1 MOTORS - 2nd SEGMENT ----------------------------------------
+  final Rx<Segment> secondSegmentN1 = Segment().obs;
+  final TextEditingController elevationSecondSegmentN1 = TextEditingController();
+  final Rx<VYTableModel> vYtableN1 = VYTableModel().obs;
+  final RxList<VYtableRowsPressures> obtainedDataVYN1 = RxList<VYtableRowsPressures>();
+  final TextEditingController velocitySecondSegmentN1 = TextEditingController();
+  final RxList<ISATableData> obtainedISADataSecondSegmentN1 = RxList<ISATableData>();
+  final TextEditingController densitySecondSegmentN1 = TextEditingController();
+  final TextEditingController velocitySecondSegmentTASN1 = TextEditingController();
+  final Rx<RateOfClimbGraphic> rateGraphicSecondSegmentN1 = RateOfClimbGraphic().obs;
+  final Rx<GradientGraphic> gradientGraphicSecondSegmentN1 = GradientGraphic().obs;
+  final RxMap<String, dynamic> resultRateSecondSegmentN1 = <String, dynamic>{}.obs;
+  final RxMap<String, dynamic> resultGradientSecondSegmentN1 = <String, dynamic>{}.obs;
+  final TextEditingController timeSecondSegmentN1 = TextEditingController();
+  final TextEditingController distanceSecondSegmentN1 = TextEditingController();
+  final TextEditingController timeToDPSecondSegmentN1 = TextEditingController();
+  final TextEditingController altitudeInDPSecondSegmentN1 = TextEditingController();
+  final TextEditingController gradientSecondSegmentN1 = TextEditingController();
+  final TextEditingController totalAltitudeInDPSecondSegmentN1 = TextEditingController();
+
+  // ----------------------- N - 1 MOTORS - 3rd SEGMENT ----------------------------------------
+  final Rx<Segment> thirdSegmentN1 = Segment().obs;
+  final TextEditingController elevationThirdSegmentN1 = TextEditingController();
+  final RxList<VYtableRowsPressures> obtainedDataThirdVYN1 = RxList<VYtableRowsPressures>();
+  final TextEditingController velocityThirdSegmentN1 = TextEditingController();
+  final RxList<ISATableData> obtainedISADataThirdSegmentN1 = RxList<ISATableData>();
+  final TextEditingController densityThirdSegmentN1 = TextEditingController();
+  final TextEditingController velocityThirdSegmentTASN1 = TextEditingController();
+  final Rx<RateOfClimbGraphic> rateGraphicThirdSegmentN1 = RateOfClimbGraphic().obs;
+  final Rx<GradientGraphic> gradientGraphicThirdSegmentN1 = GradientGraphic().obs;
+  final RxMap<String, dynamic> resultRateThirdSegmentN1 = <String, dynamic>{}.obs;
+  final RxMap<String, dynamic> resultGradientThirdSegmentN1 = <String, dynamic>{}.obs;
+  final TextEditingController timeThirdSegmentN1 = TextEditingController();
+  final TextEditingController distanceThirdSegmentN1 = TextEditingController();
+  final TextEditingController timeToDPThirdSegmentN1 = TextEditingController();
+  final TextEditingController altitudeInDPThirdSegmentN1 = TextEditingController();
+  final TextEditingController gradientThirdSegmentN1 = TextEditingController();
+  final TextEditingController totalAltitudeInDPThirdSegmentN1 = TextEditingController();
+
+  final TextEditingController finalGradientN1 = TextEditingController();
 
 }
 

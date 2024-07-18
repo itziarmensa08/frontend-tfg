@@ -120,7 +120,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   if (responseVY != null) {
                     controller.vYtableN.value = responseVY;
                   }
-                  var obtainedDataVY = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, (controller.selectedAirport.value!.elevation! + 800), double.parse(controller.weight.text));
+                  var obtainedDataVY = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, (controller.selectedAirport.value!.elevation! + 800), double.parse(controller.weight.text), "nMotors");
                   if (obtainedDataVY != null) {
                     controller.obtainedDataVYN.value = obtainedDataVY.dataList;
                     controller.velocitySecondSegmentN.text = obtainedDataVY.velocityValue.toStringAsFixed(2);
@@ -186,7 +186,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 controller.elevationThirdSegmentN.text = (controller.selectedAirport.value!.elevation! + 3000).toString();
 
                 if (controller.secondSegmentN.value.reachDP == false) {
-                  var obtainedDataVYThirdSegment = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, (controller.selectedAirport.value!.elevation! + 3000), double.parse(controller.weight.text));
+                  var obtainedDataVYThirdSegment = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, (controller.selectedAirport.value!.elevation! + 3000), double.parse(controller.weight.text), "nMotors");
                   if (obtainedDataVYThirdSegment != null) {
                     controller.obtainedDataVYThirdSegmentN.value = obtainedDataVYThirdSegment.dataList;
                     controller.velocityThirdSegmentN.text = obtainedDataVYThirdSegment.velocityValue.toStringAsFixed(2);

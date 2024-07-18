@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/gradient_chart.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/isa_table.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/vy_table.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart_gradient.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/vyse_table.dart';
 import 'package:get/get.dart';
 
 class SecondSegmentSecondStepGradient extends StatelessWidget {
@@ -23,7 +24,7 @@ class SecondSegmentSecondStepGradient extends StatelessWidget {
           children: [
             Expanded(
               child: TextFormField(
-                controller: controller.elevation,
+                controller: controller.elevationSecondSegmentN1,
                 readOnly: true,
                 decoration: InputDecoration(
                   labelText: 'elevation'.tr,
@@ -63,7 +64,7 @@ class SecondSegmentSecondStepGradient extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        /*Center(child: Obx(() => VyTable(table: controller.vYtableN.value, obtainedData: controller.obtainedDataVYN))),
+        Center(child: Obx(() => VyseTable(table: controller.vYtableN1.value, obtainedData: controller.obtainedDataVYN1))),
         const SizedBox(height: 50),
         Row(
           children: [
@@ -71,11 +72,12 @@ class SecondSegmentSecondStepGradient extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.velocitySecondSegmentN,
+                controller: controller.velocitySecondSegmentN1,
                 onChanged: (value) {
-                  controller.secondSegmentN.value.velocityIAS = double.parse(value);
-                  controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
-                  controller.newProcedure.value.nMotors = controller.nMotors.value;
+                  controller.secondSegmentN1.value.velocityIAS = double.parse(value);
+                  controller.gradient.value.secondSegment = controller.secondSegmentN1.value;
+                  controller.failure.value.gradient = controller.gradient.value;
+                  controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'velocity'.tr,
@@ -95,7 +97,13 @@ class SecondSegmentSecondStepGradient extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => ISATable(table: controller.isatable.value, obtainedData: controller.obtainedISADataSecondSegmentN))),
+        Center(child: Obx(() {
+          if (controller.obtainedISADataSecondSegmentN1.isNotEmpty) {
+            return ISATable(table: controller.isatable.value, obtainedData: controller.obtainedISADataSecondSegmentN1);
+          } else {
+            return const LinearProgressIndicator();
+          }
+        })),
         const SizedBox(height: 50),
         Row(
           children: [
@@ -103,11 +111,12 @@ class SecondSegmentSecondStepGradient extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.densitySecondSegmentN,
+                controller: controller.densitySecondSegmentN1,
                 onChanged: (value) {
-                  controller.secondSegmentN.value.density = double.parse(value);
-                  controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
-                  controller.newProcedure.value.nMotors = controller.nMotors.value;
+                  controller.secondSegmentN1.value.density = double.parse(value);
+                  controller.gradient.value.secondSegment = controller.secondSegmentN1.value;
+                  controller.failure.value.gradient = controller.gradient.value;
+                  controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'density'.tr,
@@ -133,11 +142,12 @@ class SecondSegmentSecondStepGradient extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.velocitySecondSegmentTASN,
+                controller: controller.velocitySecondSegmentTASN1,
                 onChanged: (value) {
-                  controller.secondSegmentN.value.velocityTAS = double.parse(value);
-                  controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
-                  controller.newProcedure.value.nMotors = controller.nMotors.value;
+                  controller.secondSegmentN1.value.velocityTAS = double.parse(value);
+                  controller.gradient.value.secondSegment = controller.secondSegmentN1.value;
+                  controller.failure.value.gradient = controller.gradient.value;
+                  controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'velocity'.tr,
@@ -156,23 +166,28 @@ class SecondSegmentSecondStepGradient extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 50),
-        Center(child: Obx(() => RateChart(rateGraphic: controller.rateGraphicSecondSegmentN.value, resultRate: controller.resultRateSecondSegmentN))),
-        const SizedBox(height: 50),
+        Center(child: Obx(() {
+          if (controller.resultRateSecondSegmentN1.isNotEmpty) {
+            return RateChartGradient(rateGraphic: controller.rateGraphicSecondSegmentN1.value, resultRate: controller.resultRateSecondSegmentN1);
+          } else {
+            return const LinearProgressIndicator();
+          }
+        })),
         Row(
           children: [
-            Text('finalRateOfClimb'.tr, style: Theme.of(context).textTheme.titleMedium),
+            Text('gradientObtained'.tr, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.rateOfClimbSecondSegmentN,
+                controller: controller.gradientSecondSegmentN1,
                 onChanged: (value) {
-                  controller.secondSegmentN.value.rateClimb = double.parse(value);
-                  controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
-                  controller.newProcedure.value.nMotors = controller.nMotors.value;
+                  controller.secondSegmentN1.value.rateClimb = double.parse(value);
+                  controller.gradient.value.secondSegment = controller.secondSegmentN1.value;
+                  controller.failure.value.gradient = controller.gradient.value;
+                  controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
-                  labelText: 'rateOfClimb'.tr,
+                  labelText: 'gradient'.tr,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Theme.of(context).primaryColor,
@@ -189,47 +204,26 @@ class SecondSegmentSecondStepGradient extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Row(
-          children: [
-            Text('timeFirstSegment'.tr, style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(width: 20),
-            Expanded(
-              child: TextFormField(
-                controller: controller.timeSecondSegmentN,
-                onChanged: (value) {
-                  controller.secondSegmentN.value.timeToFinish = double.parse(value);
-                  controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
-                  controller.newProcedure.value.nMotors = controller.nMotors.value;
-                },
-                decoration: InputDecoration(
-                  labelText: 'time'.tr,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+        Center(child: Obx(() {
+          if (controller.resultGradientSecondSegmentN1.isNotEmpty) {
+            return GradientChart(gradientGraphic: controller.gradientGraphicSecondSegmentN1.value, resultRate: controller.resultGradientSecondSegmentN1);
+          } else {
+            return const LinearProgressIndicator();
+          }
+        })),
         const SizedBox(height: 50),
         Row(
           children: [
-            Text('distanceFirstSegment'.tr, style: Theme.of(context).textTheme.titleMedium),
+            Text('distanceObtained'.tr, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.distancSecondSegmentN,
+                controller: controller.distanceSecondSegmentN1,
                 onChanged: (value) {
-                  controller.secondSegmentN.value.distanceToFinish = double.parse(value);
-                  controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
-                  controller.newProcedure.value.nMotors = controller.nMotors.value;
+                  controller.secondSegmentN1.value.distanceToFinish = double.parse(value);
+                  controller.gradient.value.secondSegment = controller.secondSegmentN1.value;
+                  controller.failure.value.gradient = controller.gradient.value;
+                  controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
                   labelText: 'distance'.tr,
@@ -250,108 +244,113 @@ class SecondSegmentSecondStepGradient extends StatelessWidget {
         ),
         const SizedBox(height: 50),
         Obx(() {
-          if (controller.secondSegmentN.value.distanceToFinish != null && controller.firstSegmentN.value.distanceToFinish != null && controller.newProcedure.value.dpDistance != null) {
-            if ((controller.secondSegmentN.value.distanceToFinish! + controller.firstSegmentN.value.distanceToFinish!) < controller.newProcedure.value.dpDistance!) {
-              return Text('noArrive'.tr, style: Theme.of(context).textTheme.titleMedium);
-            } else {
-              controller.secondSegmentN.value.reachDP = true;
-              // Temps que tarda desde 800 ft fins al descision point
-              controller.secondSegmentN.value.timeToDP = (controller.newProcedure.value.dpDistance! - controller.firstSegmentN.value.distanceToFinish!) / controller.secondSegmentN.value.velocityTAS!;
-              controller.timeToDPSecondSegmentN.text = ((controller.newProcedure.value.dpDistance! - controller.firstSegmentN.value.distanceToFinish!) / controller.secondSegmentN.value.velocityTAS!).toString();
-
-              // Altitud desde 800ft fins al decision point
-              controller.secondSegmentN.value.altitudeInDP = controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!;
-              controller.altitudeInDPFirstSegment.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!).toString();
-
-              if ((controller.secondSegmentN.value.altitudeInDP! + 800 + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
-                controller.secondSegmentN.value.clearDP = true;
-              } else {
-                controller.secondSegmentN.value.clearDP = false;
-              }
-
-              controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
-              controller.newProcedure.value.nMotors = controller.nMotors.value;
-
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('yesArrive'.tr, style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 50),
-                  Row(
-                    children: [
-                      Text('timeToDP'.tr, style: Theme.of(context).textTheme.titleMedium),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: TextFormField(
-                          controller: controller.timeToDPSecondSegmentN,
-                          onChanged: (value) {
-                            controller.secondSegmentN.value.timeToDP = double.parse(value);
-                            controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
-                            controller.newProcedure.value.nMotors = controller.nMotors.value;
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'time'.tr,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 50),
-                  Row(
-                    children: [
-                      Text('altitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: TextFormField(
-                          controller: controller.altitudeInDPSecondSegmentN,
-                          onChanged: (value) {
-                            controller.secondSegmentN.value.altitudeInDP = double.parse(value);
-                            controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
-                            controller.newProcedure.value.nMotors = controller.nMotors.value;
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'altitude'.tr,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            }
+          if (controller.secondSegmentN1.value.reachDP == false) {
+            return Text('noArrive'.tr, style: Theme.of(context).textTheme.titleMedium);
           } else {
-            return const LinearProgressIndicator();
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('yesArrive'.tr, style: Theme.of(context).textTheme.titleMedium),
+                const SizedBox(height: 50),
+                Row(
+                  children: [
+                    Text('altitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.altitudeInDPSecondSegmentN1,
+                        onChanged: (value) {
+                          controller.secondSegmentN1.value.altitudeInDP = double.parse(value);
+                          controller.gradient.value.secondSegment = controller.secondSegmentN1.value;
+                          controller.failure.value.gradient = controller.gradient.value;
+                          controller.newProcedure.value.failure = controller.failure.value;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'altitude'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 50),
+                Row(
+                  children: [
+                    Text('totalAltitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.totalAltitudeInDPSecondSegmentN1,
+                        onChanged: (value) {},
+                        decoration: InputDecoration(
+                          labelText: 'altitude'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 50),
+                Row(
+                  children: [
+                    Text('finalGradient'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.finalGradientN1,
+                        onChanged: (value) {
+
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'gradient'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
           }
         }),
         const SizedBox(height: 50),
         Obx(() {
-          if (controller.secondSegmentN.value.clearDP == true) {
+          if (controller.secondSegmentN1.value.clearDP == true && controller.secondSegmentN1.value.reachDP == true) {
             return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green));
-          } else {
+          } else if (controller.secondSegmentN1.value.clearDP == false && controller.secondSegmentN1.value.reachDP == true) {
             return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red));
+          } else {
+            return Container();
           }
-        })*/
+        })
       ],
     );
   }

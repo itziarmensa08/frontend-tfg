@@ -216,17 +216,29 @@ class GradientModel {
   bool? state;
   double? dpDistance;
   double? gradientValue;
+  double? finalGradient;
+  Segment? firstSegment;
+  Segment? secondSegment;
+  Segment? thirdSegment;
 
   GradientModel({
     this.state,
     this.dpDistance,
     this.gradientValue,
+    this.finalGradient,
+    this.firstSegment,
+    this.secondSegment,
+    this.thirdSegment,
   });
 
   GradientModel.fromJson(Map<String, dynamic> json) {
     state = json['state'];
     dpDistance = json['dpDistance']?.toDouble();
     gradientValue = json['gradientValue']?.toDouble();
+    finalGradient = json['finalGradient']?.toDouble();
+    firstSegment = (json['firstSegment'] != null) ? Segment.fromJson(json['firstSegment']) : null;
+    secondSegment = (json['secondSegment'] != null) ? Segment.fromJson(json['secondSegment']) : null;
+    thirdSegment = (json['thirdSegment'] != null) ? Segment.fromJson(json['thirdSegment']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -234,6 +246,16 @@ class GradientModel {
     data['state'] = state;
     data['dpDistance'] = dpDistance;
     data['gradientValue'] = gradientValue;
+    data['finalGradient'] = finalGradient;
+    if (firstSegment != null) {
+      data['firstSegment'] = firstSegment?.toJson();
+    }
+    if (secondSegment != null) {
+      data['secondSegment'] = secondSegment?.toJson();
+    }
+    if (thirdSegment != null) {
+      data['thirdSegment'] = thirdSegment?.toJson();
+    }
     return data;
   }
 }

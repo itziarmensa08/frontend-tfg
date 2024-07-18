@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/gradient_chart.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/isa_table.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart_gradient.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/v2_table.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +17,53 @@ class FirstSegmentSecondStepGradient extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text('reviewDataSecondSegment'.tr, style: Theme.of(context).textTheme.titleMedium),
+        const SizedBox(height: 30),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: TextFormField(
+                controller: controller.elevationFirstSegmentN1,
+                readOnly: true,
+                decoration: InputDecoration(
+                  labelText: 'elevation'.tr,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 20),
+            Expanded(
+              child: TextFormField(
+                controller: controller.weight,
+                readOnly: true,
+                decoration: InputDecoration(
+                  labelText: 'weight'.tr,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 50),
         Center(child: Obx(() {
           if (controller.obtainedDataN1.isNotEmpty) {
             return SpeedTable(table: controller.data.value, obtainedData: controller.obtainedDataN1);
@@ -23,7 +71,7 @@ class FirstSegmentSecondStepGradient extends StatelessWidget {
             return const LinearProgressIndicator();
           }
         })),
-        /*const SizedBox(height: 50),
+        const SizedBox(height: 50),
         Row(
           children: [
             Text('finalVelocityIAS'.tr, style: Theme.of(context).textTheme.titleMedium),
@@ -33,7 +81,8 @@ class FirstSegmentSecondStepGradient extends StatelessWidget {
                 controller: controller.velocityFirstSegmentN1,
                 onChanged: (value) {
                   controller.firstSegmentN1.value.velocityIAS = double.parse(value);
-                  controller.failure.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.gradient.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.failure.value.gradient = controller.gradient.value;
                   controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
@@ -71,7 +120,8 @@ class FirstSegmentSecondStepGradient extends StatelessWidget {
                 controller: controller.densityFirstSegmentN1,
                 onChanged: (value) {
                   controller.firstSegmentN1.value.density = double.parse(value);
-                  controller.failure.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.gradient.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.failure.value.gradient = controller.gradient.value;
                   controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
@@ -101,7 +151,8 @@ class FirstSegmentSecondStepGradient extends StatelessWidget {
                 controller: controller.velocityFirstSegmentTASN1,
                 onChanged: (value) {
                   controller.firstSegmentN1.value.velocityTAS = double.parse(value);
-                  controller.failure.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.gradient.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.failure.value.gradient = controller.gradient.value;
                   controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
@@ -124,7 +175,7 @@ class FirstSegmentSecondStepGradient extends StatelessWidget {
         const SizedBox(height: 50),
         Center(child: Obx(() {
           if (controller.resultRateFirstSegmentN1.isNotEmpty) {
-            return RateChart(rateGraphic: controller.rateGraphicFirstSegmentN1.value, resultRate: controller.resultRateFirstSegmentN1);
+            return RateChartGradient(rateGraphic: controller.rateGraphicFirstSegmentN1.value, resultRate: controller.resultRateFirstSegmentN1);
           } else {
             return const LinearProgressIndicator();
           }
@@ -132,18 +183,19 @@ class FirstSegmentSecondStepGradient extends StatelessWidget {
         const SizedBox(height: 50),
         Row(
           children: [
-            Text('finalRateOfClimb'.tr, style: Theme.of(context).textTheme.titleMedium),
+            Text('gradientObtained'.tr, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.rateOfClimbFirstSegmentN1,
+                controller: controller.gradientFirstSegmentN1,
                 onChanged: (value) {
                   controller.firstSegmentN1.value.rateClimb = double.parse(value);
-                  controller.failure.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.gradient.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.failure.value.gradient = controller.gradient.value;
                   controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
-                  labelText: 'rateOfClimb'.tr,
+                  labelText: 'gradient'.tr,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Theme.of(context).primaryColor,
@@ -160,46 +212,25 @@ class FirstSegmentSecondStepGradient extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Row(
-          children: [
-            Text('timeFirstSegment'.tr, style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(width: 20),
-            Expanded(
-              child: TextFormField(
-                controller: controller.timeFirstSegmentN1,
-                onChanged: (value) {
-                  controller.firstSegmentN1.value.timeToFinish = double.parse(value);
-                  controller.failure.value.firstSegment = controller.firstSegmentN1.value;
-                  controller.newProcedure.value.failure = controller.failure.value;
-                },
-                decoration: InputDecoration(
-                  labelText: 'time'.tr,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+        Center(child: Obx(() {
+          if (controller.resultGradientFirstSegmentN1.isNotEmpty) {
+            return GradientChart(gradientGraphic: controller.gradientGraphicFirstSegmentN1.value, resultRate: controller.resultGradientFirstSegmentN1);
+          } else {
+            return const LinearProgressIndicator();
+          }
+        })),
         const SizedBox(height: 50),
         Row(
           children: [
-            Text('distanceFirstSegment'.tr, style: Theme.of(context).textTheme.titleMedium),
+            Text('distanceObtained'.tr, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
                 controller: controller.distanceFirstSegmentN1,
                 onChanged: (value) {
                   controller.firstSegmentN1.value.distanceToFinish = double.parse(value);
-                  controller.failure.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.gradient.value.firstSegment = controller.firstSegmentN1.value;
+                  controller.failure.value.gradient = controller.gradient.value;
                   controller.newProcedure.value.failure = controller.failure.value;
                 },
                 decoration: InputDecoration(
@@ -232,18 +263,19 @@ class FirstSegmentSecondStepGradient extends StatelessWidget {
                 const SizedBox(height: 50),
                 Row(
                   children: [
-                    Text('timeToDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    Text('altitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(width: 20),
                     Expanded(
                       child: TextFormField(
-                        controller: controller.timeToDPFirstSegment,
+                        controller: controller.altitudeInDPFirstSegmentN1,
                         onChanged: (value) {
-                          controller.firstSegmentN.value.timeToDP = double.parse(value);
-                          controller.nMotors.value.firstSegment = controller.firstSegmentN.value;
-                          controller.newProcedure.value.nMotors = controller.nMotors.value;
+                          controller.firstSegmentN1.value.altitudeInDP = double.parse(value);
+                          controller.gradient.value.firstSegment = controller.firstSegmentN1.value;
+                          controller.failure.value.gradient = controller.gradient.value;
+                          controller.newProcedure.value.failure = controller.failure.value;
                         },
                         decoration: InputDecoration(
-                          labelText: 'time'.tr,
+                          labelText: 'altitude'.tr,
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Theme.of(context).primaryColor,
@@ -262,18 +294,44 @@ class FirstSegmentSecondStepGradient extends StatelessWidget {
                 const SizedBox(height: 50),
                 Row(
                   children: [
-                    Text('altitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    Text('totalAltitudeInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(width: 20),
                     Expanded(
                       child: TextFormField(
-                        controller: controller.altitudeInDPFirstSegment,
+                        controller: controller.totalAltitudeInDPFirstSegmentN1,
                         onChanged: (value) {
-                          controller.firstSegmentN.value.altitudeInDP = double.parse(value);
-                          controller.nMotors.value.firstSegment = controller.firstSegmentN.value;
-                          controller.newProcedure.value.nMotors = controller.nMotors.value;
+
                         },
                         decoration: InputDecoration(
                           labelText: 'altitude'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 50),
+                Row(
+                  children: [
+                    Text('finalGradient'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.finalGradientN1,
+                        onChanged: (value) {
+
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'gradient'.tr,
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Theme.of(context).primaryColor,
@@ -302,7 +360,7 @@ class FirstSegmentSecondStepGradient extends StatelessWidget {
           } else {
             return Container();
           }
-        })*/
+        })
       ],
     );
   }

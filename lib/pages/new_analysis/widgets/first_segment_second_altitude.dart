@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/gradient_chart.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/isa_table.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart_gradient.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/v2_table.dart';
 import 'package:get/get.dart';
@@ -18,6 +17,53 @@ class FirstSegmentSecondStepAltitude extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text('reviewDataSecondSegment'.tr, style: Theme.of(context).textTheme.titleMedium),
+        const SizedBox(height: 30),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: TextFormField(
+                controller: controller.elevationFirstSegmentN1,
+                readOnly: true,
+                decoration: InputDecoration(
+                  labelText: 'elevation'.tr,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 20),
+            Expanded(
+              child: TextFormField(
+                controller: controller.weight,
+                readOnly: true,
+                decoration: InputDecoration(
+                  labelText: 'weight'.tr,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 50),
         Center(child: Obx(() {
           if (controller.obtainedDataN1.isNotEmpty) {
             return SpeedTable(table: controller.data.value, obtainedData: controller.obtainedDataN1);
