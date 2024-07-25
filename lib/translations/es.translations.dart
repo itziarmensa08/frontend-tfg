@@ -159,8 +159,8 @@ final Map<String, String> es = {
   'noArrive': "En este punto la aeronave aún no ha alcanzado el punto crítico, por lo tanto debemos hacer los cálculos para el siguiente segmento.",
   'yesArrive': "En este punto la aeronave ha alcanzado el punto crítico, vamos a calcular si es capaz de sobrepasarlo:",
   'timeToDP': "Tiempo que tarda en llegar al punto crítico:",
-  'altitudeInDP': "Altitud alcanzada por la aeronave en el punto crítico desde el comienzo del segmento:",
-  'totalAltitudeInDP': "Altitud alcanzada por la aeronave en el punto crítico en total:",
+  'altitudeInDP': "Incremento de altitud desde el comienzo del segmento:",
+  'totalAltitudeInDP': "Altitud alcanzada por la aeronave en el punto crítico:",
   'altitude': "Altitud",
   'clearDP': "La aeronave es capaz de sobrepasar el punto crítico",
   'noClearDP': "La aeronave no es capaz de sobrepasar el punto crítico",
@@ -178,6 +178,9 @@ final Map<String, String> es = {
   "start_analysis": "Empezar análisi",
 
   "gradient": "Gradiente (%)",
+  "finalGradient": "Gradiente total calculado:",
+  "gradientObtained": "Gradiente obtenido:",
+  "distanceObtained": "Distancia obtenida:",
 
 
   'step4title': "Conclusión"

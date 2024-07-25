@@ -183,10 +183,13 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController distanceThirdSegmentN1 = TextEditingController();
   final TextEditingController timeToDPThirdSegmentN1 = TextEditingController();
   final TextEditingController altitudeInDPThirdSegmentN1 = TextEditingController();
-  final TextEditingController gradientThirdSegmentN1 = TextEditingController();
+  final TextEditingController rateOfClimbThirdSegmentN1 = TextEditingController();
   final TextEditingController totalAltitudeInDPThirdSegmentN1 = TextEditingController();
 
   final TextEditingController finalGradientN1 = TextEditingController();
+
+  final TextEditingController precedureN = TextEditingController();
+  final TextEditingController precedureN1 = TextEditingController();
 
 }
 

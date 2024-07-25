@@ -362,13 +362,13 @@ class ThirdStepState extends State<ThirdStep> {
                             controller.firstSegmentN1.value.reachDP = true;
                             reachDP1 = true;
 
-                            controller.firstSegmentN1.value.altitudeInDP = (controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 100 / controller.firstSegmentN1.value.rateClimb!;
-                            controller.altitudeInDPFirstSegmentN1.text = ((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 100 / controller.firstSegmentN1.value.rateClimb!).toString();
+                            controller.firstSegmentN1.value.altitudeInDP = ((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.firstSegmentN1.value.rateClimb!) / 100;
+                            controller.altitudeInDPFirstSegmentN1.text = (((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.firstSegmentN1.value.rateClimb!) / 100).toString();
                             controller.totalAltitudeInDPFirstSegmentN1.text = (controller.firstSegmentN1.value.altitudeInDP! + controller.selectedAirport.value!.elevation!).toString();
                             var height = controller.firstSegmentN1.value.altitudeInDP!;
                             var distanceFeet = controller.gradient.value.dpDistance! * 6076.12;
-                            controller.gradient.value.finalGradient = (distanceFeet / height) * 100;
-                            controller.finalGradientN1.text = ((distanceFeet / height) * 100).toStringAsFixed(2);
+                            controller.gradient.value.finalGradient = (height / distanceFeet) * 100;
+                            controller.finalGradientN1.text = ((height / distanceFeet) * 100).toStringAsFixed(2);
 
                             if (controller.gradient.value.finalGradient! > controller.gradient.value.gradientValue!) {
                               controller.firstSegmentN1.value.clearDP = true;
@@ -416,7 +416,7 @@ class ThirdStepState extends State<ThirdStep> {
                             controller.resultRateSecondSegmentN1.value = resultrateresponseSecond;
                             controller.secondSegmentN1.value.rateClimb = resultrateresponseSecond['finalPoint']['x'];
                             controller.gradientSecondSegmentN1.text = resultrateresponseSecond['finalPoint']['x'].toString();
-                            var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicSecondSegmentN1.value.id!, resultrateresponseSecond['finalPoint']['x'], 1500 - 35);
+                            var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicSecondSegmentN1.value.id!, resultrateresponseSecond['finalPoint']['x'], 1500 - 400);
                             if (resultgradientresponse != null) {
                               controller.resultGradientSecondSegmentN1.value = resultgradientresponse;
                               controller.secondSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
@@ -430,13 +430,13 @@ class ThirdStepState extends State<ThirdStep> {
                               controller.secondSegmentN1.value.reachDP = true;
                               reachDP2 = true;
 
-                              controller.secondSegmentN1.value.altitudeInDP = (controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 100 / controller.secondSegmentN1.value.rateClimb!;
-                              controller.altitudeInDPSecondSegmentN1.text = ((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 100 / controller.secondSegmentN1.value.rateClimb!).toString();
-                              controller.totalAltitudeInDPSecondSegmentN1.text = (controller.secondSegmentN1.value.altitudeInDP! + 400).toString();
+                              controller.secondSegmentN1.value.altitudeInDP = ((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.secondSegmentN1.value.rateClimb!) / 100;
+                              controller.altitudeInDPSecondSegmentN1.text = (((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.secondSegmentN1.value.rateClimb!) / 100).toString();
+                              controller.totalAltitudeInDPSecondSegmentN1.text = (controller.secondSegmentN1.value.altitudeInDP! + 400 + controller.selectedAirport.value!.elevation!).toString();
                               var height = controller.secondSegmentN1.value.altitudeInDP! + 400 - controller.selectedAirport.value!.elevation!;
                               var distanceFeet = controller.gradient.value.dpDistance! * 6076.12;
-                              controller.gradient.value.finalGradient = (distanceFeet / height) * 100;
-                              controller.finalGradientN1.text = ((distanceFeet / height) * 100).toStringAsFixed(2);
+                              controller.gradient.value.finalGradient = (height / distanceFeet) * 100;
+                              controller.finalGradientN1.text = ((height / distanceFeet) * 100).toStringAsFixed(2);
 
                               if (controller.gradient.value.finalGradient! > controller.gradient.value.gradientValue!) {
                                 controller.secondSegmentN1.value.clearDP = true;
@@ -469,21 +469,39 @@ class ThirdStepState extends State<ThirdStep> {
                           controller.thirdSegmentN1.value.velocityTAS = velocityTAS;
                           controller.velocityThirdSegmentTASN1.text = velocityTAS.toStringAsFixed(2);
                         }
-                        if (controller.secondSegmentN1.value.rateClimb != null) {
-                          controller.thirdSegmentN1.value.rateClimb = controller.secondSegmentN1.value.rateClimb;
-                          controller.gradientThirdSegmentN1.text = controller.secondSegmentN1.value.rateClimb!.toStringAsFixed(2);
+                        var rateresponseThird = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 3, "failure");
+                        if (rateresponseThird != null) {
+                          controller.rateGraphicThirdSegmentN1.value = rateresponseThird;
+                        }
+                        var resultrateresponseThird = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicThirdSegmentN1.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.selectedAirport.value!.elevation! + 1500), double.parse(controller.weight.text));
+                        if (resultrateresponseThird != null) {
+                          controller.resultRateThirdSegmentN1.value = resultrateresponseThird;
+                          controller.thirdSegmentN1.value.rateClimb = resultrateresponseThird['finalPoint']['x'];
+                          /*controller.gradientThirdSegmentN1.text = resultrateresponseThird['finalPoint']['x'].toString();
+                          //var altitudRequired = (controller.gradient.value.dpDistance! / controller.gradient.value.gradientValue!) * 100;
+                          var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicThirdSegmentN1.value.id!, resultrateresponseThird['finalPoint']['x'], 1500 - 400);
+                          if (resultgradientresponse != null) {
+                            controller.resultGradientThirdSegmentN1.value = resultgradientresponse;
+                            controller.thirdSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
+                            controller.distanceThirdSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
+                          }*/
+                          controller.rateOfClimbThirdSegmentN1.text = resultrateresponseThird['finalPoint']['x'].toStringAsFixed(2);
                         }
                         if (controller.gradient.value.dpDistance != null) {
                           controller.thirdSegmentN1.value.reachDP = true;
                           reachDP3 = true;
 
-                          controller.thirdSegmentN1.value.altitudeInDP = (controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 100 / controller.thirdSegmentN1.value.rateClimb!;
-                          controller.altitudeInDPThirdSegmentN1.text = ((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 100 / controller.thirdSegmentN1.value.rateClimb!).toString();
-                          controller.totalAltitudeInDPThirdSegmentN1.text = (controller.thirdSegmentN1.value.altitudeInDP! + 1500).toString();
+                          controller.thirdSegmentN1.value.timeToDP = ((controller.gradient.value.dpDistance! - (controller.failure.value.distanceToInitial! + controller.firstSegmentN1.value.distanceToFinish! + controller.secondSegmentN1.value.distanceToFinish!)) / controller.thirdSegmentN1.value.velocityTAS!) * 60;
+                          controller.timeToDPThirdSegmentN1.text = (((controller.gradient.value.dpDistance! - (controller.failure.value.distanceToInitial! + controller.firstSegmentN1.value.distanceToFinish! + controller.secondSegmentN1.value.distanceToFinish!)) / controller.thirdSegmentN1.value.velocityTAS!) * 60).toStringAsFixed(2);
+
+                          controller.thirdSegmentN1.value.altitudeInDP = controller.thirdSegmentN1.value.timeToDP! * controller.thirdSegmentN1.value.rateClimb!;
+                          controller.altitudeInDPThirdSegmentN1.text = (controller.thirdSegmentN1.value.timeToDP! * controller.thirdSegmentN1.value.rateClimb!).toStringAsFixed(2);
+
+                          controller.totalAltitudeInDPThirdSegmentN1.text = (controller.thirdSegmentN1.value.altitudeInDP! + 1500 + controller.selectedAirport.value!.elevation!).toString();
                           var height = controller.thirdSegmentN1.value.altitudeInDP! + 1500 - controller.selectedAirport.value!.elevation!;
                           var distanceFeet = controller.gradient.value.dpDistance! * 6076.12;
-                          controller.gradient.value.finalGradient = (distanceFeet / height) * 100;
-                          controller.finalGradientN1.text = ((distanceFeet / height) * 100).toStringAsFixed(2);
+                          controller.gradient.value.finalGradient = (height / distanceFeet) * 100;
+                          controller.finalGradientN1.text = ((height / distanceFeet) * 100).toStringAsFixed(2);
 
                           if (controller.gradient.value.finalGradient! > controller.gradient.value.gradientValue!) {
                             controller.thirdSegmentN1.value.clearDP = true;
@@ -502,7 +520,6 @@ class ThirdStepState extends State<ThirdStep> {
                       widget.controller.seeAnalysis.value = true;
                     }
                     controller.loadingAnalysis.value = false;
-                    print(controller.newProcedure.value.toJson());
 
                   },
                   child: Text('start_analysis'.tr),
@@ -642,8 +659,8 @@ class ThirdStepState extends State<ThirdStep> {
                             controller.firstSegmentN1.value.reachDP = true;
                             reachDP1 = true;
 
-                            controller.firstSegmentN1.value.altitudeInDP = (controller.altitude.value.dpDistance! - controller.failure.value.distanceToInitial!) * 100 / controller.firstSegmentN1.value.rateClimb!;
-                            controller.altitudeInDPFirstSegmentN1.text = ((controller.altitude.value.dpDistance! - controller.failure.value.distanceToInitial!) * 100 / controller.firstSegmentN1.value.rateClimb!).toString();
+                            controller.firstSegmentN1.value.altitudeInDP = ((controller.altitude.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.firstSegmentN1.value.rateClimb!) / 100;
+                            controller.altitudeInDPFirstSegmentN1.text = (((controller.altitude.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.firstSegmentN1.value.rateClimb!) / 100).toString();
                             controller.totalAltitudeInDPFirstSegmentN1.text = (controller.firstSegmentN1.value.altitudeInDP! + controller.selectedAirport.value!.elevation!).toString();
 
                             if ((controller.firstSegmentN1.value.altitudeInDP! + controller.selectedAirport.value!.elevation!) > controller.altitude.value.dpElevation!) {
@@ -692,7 +709,7 @@ class ThirdStepState extends State<ThirdStep> {
                             controller.resultRateSecondSegmentN1.value = resultrateresponseSecond;
                             controller.secondSegmentN1.value.rateClimb = resultrateresponseSecond['finalPoint']['x'];
                             controller.gradientSecondSegmentN1.text = resultrateresponseSecond['finalPoint']['x'].toString();
-                            var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicSecondSegmentN1.value.id!, resultrateresponseSecond['finalPoint']['x'], 1500 - 35);
+                            var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicSecondSegmentN1.value.id!, resultrateresponseSecond['finalPoint']['x'], 1500 - 400);
                             if (resultgradientresponse != null) {
                               controller.resultGradientSecondSegmentN1.value = resultgradientresponse;
                               controller.secondSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
@@ -706,9 +723,9 @@ class ThirdStepState extends State<ThirdStep> {
                               controller.secondSegmentN1.value.reachDP = true;
                               reachDP2 = true;
 
-                              controller.secondSegmentN1.value.altitudeInDP = (controller.altitude.value.dpDistance! - (controller.firstSegmentN1.value.distanceToFinish! + controller.failure.value.distanceToInitial!)) * 100 / controller.secondSegmentN1.value.rateClimb!;
-                              controller.altitudeInDPSecondSegmentN1.text = ((controller.altitude.value.dpDistance! - (controller.firstSegmentN1.value.distanceToFinish! + controller.failure.value.distanceToInitial!)) * 100 / controller.secondSegmentN1.value.rateClimb!).toString();
-                              controller.totalAltitudeInDPSecondSegmentN1.text = (controller.secondSegmentN1.value.altitudeInDP! + 400).toString();
+                              controller.secondSegmentN1.value.altitudeInDP = ((controller.altitude.value.dpDistance! - (controller.firstSegmentN1.value.distanceToFinish! + controller.failure.value.distanceToInitial!)) * 6076.12) * controller.secondSegmentN1.value.rateClimb! / 100;
+                              controller.altitudeInDPSecondSegmentN1.text = (((controller.altitude.value.dpDistance! - (controller.firstSegmentN1.value.distanceToFinish! + controller.failure.value.distanceToInitial!)) * 6076.12) * controller.secondSegmentN1.value.rateClimb! / 100).toString();
+                              controller.totalAltitudeInDPSecondSegmentN1.text = (controller.secondSegmentN1.value.altitudeInDP! + 400 + controller.selectedAirport.value!.elevation!).toString();
 
                               if ((controller.secondSegmentN1.value.altitudeInDP! + controller.selectedAirport.value!.elevation! + 400) > controller.altitude.value.dpElevation!) {
                                 controller.secondSegmentN1.value.clearDP = true;
@@ -741,16 +758,37 @@ class ThirdStepState extends State<ThirdStep> {
                           controller.thirdSegmentN1.value.velocityTAS = velocityTAS;
                           controller.velocityThirdSegmentTASN1.text = velocityTAS.toStringAsFixed(2);
                         }
-                        if (controller.secondSegmentN1.value.rateClimb != null) {
-                          controller.thirdSegmentN1.value.rateClimb = controller.secondSegmentN1.value.rateClimb;
-                          controller.gradientThirdSegmentN1.text = controller.secondSegmentN1.value.rateClimb!.toStringAsFixed(2);
+                        var rateresponseThird = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 3, "failure");
+                        if (rateresponseThird != null) {
+                          controller.rateGraphicThirdSegmentN1.value = rateresponseThird;
+                        }
+                        var gradientresponseThird = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 2);
+                        if (gradientresponseThird != null) {
+                          controller.gradientGraphicThirdSegmentN1.value = gradientresponseThird;
+                        }
+                        var resultrateresponseThird = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicThirdSegmentN1.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.selectedAirport.value!.elevation! + 1500), double.parse(controller.weight.text));
+                        if (resultrateresponseThird != null) {
+                          controller.resultRateThirdSegmentN1.value = resultrateresponseThird;
+                          controller.thirdSegmentN1.value.rateClimb = resultrateresponseThird['finalPoint']['x'];
+                          /*controller.gradientThirdSegmentN1.text = resultrateresponseThird['finalPoint']['x'].toString();
+                          var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicThirdSegmentN1.value.id!, resultrateresponseThird['finalPoint']['x'], 1500 - 400);
+                          if (resultgradientresponse != null) {
+                            controller.resultGradientThirdSegmentN1.value = resultgradientresponse;
+                            controller.thirdSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
+                            controller.distanceThirdSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
+                          }*/
+                          controller.rateOfClimbThirdSegmentN1.text = resultrateresponseThird['finalPoint']['x'].toStringAsFixed(2);
                         }
                         if (controller.altitude.value.dpDistance != null) {
                           controller.thirdSegmentN1.value.reachDP = true;
                           reachDP3 = true;
-                          controller.thirdSegmentN1.value.altitudeInDP = (controller.altitude.value.dpDistance! - (controller.firstSegmentN1.value.distanceToFinish! + controller.secondSegmentN1.value.distanceToFinish! + controller.failure.value.distanceToInitial!)) * 100 / controller.thirdSegmentN1.value.rateClimb!;
-                          controller.altitudeInDPThirdSegmentN1.text = ((controller.altitude.value.dpDistance! - (controller.firstSegmentN1.value.distanceToFinish! + controller.secondSegmentN1.value.distanceToFinish! + controller.failure.value.distanceToInitial!)) * 100 / controller.thirdSegmentN1.value.rateClimb!).toString();
-                          controller.totalAltitudeInDPThirdSegmentN1.text = (controller.thirdSegmentN1.value.altitudeInDP! + 1500).toString();
+                          controller.thirdSegmentN1.value.timeToDP = ((controller.altitude.value.dpDistance! - (controller.failure.value.distanceToInitial! + controller.firstSegmentN1.value.distanceToFinish! + controller.secondSegmentN1.value.distanceToFinish!)) / controller.thirdSegmentN1.value.velocityTAS!) * 60;
+                          controller.timeToDPThirdSegmentN1.text = (((controller.altitude.value.dpDistance! - (controller.failure.value.distanceToInitial! + controller.firstSegmentN1.value.distanceToFinish! + controller.secondSegmentN1.value.distanceToFinish!)) / controller.thirdSegmentN1.value.velocityTAS!) * 60).toStringAsFixed(2);
+
+                          controller.thirdSegmentN1.value.altitudeInDP = controller.thirdSegmentN1.value.timeToDP! * controller.thirdSegmentN1.value.rateClimb!;
+                          controller.altitudeInDPThirdSegmentN1.text = (controller.thirdSegmentN1.value.timeToDP! * controller.thirdSegmentN1.value.rateClimb!).toStringAsFixed(2);
+
+                          controller.totalAltitudeInDPThirdSegmentN1.text = (controller.thirdSegmentN1.value.altitudeInDP! + 1500 + controller.selectedAirport.value!.elevation!).toString();
                           if ((controller.thirdSegmentN1.value.altitudeInDP! + controller.selectedAirport.value!.elevation! + 1500) > controller.altitude.value.dpElevation!) {
                             controller.thirdSegmentN1.value.clearDP = true;
                           } else {
@@ -768,7 +806,6 @@ class ThirdStepState extends State<ThirdStep> {
                       widget.controller.seeAnalysis.value = true;
                     }
                     controller.loadingAnalysis.value = false;
-                    print(controller.newProcedure.value.toJson());
                   },
                   child: Text('start_analysis'.tr),
                 ),

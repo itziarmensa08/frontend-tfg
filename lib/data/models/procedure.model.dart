@@ -16,6 +16,8 @@ class Procedure {
   Failure? failure;
   String? createdAt;
   String? updatedAt;
+  String? procedureN;
+  String? procedureN1;
 
   Procedure({
     this.id,
@@ -33,6 +35,8 @@ class Procedure {
     this.failure,
     this.createdAt,
     this.updatedAt,
+    this.procedureN,
+    this.procedureN1
   });
   Procedure.fromJson(Map<String, dynamic> json) {
     id = json['_id']?.toString();
@@ -50,6 +54,8 @@ class Procedure {
     failure = (json['failure'] != null) ? Failure.fromJson(json['failure']) : null;
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
+    procedureN = json['procedureN']?.toString();
+    procedureN1 = json['procedureN1']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -72,6 +78,8 @@ class Procedure {
     }
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
+    data['procedureN'] = procedureN;
+    data['procedureN1'] = procedureN1;
     return data;
   }
 }

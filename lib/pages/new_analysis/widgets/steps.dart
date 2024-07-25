@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/conclusion.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/first_step.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/second_step.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/third_step.dart';
@@ -24,6 +25,6 @@ List<Step> getSteps (controller) => [
   Step(
     isActive: controller.indexStepper.value >= 3,
     title: Text('step4title'.tr),
-    content: const Text('Content for Step 4'),
+    content: Conclusion(),
   ),
 ];

@@ -58,7 +58,7 @@ class MyApi {
 
     } catch (e) {
 
-      log('Error in post: $e');
+      print('Error in post: $e');
       res.data = 'Error in post: $e';
       return res;
 

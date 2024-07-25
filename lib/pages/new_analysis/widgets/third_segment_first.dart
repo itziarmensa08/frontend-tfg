@@ -26,7 +26,7 @@ class ThirdSegmentFirstStep extends StatelessWidget {
                 controller: controller.elevationThirdSegmentN,
                 readOnly: true,
                 decoration: InputDecoration(
-                  labelText: 'elevation'.tr,
+                  labelText: 'altitude'.tr,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Theme.of(context).primaryColor,

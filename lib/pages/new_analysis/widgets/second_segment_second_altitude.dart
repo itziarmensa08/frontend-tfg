@@ -27,7 +27,7 @@ class SecondSegmentSecondStepAltitude extends StatelessWidget {
                 controller: controller.elevationSecondSegmentN1,
                 readOnly: true,
                 decoration: InputDecoration(
-                  labelText: 'elevation'.tr,
+                  labelText: 'altitude'.tr,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Theme.of(context).primaryColor,
@@ -166,6 +166,7 @@ class SecondSegmentSecondStepAltitude extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 50),
         Center(child: Obx(() {
           if (controller.resultRateSecondSegmentN1.isNotEmpty) {
             return RateChartGradient(rateGraphic: controller.rateGraphicSecondSegmentN1.value, resultRate: controller.resultRateSecondSegmentN1);
@@ -173,6 +174,7 @@ class SecondSegmentSecondStepAltitude extends StatelessWidget {
             return const LinearProgressIndicator();
           }
         })),
+        const SizedBox(height: 50),
         Row(
           children: [
             Text('gradientObtained'.tr, style: Theme.of(context).textTheme.titleMedium),
@@ -316,9 +318,9 @@ class SecondSegmentSecondStepAltitude extends StatelessWidget {
         const SizedBox(height: 50),
         Obx(() {
           if (controller.secondSegmentN1.value.clearDP == true && controller.secondSegmentN1.value.reachDP == true) {
-            return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green));
+            return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green, fontSize: 20));
           } else if (controller.secondSegmentN1.value.clearDP == false && controller.secondSegmentN1.value.reachDP == true) {
-            return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red));
+            return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red, fontSize: 20));
           } else {
             return Container();
           }

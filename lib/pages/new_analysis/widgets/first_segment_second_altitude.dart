@@ -27,7 +27,7 @@ class FirstSegmentSecondStepAltitude extends StatelessWidget {
                 controller: controller.elevationFirstSegmentN1,
                 readOnly: true,
                 decoration: InputDecoration(
-                  labelText: 'elevation'.tr,
+                  labelText: 'altitude'.tr,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Theme.of(context).primaryColor,
@@ -323,9 +323,9 @@ class FirstSegmentSecondStepAltitude extends StatelessWidget {
         const SizedBox(height: 50),
         Obx(() {
           if (controller.firstSegmentN1.value.clearDP == true && controller.firstSegmentN1.value.reachDP == true) {
-            return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green));
+            return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green, fontSize: 20));
           } else if (controller.firstSegmentN1.value.clearDP == false && controller.firstSegmentN1.value.reachDP == true) {
-            return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red));
+            return Text('noClearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red, fontSize: 20));
           } else {
             return Container();
           }
