@@ -29,4 +29,28 @@ class ProcedureService {
     return null;
   }
 
+  static Future<dynamic> getAllProcedures() async {
+    ApiResponse response;
+
+    try {
+      response = await MyApi().get(
+        '/procedures',
+      );
+
+      if (response.statusCode == 200) {
+
+        dynamic data = response.data;
+
+        return data;
+
+      } else {
+        ToastUtils.showErrorToast(response.data);
+      }
+
+    } catch (error) {
+      ToastUtils.showErrorToast('Error Getting Procedures: $error');
+    }
+    return null;
+  }
+
 }
