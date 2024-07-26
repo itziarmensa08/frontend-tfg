@@ -41,7 +41,7 @@ class ProcedureCard extends StatelessWidget {
                       'Aeropuerto',
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -49,7 +49,7 @@ class ProcedureCard extends StatelessWidget {
                       airport,
                       style: const TextStyle(
                         fontSize: 14,
-                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
@@ -62,7 +62,7 @@ class ProcedureCard extends StatelessWidget {
                       'Aeronave',
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -70,7 +70,8 @@ class ProcedureCard extends StatelessWidget {
                       aircraft,
                       style: const TextStyle(
                         fontSize: 14,
-                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        
                       ),
                     ),
                   ],
@@ -83,7 +84,7 @@ class ProcedureCard extends StatelessWidget {
                       'SID',
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -91,7 +92,8 @@ class ProcedureCard extends StatelessWidget {
                       sidName,
                       style: const TextStyle(
                         fontSize: 14,
-                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        
                       ),
                     ),
                   ],
@@ -104,7 +106,7 @@ class ProcedureCard extends StatelessWidget {
                       'RWY',
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -112,7 +114,8 @@ class ProcedureCard extends StatelessWidget {
                       rwyName,
                       style: const TextStyle(
                         fontSize: 14,
-                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        
                       ),
                     ),
                   ],
@@ -125,7 +128,7 @@ class ProcedureCard extends StatelessWidget {
                       'DP',
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -133,7 +136,8 @@ class ProcedureCard extends StatelessWidget {
                       dpName,
                       style: const TextStyle(
                         fontSize: 14,
-                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        
                       ),
                     ),
                   ],
