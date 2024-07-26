@@ -22,9 +22,9 @@ class Conclusion extends StatelessWidget {
 
           if (clearDP != null) {
             if (clearDP) {
-              return Text('El decision point se encuentra en el primer segmento y la aeronave es capaz de sobrepasarlo.');
+              return const Text('El decision point se encuentra en el primer segmento y la aeronave es capaz de sobrepasarlo.');
             } else {
-              return Text('El decision point se encuentra en el primer segmento y la aeronave NO es capaz de sobrepasarlo.');
+              return const Text('El decision point se encuentra en el primer segmento y la aeronave NO es capaz de sobrepasarlo.');
             }
           } else {
             return Container();
@@ -35,9 +35,9 @@ class Conclusion extends StatelessWidget {
 
           if (clearDP != null) {
             if (clearDP) {
-              return Text('El decision point se encuentra en el segundo segmento y la aeronave es capaz de sobrepasarlo.');
+              return const Text('El decision point se encuentra en el segundo segmento y la aeronave es capaz de sobrepasarlo.');
             } else {
-              return Text('El decision point se encuentra en el segundo segmento y la aeronave NO es capaz de sobrepasarlo.');
+              return const Text('El decision point se encuentra en el segundo segmento y la aeronave NO es capaz de sobrepasarlo.');
             }
           } else {
             return Container();
@@ -48,9 +48,9 @@ class Conclusion extends StatelessWidget {
 
           if (clearDP != null) {
             if (clearDP) {
-              return Text('El decision point se encuentra en el tercer segmento y la aeronave es capaz de sobrepasarlo.');
+              return const Text('El decision point se encuentra en el tercer segmento y la aeronave es capaz de sobrepasarlo.');
             } else {
-              return Text('El decision point se encuentra en el tercer segmento y la aeronave NO es capaz de sobrepasarlo.');
+              return const Text('El decision point se encuentra en el tercer segmento y la aeronave NO es capaz de sobrepasarlo.');
             }
           } else {
             return Container();
@@ -96,9 +96,9 @@ class Conclusion extends StatelessWidget {
 
             if (clearDP1 != null) {
               if (clearDP1) {
-                return Text('El decision point se encuentra en el primer segmento y la aeronave es capaz de sobrepasarlo.');
+                return const Text('El decision point se encuentra en el primer segmento y la aeronave es capaz de sobrepasarlo.');
               } else {
-                return Text('El decision point se encuentra en el primer segmento y la aeronave NO es capaz de sobrepasarlo.');
+                return const Text('El decision point se encuentra en el primer segmento y la aeronave NO es capaz de sobrepasarlo.');
               }
             }
 
@@ -106,9 +106,9 @@ class Conclusion extends StatelessWidget {
 
             if (clearDP2 != null) {
               if (clearDP2) {
-                return Text('El decision point se encuentra en el segundo segmento y la aeronave es capaz de sobrepasarlo.');
+                return const Text('El decision point se encuentra en el segundo segmento y la aeronave es capaz de sobrepasarlo.');
               } else {
-                return Text('El decision point se encuentra en el segundo segmento y la aeronave NO es capaz de sobrepasarlo.');
+                return const Text('El decision point se encuentra en el segundo segmento y la aeronave NO es capaz de sobrepasarlo.');
               }
             }
 
@@ -116,9 +116,9 @@ class Conclusion extends StatelessWidget {
 
             if (clearDP3 != null) {
               if (clearDP3) {
-                return Text('El decision point se encuentra en el tercer segmento y la aeronave es capaz de sobrepasarlo.');
+                return const Text('El decision point se encuentra en el tercer segmento y la aeronave es capaz de sobrepasarlo.');
               } else {
-                return Text('El decision point se encuentra en el tercer segmento y la aeronave NO es capaz de sobrepasarlo.');
+                return const Text('El decision point se encuentra en el tercer segmento y la aeronave NO es capaz de sobrepasarlo.');
               }
             }
 

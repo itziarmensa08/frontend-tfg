@@ -28,7 +28,7 @@ RUN mkdir /app/
 COPY . /app/
 WORKDIR /app/
 RUN flutter pub get
-RUN flutter build web
+RUN flutter build web --no-tree-shake-icons
 
 EXPOSE 8080
 
