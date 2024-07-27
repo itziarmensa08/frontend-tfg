@@ -28,10 +28,8 @@ RUN mkdir /app/
 COPY . /app/
 WORKDIR /app/
 RUN flutter pub get
-RUN flutter build web --no-tree-shake-icons
-
+# Expose the port for the development server
 EXPOSE 8080
 
-# Stage 2 - Create the run-time image
-FROM nginx:1.21.1-alpine
-COPY --from=build-env /app/build/web /usr/share/nginx/html
+# Command to run the Flutter app
+CMD ["flutter", "run", "-d", "web-server", "--web-port", "8080", "--web-hostname", "0.0.0.0"]
