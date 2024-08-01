@@ -37,9 +37,9 @@ WORKDIR /app/
 RUN flutter pub get
 RUN flutter build web --dart-define=env=production --no-tree-shake-icons
 
+# Expose port 80 for the web server
+EXPOSE 8080
+
 # Stage 2 - Create the run-time image
 FROM nginx:alpine
 COPY --from=build-env /app/build/web /usr/share/nginx/html
-
-# Expose port 80 for the web server
-EXPOSE 8080
