@@ -35,7 +35,7 @@ RUN flutter config --no-enable-macos-desktop --no-enable-windows-desktop --no-en
 COPY . /app/
 WORKDIR /app/
 RUN flutter pub get
-RUN flutter build web --dart-define=env=production
+RUN flutter build web --dart-define=env=production --no-tree-shake-icons
 
 # Stage 2 - Create the run-time image
 FROM nginx:alpine
