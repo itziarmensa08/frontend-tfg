@@ -37,9 +37,11 @@ WORKDIR /app/
 RUN flutter pub get
 RUN flutter build web --dart-define=env=production --no-tree-shake-icons
 
-# Expose port 80 for the web server
-EXPOSE 80
+# Stage 2 - Create the run-time image with Apache
+FROM httpd:alpine
 
-# Stage 2 - Create the run-time image
-FROM nginx:alpine
-COPY --from=build-env /app/build/web /usr/share/nginx/html
+# Copy built app files to the Apache server's root directory
+COPY --from=build-env /app/build/web /usr/local/apache2/htdocs/
+
+# Expose port 80
+EXPOSE 80
