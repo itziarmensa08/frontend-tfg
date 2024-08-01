@@ -42,7 +42,7 @@ FROM nginx:alpine
 COPY --from=build-env /app/build/web /usr/share/nginx/html
 
 # Expose port 80 for the web server
-EXPOSE 4001
+EXPOSE 80
 
 # Command to run Nginx
 CMD ["nginx", "-g", "daemon off;"]
