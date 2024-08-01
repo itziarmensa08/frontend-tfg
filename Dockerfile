@@ -38,7 +38,7 @@ RUN flutter pub get
 RUN flutter build web --dart-define=env=production --no-tree-shake-icons
 
 # Expose port 80 for the web server
-EXPOSE 8080
+EXPOSE 80
 
 # Stage 2 - Create the run-time image
 FROM nginx:alpine
