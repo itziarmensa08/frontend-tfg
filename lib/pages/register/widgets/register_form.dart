@@ -175,7 +175,8 @@ class RegisterForm extends Container {
                   email: controller.email.text,
                   password: controller.password1.text,
                   role: 'user',
-                  language: prefs.getString('language') ?? 'es'
+                  language: prefs.getString('language') ?? 'es',
+                  validated: false
                 );
                 await UserService.register(user);
                 Get.toNamed(Routes.login);

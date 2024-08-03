@@ -24,6 +24,8 @@ final Map<String, String> es = {
   'getIn': 'ENTRAR',
   'Not found user': 'No existe ningún usuario con este nombre de usuario',
   'Incorrect password': 'Contraseña incorrecta',
+  'successValidate': 'Se ha validado el usuario correctamente',
+  'notValidated': 'El usuario no está validado',
 
   //Register
   'email': 'Correo electrónico',

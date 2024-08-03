@@ -12,6 +12,7 @@ class UserModel {
   DateTime? dateBorn;
   String? profileImage;
   String? language;
+  bool? validated;
 
   UserModel(
     {
@@ -25,7 +26,8 @@ class UserModel {
       this.telephone,
       this.dateBorn,
       this.profileImage,
-      this.language
+      this.language,
+      this.validated
     }
   );
 
@@ -41,6 +43,7 @@ class UserModel {
     dateBorn = json['dateBorn'] != null ? DateTime.parse(json['dateBorn']) : null;
     profileImage = json['profileImage']?.toString();
     language = json['language']?.toString();
+    validated = json['validated'];
   }
 
   Map<String, dynamic> toJson(){
@@ -65,6 +68,7 @@ class UserModel {
     }
     data['profileImage'] = profileImage;
     data['language'] = language;
+    data['validated'] = validated;
     return data;
   }
 }

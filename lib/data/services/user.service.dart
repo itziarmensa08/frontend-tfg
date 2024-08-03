@@ -55,7 +55,8 @@ class UserService {
 
       } else if (response.statusCode == 404 ||  response.statusCode == 400) {
         return response.data;
-
+      } else if (response.statusCode == 401) {
+        ToastUtils.showErrorToast('notValidated'.tr);
       } else {
         ToastUtils.showErrorToast(response.data);
       }
@@ -160,6 +161,24 @@ class UserService {
       }
     } catch (error) {
       ToastUtils.showErrorToast('Error DeleteUser: $error');
+    }
+  }
+
+  static Future<void> validate(String id) async {
+    ApiResponse response;
+
+    try {
+      response = await MyApi().put(
+        '/auth/validate/$id',
+      );
+
+      if (response.statusCode == 200) {
+        ToastUtils.showSuccessToast('successValidate'.tr);
+      } else {
+        ToastUtils.showErrorToast('${response.data}'.tr);
+      }
+    } catch (error) {
+      ToastUtils.showErrorToast('Error Validate: $error');
     }
   }
 
