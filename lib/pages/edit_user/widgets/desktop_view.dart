@@ -7,6 +7,7 @@ import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
 import 'package:frontend_tfg/pages/edit_user/edit_user.binding.dart';
 import 'package:frontend_tfg/pages/edit_user/edit_user.controller.dart';
+import 'package:frontend_tfg/pages/edit_user/widgets/assign_task_form.dart';
 import 'package:frontend_tfg/pages/edit_user/widgets/edit_user_form.dart';
 import 'package:frontend_tfg/pages/edit_user/widgets/view_user_form.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
@@ -87,23 +88,20 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(onPressed: () async {
-                    showAlert(
-                      context,
-                      'deleteUser'.tr,
-                      'confirmDeleteUser'.tr,
-                      'yes'.tr,
-                      'no'.tr,
-                      const Color.fromRGBO(255, 0, 0, 1),
-                      const Color.fromARGB(255, 255, 255, 255),
-                      () async {
-                        await UserService.deleteUser(controller.user.value.id!);
-                        Get.toNamed(Routes.admin);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          scrollable: true,
+                          title: Text('assignTask'.tr),
+                          content: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: AssignTaskForm()
+                          ),
+                        );
                       },
-                      () {
-                        Navigator.of(context).pop();
-                      }
                     );
-                  }, child: Text('deleteUser'.tr)),
+                  }, child: Text('assignTask'.tr)),
                   const SizedBox(height: 20),
                   ElevatedButton(onPressed: () async {
                     showAlert(

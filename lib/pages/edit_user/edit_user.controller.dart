@@ -17,4 +17,10 @@ class EditUserController extends GetxController {
 
   DateTime? date;
 
+  final Rx<Event> event = Event().obs;
+  final TextEditingController taskDescription = TextEditingController();
+  TextEditingController taskDateText = TextEditingController();
+  DateTime? taskDate;
+
+
 }

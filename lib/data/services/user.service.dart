@@ -182,4 +182,38 @@ class UserService {
     }
   }
 
+  static Future<bool?> assignTask(String idUser, Event task) async {
+    ApiResponse response;
+
+    try {
+      response = await MyApi().put('/users/tasks/$idUser', data: task.toJson());
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        ToastUtils.showErrorToast(response.data);
+      }
+    } catch (error) {
+      ToastUtils.showErrorToast('Error AssignTask: $error');
+    }
+    return null;
+  }
+
+  static Future<bool?> completeTask(String idUser, String idTask) async {
+    ApiResponse response;
+
+    try {
+      response = await MyApi().put('/users/tasks/$idUser/$idTask');
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        ToastUtils.showErrorToast(response.data);
+      }
+    } catch (error) {
+      ToastUtils.showErrorToast('Error AssignTask: $error');
+    }
+    return null;
+  }
+
 }

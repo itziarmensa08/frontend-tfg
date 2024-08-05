@@ -94,6 +94,10 @@ final Map<String, String> es = {
   'editPhoto': "Editar foto",
   'signOut': "Cerrar sesión",
   'errorCloudinary': "Ha habido un error subiendo la imagen, inténtalo más tarde",
+  'assignTask': 'Asignar nueva tarea',
+  'description': 'Descripción',
+  'dateLimit': 'Fecha límite de realización',
+  'assignTaskSuccess': 'Tarea asignada con éxito',
 
   //Add aircraft
   'succesAddAircraft': 'Aeronave registrada correctamente',
