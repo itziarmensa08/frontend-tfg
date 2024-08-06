@@ -28,6 +28,8 @@ import 'package:frontend_tfg/pages/profile/profile.binding.dart';
 import 'package:frontend_tfg/pages/profile/profile.page.dart';
 import 'package:frontend_tfg/pages/register/register.binding.dart';
 import 'package:frontend_tfg/pages/register/register.page.dart';
+import 'package:frontend_tfg/pages/settings/settings.binding.dart';
+import 'package:frontend_tfg/pages/settings/settings.page.dart';
 import 'package:frontend_tfg/pages/splash/splash.binding.dart';
 import 'package:frontend_tfg/pages/splash/splash.page.dart';
 import 'package:frontend_tfg/pages/tasks/tasks.binding.dart';
@@ -122,6 +124,11 @@ abstract class AppPages {
       name: Routes.editAirport,
       page:() => const EditAirportPage(),
       binding: EditAirportBinding()
+    ),
+    GetPage(
+      name: Routes.settings,
+      page:() => const SettingsPage(),
+      binding: SettingsBinding()
     ),
   ];
 }

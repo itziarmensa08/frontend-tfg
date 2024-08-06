@@ -81,6 +81,7 @@ class AssignTaskForm extends Container {
             if (_formKey.currentState!.validate()) {
               controller.event.value.title = controller.taskDescription.text;
               controller.event.value.isCompleted = false;
+              controller.event.value.remembered = false;
               if (controller.taskDate != null) {
                 controller.event.value.date = controller.taskDate;
               }

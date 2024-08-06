@@ -19,6 +19,7 @@ abstract class Routes{
   static const listAirports = '/listAirports';
   static const addAirport = '/addAirport';
   static const editAirport = '/editAirport';
+  static const settings = '/settings';
 
 }
 

@@ -56,7 +56,9 @@ List<ContentView> tabs = [
   ),
   ContentView(
     tab: CustomTab(title: 'settings'.tr),
-    onTabPressed: () {},
+    onTabPressed: () {
+      Get.toNamed(Routes.settings);
+    },
   ),
 ];
 

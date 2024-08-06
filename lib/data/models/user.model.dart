@@ -2,14 +2,16 @@ class Event {
   DateTime? date;
   String? title;
   bool? isCompleted;
+  bool? remembered;
   String? id;
 
-  Event({this.date, this.title, this.isCompleted, this.id});
+  Event({this.date, this.title, this.isCompleted, this.id, this.remembered});
 
   Event.fromJson(Map<String, dynamic> json) {
     date = json['date'] != null ? DateTime.parse(json['date']) : null;
     title = json['title']?.toString();
     isCompleted = json['isCompleted'];
+    remembered = json['remembered'];
     id = json['_id']?.toString();
   }
 
@@ -30,6 +32,7 @@ class Event {
     }
     data['title'] = title;
     data['isCompleted'] = isCompleted;
+    data['remembered'] = remembered;
     return data;
   }
 }
