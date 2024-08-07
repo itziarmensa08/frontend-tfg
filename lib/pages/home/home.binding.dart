@@ -8,6 +8,8 @@ class HomeBinding implements Bindings {
   Future<void> dependencies() async {
     final HomeController controller = Get.put(HomeController());
     var procedures = await ProcedureService.getAllProcedures();
-    controller.procedures.value = procedures;
+    if (procedures != null) {
+      controller.procedures.value = procedures;
+    }
   }
 }

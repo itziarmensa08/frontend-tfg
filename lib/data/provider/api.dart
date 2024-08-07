@@ -3,6 +3,7 @@ import 'dart:developer' show log;
 import 'package:frontend_tfg/data/models/auth.model.dart';
 import 'package:frontend_tfg/data/provider/endpoints.dart';
 import 'package:http_interceptor/http_interceptor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final optHeader = {
   'content-type': 'application/json',
@@ -38,6 +39,12 @@ class MyApi {
 
       if (token != null) {
         optHeader['Authorization'] = 'Bearer $token';
+      } else {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        var tokenPrefs = prefs.getString('token');
+        if (tokenPrefs != null) {
+          optHeader['Authorization'] = 'Bearer $tokenPrefs';
+        }
       }
 
       final response = await client.post(
@@ -75,6 +82,12 @@ class MyApi {
 
       if (token != null) {
         optHeader['Authorization'] = 'Bearer $token';
+      } else {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        var tokenPrefs = prefs.getString('token');
+        if (tokenPrefs != null) {
+          optHeader['Authorization'] = 'Bearer $tokenPrefs';
+        }
       }
 
       final response = await client.get(
@@ -112,6 +125,12 @@ class MyApi {
 
       if (token != null) {
         optHeader['Authorization'] = 'Bearer $token';
+      } else {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        var tokenPrefs = prefs.getString('token');
+        if (tokenPrefs != null) {
+          optHeader['Authorization'] = 'Bearer $tokenPrefs';
+        }
       }
 
       final response = await client.delete(
@@ -149,6 +168,12 @@ class MyApi {
 
       if (token != null) {
         optHeader['Authorization'] = 'Bearer $token';
+      } else {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        var tokenPrefs = prefs.getString('token');
+        if (tokenPrefs != null) {
+          optHeader['Authorization'] = 'Bearer $tokenPrefs';
+        }
       }
 
       final response = await client.put(

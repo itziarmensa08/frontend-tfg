@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/pages/settings/widgets/settings_item.dart';
+import 'package:get/get.dart';
 
 Widget desktopView(double height, BuildContext context, TickerProviderStateMixin page) {
   return Column(
@@ -14,16 +15,8 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
           child: Column(
             children: <Widget>[
             SettingsItem(
-              icon: Icons.language,
-              title: 'Language',
-              onTap: () {
-                // Navigate to language settings
-              },
-            ),
-            const Divider(),
-            SettingsItem(
               icon: Icons.notifications,
-              title: 'Notifications',
+              title: 'notifications'.tr,
               onTap: () {
                 // Navigate to notifications settings
               },
@@ -31,7 +24,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
             const Divider(),
             SettingsItem(
               icon: Icons.visibility,
-              title: 'Appearance',
+              title: 'appearance'.tr,
               onTap: () {
                 // Navigate to appearance settings
               },
@@ -39,7 +32,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
             const Divider(),
             SettingsItem(
               icon: Icons.lock,
-              title: 'Privacy & Security',
+              title: 'privacy'.tr,
               onTap: () {
                 // Navigate to privacy & security settings
               },
@@ -47,7 +40,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
             const Divider(),
             SettingsItem(
               icon: Icons.help,
-              title: 'Help and Support',
+              title: 'help'.tr,
               onTap: () {
                 // Navigate to help and support settings
               },
@@ -55,12 +48,19 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
             const Divider(),
             SettingsItem(
               icon: Icons.info,
-              title: 'About',
+              title: 'about'.tr,
               onTap: () {
                 // Navigate to about settings
               },
             ),
             const Divider(),
+            SettingsItemLanguage(
+              icon: Icons.language,
+              title: 'language'.tr,
+              onTap: () {
+                // Navigate to language settings
+              },
+            ),
           ],
           )
         ),

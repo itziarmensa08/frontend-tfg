@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_tfg/general_widgets/language_dropdown.dart';
 
 class SettingsItem extends StatefulWidget {
   final IconData icon;
@@ -60,3 +61,47 @@ class _SettingsItemState extends State<SettingsItem> {
     );
   }
 }
+
+class SettingsItemLanguage extends StatefulWidget {
+  final IconData icon;
+  final String title;
+  final VoidCallback onTap;
+
+  const SettingsItemLanguage({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.onTap,
+  });
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _SettingsItemLanguageState createState() => _SettingsItemLanguageState();
+}
+
+class _SettingsItemLanguageState extends State<SettingsItemLanguage> {
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          children: <Widget>[
+            Icon(widget.icon, size: 28, color: Colors.grey),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                widget.title,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            buildLanguageDropdown()
+          ],
+        ),
+      ),
+    );
+  }
+}
+

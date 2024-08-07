@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Frontend TFG',
+      title: 'EOSID program',
       theme: theme,
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.initial,

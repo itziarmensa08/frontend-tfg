@@ -1,4 +1,5 @@
 
+import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/auth.model.dart';
 import 'package:frontend_tfg/data/models/user.model.dart';
 import 'package:frontend_tfg/data/provider/api.dart';
@@ -8,10 +9,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService {
 
-  getUserLogged() async {
+  getUserLoggedSplash() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('id');
     await Future.delayed(const Duration(seconds: 2));
+    if (userId != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getUserLogged() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('id');
     if (userId != null) {
       return true;
     } else {
@@ -37,6 +48,7 @@ class UserService {
         Auth.token = data['token'];
         Auth.id = userModel.id!;
         Auth.language = userModel.language!;
+        Get.updateLocale(Locale(userModel.language!));
         if (userModel.role == 'admin') {
           Auth.isAdmin = true;
         } else {
