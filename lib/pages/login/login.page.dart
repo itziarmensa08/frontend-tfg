@@ -17,7 +17,7 @@ class LoginPage extends StatelessWidget {
         fit: StackFit.expand,
         children: <Widget>[
           Image.asset(
-            "fondo.png",
+            "assets/fondo.png",
             fit: BoxFit.cover,
           ),
           SingleChildScrollView(
