@@ -16,7 +16,7 @@ class SplashScreenPage extends StatelessWidget {
       body: DecoratedBox(
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("fondo.jpg"), fit: BoxFit.cover),
+              image: AssetImage("fondo.png"), fit: BoxFit.cover),
         ),
         child: SafeArea(
           child: Center(
