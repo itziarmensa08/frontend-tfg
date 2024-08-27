@@ -17,7 +17,7 @@ class RegisterPage extends StatelessWidget {
       body: DecoratedBox(
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("IMG_0621.JPG"), fit: BoxFit.cover),
+              image: AssetImage("fondo.jpg"), fit: BoxFit.cover),
         ),
         child: SingleChildScrollView(
           child: Center(
