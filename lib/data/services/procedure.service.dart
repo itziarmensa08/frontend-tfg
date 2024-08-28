@@ -53,4 +53,26 @@ class ProcedureService {
     return null;
   }
 
+  static Future<dynamic> downloadPdfProcedure(String idProcedure) async {
+    ApiResponse response;
+
+    try {
+      response = await MyApi().post(
+        '/pdf/generate/$idProcedure',
+      );
+
+      if (response.statusCode == 200) {
+
+        return response.data;
+
+      } else {
+        ToastUtils.showErrorToast(response.data);
+      }
+
+    } catch (error) {
+      ToastUtils.showErrorToast('Error Downloading Procedure: $error');
+    }
+    return null;
+  }
+
 }

@@ -50,6 +50,7 @@ Widget desktopView(double height, TickerProviderStateMixin page) {
                         sidName: procedure['sidName'],
                         rwyName: procedure['rwyName'],
                         dpName: procedure['dpName'],
+                        id: procedure['_id'],
                       );
                     },
                   ),

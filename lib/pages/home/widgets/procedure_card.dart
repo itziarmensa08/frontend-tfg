@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_tfg/data/services/procedure.service.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class ProcedureCard extends StatelessWidget {
   final String airport;
@@ -6,6 +9,7 @@ class ProcedureCard extends StatelessWidget {
   final String sidName;
   final String rwyName;
   final String dpName;
+  final String id;
 
   const ProcedureCard({
     super.key,
@@ -14,6 +18,7 @@ class ProcedureCard extends StatelessWidget {
     required this.sidName,
     required this.dpName,
     required this.rwyName,
+    required this.id,
   });
 
   @override
@@ -162,8 +167,14 @@ class ProcedureCard extends StatelessWidget {
                       child: IconButton(
                         icon: const Icon(Icons.picture_as_pdf),
                         color: Colors.grey,
-                        onPressed: () {
-                          // Acción para descargar PDF
+                        onPressed: () async {
+                          var url = await ProcedureService.downloadPdfProcedure(id);
+                          final Uri uri = Uri.parse(url['url']);
+                          if (await canLaunchUrl(uri)) {
+                            await launchUrl(uri);
+                          } else {
+                            throw 'No se puede abrir la URL: $uri';
+                          }
                         },
                         tooltip: 'Descargar PDF',
                       ),
