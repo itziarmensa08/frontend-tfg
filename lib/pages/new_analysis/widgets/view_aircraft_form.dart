@@ -53,6 +53,82 @@ class ViewAircraftForm extends Container {
               suffixIcon: const Icon(Icons.airplanemode_active),
             ),
           ),
+          const SizedBox(height: 20),
+          TextFormField(
+            controller: controller.altitude1stSegmentN,
+            readOnly: true,
+            decoration: InputDecoration(
+              labelText: 'altitude1stSegmentN'.tr,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              suffixIcon: const Icon(Icons.airplanemode_active),
+            ),
+          ),
+          const SizedBox(height: 20),
+          TextFormField(
+            controller: controller.altitude2ndSegmentN,
+            readOnly: true,
+            decoration: InputDecoration(
+              labelText: 'altitude2ndSegmentN'.tr,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              suffixIcon: const Icon(Icons.airplanemode_active),
+            ),
+          ),
+          const SizedBox(height: 20),
+          TextFormField(
+            controller: controller.altitude1stSegmentFailure,
+            readOnly: true,
+            decoration: InputDecoration(
+              labelText: 'altitude1stSegmentFailure'.tr,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              suffixIcon: const Icon(Icons.airplanemode_active),
+            ),
+          ),
+          const SizedBox(height: 20),
+          TextFormField(
+            controller: controller.altitude2ndSegmentFailure,
+            readOnly: true,
+            decoration: InputDecoration(
+              labelText: 'altitude2ndSegmentFailure'.tr,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              suffixIcon: const Icon(Icons.airplanemode_active),
+            ),
+          ),
         ],
       )
     );

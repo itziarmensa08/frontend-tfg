@@ -34,6 +34,86 @@ class ViewAircraftForm extends Container {
               suffixIcon: const Icon(Icons.airplanemode_active),
             ),
           ),
+          const SizedBox(height: 20),
+          if (controller.aircraft.value.profile != null)
+          TextFormField(
+            controller: TextEditingController(text: controller.aircraft.value.profile!.nMotors!.heightFirstSegment!.toString()),
+            readOnly: true,
+            decoration: InputDecoration(
+              labelText: 'altitude1stSegmentN'.tr,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              suffixIcon: const Icon(Icons.airplanemode_active),
+            ),
+          ),
+          const SizedBox(height: 20),
+          if (controller.aircraft.value.profile != null)
+          TextFormField(
+            controller: TextEditingController(text: controller.aircraft.value.profile!.nMotors!.heightSecondSegment!.toString()),
+            readOnly: true,
+            decoration: InputDecoration(
+              labelText: 'altitude2ndSegmentN'.tr,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              suffixIcon: const Icon(Icons.airplanemode_active),
+            ),
+          ),
+          const SizedBox(height: 20),
+          if (controller.aircraft.value.profile != null)
+          TextFormField(
+            controller: TextEditingController(text: controller.aircraft.value.profile!.failure!.heightFirstSegment!.toString()),
+            readOnly: true,
+            decoration: InputDecoration(
+              labelText: 'altitude1stSegmentFailure'.tr,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              suffixIcon: const Icon(Icons.airplanemode_active),
+            ),
+          ),
+          const SizedBox(height: 20),
+          if (controller.aircraft.value.profile != null)
+          TextFormField(
+            controller: TextEditingController(text: controller.aircraft.value.profile!.failure!.heightSecondSegment!.toString()),
+            readOnly: true,
+            decoration: InputDecoration(
+              labelText: 'altitude2ndSegmentFailure'.tr,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              suffixIcon: const Icon(Icons.airplanemode_active),
+            ),
+          ),
         ],
       ))
     );

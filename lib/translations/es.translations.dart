@@ -54,6 +54,7 @@ final Map<String, String> es = {
   'admin': 'Administrador',
   'user': 'Usuario',
   'settings': 'Configuración',
+  'airportsListProc': 'Lista de aeropuertos con procedimientos realizados:',
 
   //Admin page
   'dashboard': 'Panel de administrador',
@@ -102,6 +103,11 @@ final Map<String, String> es = {
   //Add aircraft
   'succesAddAircraft': 'Aeronave registrada correctamente',
   'addAircraft': 'Guardar aeronave',
+  'altitude1stSegmentN': 'Altitud del primer segmento con N motores',
+  'altitude2ndSegmentN': 'Altitud del segundo segmento con N motores',
+  'altitude1stSegmentFailure': 'Altitud del primer segmento con N - 1 motores',
+  'altitude2ndSegmentFailure': 'Altitud del segundo segmento con N - 1 motores',
+  'subirProfile': 'Subir foto perfil de elevación',
 
   //Edit aircraft
   'editAircraft': 'Editar aeronave',
@@ -189,6 +195,6 @@ final Map<String, String> es = {
   "distanceObtained": "Distancia obtenida:",
 
 
-  'step4title': "Conclusión"
+  'step4title': "Conclusión",
 
 };

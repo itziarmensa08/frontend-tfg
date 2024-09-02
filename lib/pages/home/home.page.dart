@@ -40,7 +40,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin{
         padding: EdgeInsets.only(bottom: botomPadding, top: topPadding),
         child: LayoutBuilder(builder: (context, constraints) {
           if (constraints.maxWidth > 715){
-            return desktopView(screenHeight * 0.85, this);
+            return desktopView(screenHeight * 0.85, this, context);
           }else{
             return mobileView(screenWidth, scaffoldKey, context);
           }

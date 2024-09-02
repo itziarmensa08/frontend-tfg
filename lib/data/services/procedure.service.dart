@@ -1,4 +1,5 @@
 
+import 'package:frontend_tfg/data/models/airport_model.dart';
 import 'package:frontend_tfg/data/models/procedure.model.dart';
 import 'package:frontend_tfg/data/provider/api.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
@@ -71,6 +72,37 @@ class ProcedureService {
 
     } catch (error) {
       ToastUtils.showErrorToast('Error Downloading Procedure: $error');
+    }
+    return null;
+  }
+
+  static Future<dynamic> getAirportsWithProcedures() async {
+    ApiResponse response;
+
+    try {
+      response = await MyApi().get(
+        '/procedures/list/airports',
+      );
+
+      if (response.statusCode == 200) {
+
+        dynamic data = response.data;
+
+        if (data is List) {
+          List<AirportModel> airports = data.map((airportJson) => AirportModel.fromJson(airportJson)).toList();
+          return airports;
+        } else {
+          ToastUtils.showErrorToast('Invalid data format');
+        }
+
+        return data;
+
+      } else {
+        ToastUtils.showErrorToast(response.data);
+      }
+
+    } catch (error) {
+      ToastUtils.showErrorToast('Error Getting Procedures: $error');
     }
     return null;
   }

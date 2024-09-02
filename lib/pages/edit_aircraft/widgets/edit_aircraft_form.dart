@@ -62,11 +62,91 @@ class EditAircraftForm extends Container {
             ),
             validator: (value) => textValidator(value),
           ),
+          const SizedBox(height: 20),
+          TextFormField(
+            controller: controller.altitude1stSegmentN,
+            decoration: InputDecoration(
+              labelText: 'altitude1stSegmentN'.tr,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              suffixIcon: const Icon(Icons.airplanemode_active),
+            ),
+            validator: (value) => textValidator(value),
+          ),
+          const SizedBox(height: 20),
+          TextFormField(
+            controller: controller.altitude2ndSegmentN,
+            decoration: InputDecoration(
+              labelText: 'altitude2ndSegmentN'.tr,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              suffixIcon: const Icon(Icons.airplanemode_active),
+            ),
+            validator: (value) => textValidator(value),
+          ),
+          const SizedBox(height: 20),
+          TextFormField(
+            controller: controller.altitude1stSegmentFailure,
+            decoration: InputDecoration(
+              labelText: 'altitude1stSegmentFailure'.tr,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              suffixIcon: const Icon(Icons.airplanemode_active),
+            ),
+            validator: (value) => textValidator(value),
+          ),
+          const SizedBox(height: 20),
+          TextFormField(
+            controller: controller.altitude2ndSegmentFailure,
+            decoration: InputDecoration(
+              labelText: 'altitude2ndSegmentFailure'.tr,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              suffixIcon: const Icon(Icons.airplanemode_active),
+            ),
+            validator: (value) => textValidator(value),
+          ),
           const SizedBox(height: 40),
           ElevatedButton(onPressed: () async {
             if (_formKey.currentState!.validate()) {
               controller.aircraft.value.name = controller.name.text;
               controller.aircraft.value.metro = controller.metro.text;
+              controller.aircraft.value.profile!.nMotors!.heightFirstSegment = double.parse(controller.altitude1stSegmentN.text);
+              controller.aircraft.value.profile!.nMotors!.heightSecondSegment = double.parse(controller.altitude2ndSegmentN.text);
+              controller.aircraft.value.profile!.failure!.heightFirstSegment = double.parse(controller.altitude1stSegmentFailure.text);
+              controller.aircraft.value.profile!.failure!.heightSecondSegment = double.parse(controller.altitude2ndSegmentFailure.text);
 
               bool? success = await AircraftService.updateAircraft(
                 controller.aircraft.value.id!,

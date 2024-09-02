@@ -23,6 +23,10 @@ class NewAnalaysisController extends GetxController {
   final Rx<AircraftModel?> selectedAircraft = Rx<AircraftModel?>(null);
   final TextEditingController nameAircraft = TextEditingController();
   final TextEditingController metro = TextEditingController();
+  final TextEditingController altitude1stSegmentN = TextEditingController();
+  final TextEditingController altitude2ndSegmentN = TextEditingController();
+  final TextEditingController altitude1stSegmentFailure = TextEditingController();
+  final TextEditingController altitude2ndSegmentFailure = TextEditingController();
   final RxBool aircraftCorrect = RxBool(false);
 
   final RxList<AirportModel> airports = RxList<AirportModel>();
@@ -207,6 +211,10 @@ asignAircraftData (NewAnalaysisController controller) {
   if (controller.selectedAircraft.value != null) {
     controller.nameAircraft.text = controller.selectedAircraft.value!.name!;
     controller.metro.text = controller.selectedAircraft.value!.metro!;
+    controller.altitude1stSegmentN.text = controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!.toString();
+    controller.altitude2ndSegmentN.text = controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!.toString();
+    controller.altitude1stSegmentFailure.text = controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!.toString();
+    controller.altitude2ndSegmentFailure.text = controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment!.toString();
   }
 }
 

@@ -7,9 +7,10 @@ class HomeBinding implements Bindings {
   @override
   Future<void> dependencies() async {
     final HomeController controller = Get.put(HomeController());
-    var procedures = await ProcedureService.getAllProcedures();
-    if (procedures != null) {
-      controller.procedures.value = procedures;
+    var airports = await ProcedureService.getAirportsWithProcedures();
+    if (airports != null) {
+      controller.airports.value = airports;
+      controller.filteredairports.value = airports;
     }
   }
 }

@@ -77,11 +77,11 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   controller.resultRate.value = resultrateresponse;
                   controller.firstSegmentN.value.rateClimb = resultrateresponse['finalPoint']['x']; // feet / minute
                   controller.rateOfClimbFirstSegment.text = resultrateresponse['finalPoint']['x'].toStringAsFixed(2);
-                  controller.firstSegmentN.value.timeToFinish = (800 - 50) / resultrateresponse['finalPoint']['x']; // minutes
-                  controller.timeFirstSegment.text = ((800 - 50) / resultrateresponse['finalPoint']['x']).toStringAsFixed(2);
+                  controller.firstSegmentN.value.timeToFinish = (controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment! - 50) / resultrateresponse['finalPoint']['x']; // minutes
+                  controller.timeFirstSegment.text = ((controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment! - 50) / resultrateresponse['finalPoint']['x']).toStringAsFixed(2);
                   if (controller.firstSegmentN.value.velocityTAS != null) {
-                    controller.firstSegmentN.value.distanceToFinish = controller.firstSegmentN.value.velocityTAS! * (((800 - 50) / resultrateresponse['finalPoint']['x'])/60);
-                    controller.distanceFirstSegment.text = (controller.firstSegmentN.value.velocityTAS! * (((800 - 50) / resultrateresponse['finalPoint']['x'])/60)).toStringAsFixed(2);
+                    controller.firstSegmentN.value.distanceToFinish = controller.firstSegmentN.value.velocityTAS! * (((controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment! - 50) / resultrateresponse['finalPoint']['x'])/60);
+                    controller.distanceFirstSegment.text = (controller.firstSegmentN.value.velocityTAS! * (((controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment! - 50) / resultrateresponse['finalPoint']['x'])/60)).toStringAsFixed(2);
                   }
                 }
                 var reachDP1 = false;
@@ -113,20 +113,20 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
 
                 // ---------------------- N MOTORES - 2 SEGMENTO -------------------------------------------
 
-                controller.elevationSecondSegmentN.text = (controller.selectedAirport.value!.elevation! + 800).toString();
+                controller.elevationSecondSegmentN.text = (controller.selectedAirport.value!.elevation! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!).toString();
 
                 if (controller.firstSegmentN.value.reachDP == false) {
                   var responseVY = await VYTableService.getVYtableByAircraft(controller.selectedAircraft.value!.id!, "nMotors");
                   if (responseVY != null) {
                     controller.vYtableN.value = responseVY;
                   }
-                  var obtainedDataVY = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, (controller.selectedAirport.value!.elevation! + 800), double.parse(controller.weight.text), "nMotors");
+                  var obtainedDataVY = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, (controller.selectedAirport.value!.elevation! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!), double.parse(controller.weight.text), "nMotors");
                   if (obtainedDataVY != null) {
                     controller.obtainedDataVYN.value = obtainedDataVY.dataList;
                     controller.velocitySecondSegmentN.text = obtainedDataVY.velocityValue.toStringAsFixed(2);
                     controller.secondSegmentN.value.velocityIAS = obtainedDataVY.velocityValue;
                   }
-                  var obtainedDataISASecondSegment = await ISATableService.getObtainedData((controller.selectedAirport.value!.elevation! + 800));
+                  var obtainedDataISASecondSegment = await ISATableService.getObtainedData((controller.selectedAirport.value!.elevation! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!));
                   if (obtainedDataISASecondSegment != null) {
                     controller.obtainedISADataSecondSegmentN.value = obtainedDataISASecondSegment.dataList;
                     controller.densitySecondSegmentN.text = obtainedDataISASecondSegment.densityValue.toStringAsFixed(2);
@@ -141,16 +141,16 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   if (rateresponseSecondSegment != null) {
                     controller.rateGraphicSecondSegmentN.value = rateresponseSecondSegment;
                   }
-                  var resultrateresponseSecondSegment = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicSecondSegmentN.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.selectedAirport.value!.elevation! + 800), double.parse(controller.weight.text));
+                  var resultrateresponseSecondSegment = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicSecondSegmentN.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.selectedAirport.value!.elevation! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!), double.parse(controller.weight.text));
                   if (resultrateresponseSecondSegment != null) {
                     controller.resultRateSecondSegmentN.value = resultrateresponseSecondSegment;
                     controller.secondSegmentN.value.rateClimb = resultrateresponseSecondSegment['finalPoint']['x']; // rate of climb
                     controller.rateOfClimbSecondSegmentN.text = resultrateresponseSecondSegment['finalPoint']['x'].toStringAsFixed(2);
-                    controller.secondSegmentN.value.timeToFinish = (3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']; // Temps que tarda d'anar de 800ft a 3000ft
-                    controller.timeSecondSegmentN.text = ((3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x']).toStringAsFixed(2);
+                    controller.secondSegmentN.value.timeToFinish = (controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!) / resultrateresponseSecondSegment['finalPoint']['x']; // Temps que tarda d'anar de 800ft a 3000ft
+                    controller.timeSecondSegmentN.text = ((controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!) / resultrateresponseSecondSegment['finalPoint']['x']).toStringAsFixed(2);
                     if (controller.secondSegmentN.value.velocityTAS != null) {
-                      controller.secondSegmentN.value.distanceToFinish = controller.secondSegmentN.value.velocityTAS! * (((3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x'])/60); // Distància que recórre de 800ft a 3000ft
-                      controller.distancSecondSegmentN.text = (controller.secondSegmentN.value.velocityTAS! * (((3000 - 800) / resultrateresponseSecondSegment['finalPoint']['x'])/60)).toStringAsFixed(2);
+                      controller.secondSegmentN.value.distanceToFinish = controller.secondSegmentN.value.velocityTAS! * (((controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!) / resultrateresponseSecondSegment['finalPoint']['x'])/60); // Distància que recórre de 800ft a 3000ft
+                      controller.distancSecondSegmentN.text = (controller.secondSegmentN.value.velocityTAS! * (((controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!) / resultrateresponseSecondSegment['finalPoint']['x'])/60)).toStringAsFixed(2);
                     }
                   }
                   if (controller.secondSegmentN.value.distanceToFinish != null && controller.firstSegmentN.value.distanceToFinish != null && controller.newProcedure.value.dpDistance != null) {
@@ -166,11 +166,11 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                       // Altitud desde 800ft fins al decision point
                       controller.secondSegmentN.value.altitudeInDP = controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!;
                       controller.altitudeInDPSecondSegmentN.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!).toStringAsFixed(2);
-                      controller.totalAltitudeInDPSecondSegmentN.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + 800 + controller.selectedAirport.value!.elevation!).toStringAsFixed(2);
-                      controller.initialElevation.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + 800).toStringAsFixed(2);
-                      controller.failure.value.initialElevation = controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + 800;
+                      controller.totalAltitudeInDPSecondSegmentN.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment! + controller.selectedAirport.value!.elevation!).toStringAsFixed(2);
+                      controller.initialElevation.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!).toStringAsFixed(2);
+                      controller.failure.value.initialElevation = controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!;
 
-                      if ((controller.secondSegmentN.value.altitudeInDP! + 800 + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
+                      if ((controller.secondSegmentN.value.altitudeInDP! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment! + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
                         controller.secondSegmentN.value.clearDP = true;
                       } else {
                         controller.secondSegmentN.value.clearDP = false;
@@ -183,16 +183,16 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
 
                 // ---------------------- N MOTORES - 3 SEGMENTO -------------------------------------------
 
-                controller.elevationThirdSegmentN.text = (controller.selectedAirport.value!.elevation! + 3000).toString();
+                controller.elevationThirdSegmentN.text = (controller.selectedAirport.value!.elevation! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!).toString();
 
                 if (controller.secondSegmentN.value.reachDP == false) {
-                  var obtainedDataVYThirdSegment = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, (controller.selectedAirport.value!.elevation! + 3000), double.parse(controller.weight.text), "nMotors");
+                  var obtainedDataVYThirdSegment = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, (controller.selectedAirport.value!.elevation! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!), double.parse(controller.weight.text), "nMotors");
                   if (obtainedDataVYThirdSegment != null) {
                     controller.obtainedDataVYThirdSegmentN.value = obtainedDataVYThirdSegment.dataList;
                     controller.velocityThirdSegmentN.text = obtainedDataVYThirdSegment.velocityValue.toStringAsFixed(2);
                     controller.thirdSegmentN.value.velocityIAS = obtainedDataVYThirdSegment.velocityValue;
                   }
-                  var obtainedDataISAThirdSegment = await ISATableService.getObtainedData((controller.selectedAirport.value!.elevation! + 3000));
+                  var obtainedDataISAThirdSegment = await ISATableService.getObtainedData((controller.selectedAirport.value!.elevation! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!));
                   if (obtainedDataISAThirdSegment != null) {
                     controller.obtainedISADataThirdSegmentN.value = obtainedDataISAThirdSegment.dataList;
                     controller.densityThirdSegmentN.text = obtainedDataISAThirdSegment.densityValue.toStringAsFixed(2);
@@ -208,7 +208,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                     if (rateresponseThirdSegment != null) {
                       controller.rateGraphicThirdSegmentN.value = rateresponseThirdSegment;
                     }
-                    var resultrateresponseThirdSegment = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicThirdSegmentN.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.selectedAirport.value!.elevation! + 3000), double.parse(controller.weight.text));
+                    var resultrateresponseThirdSegment = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicThirdSegmentN.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.selectedAirport.value!.elevation! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!), double.parse(controller.weight.text));
                     if (resultrateresponseThirdSegment != null) {
                       controller.resultRateThirdSegmentN.value = resultrateresponseThirdSegment;
                       controller.thirdSegmentN.value.rateClimb = resultrateresponseThirdSegment['finalPoint']['x'];
@@ -225,12 +225,12 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
 
                     controller.thirdSegmentN.value.altitudeInDP = controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb!;
                     controller.altitudeInDPThirdSegmentN.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb!).toStringAsFixed(2);
-                    controller.totalAltitudeInDPThirdSegmentN.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + 3000 + controller.selectedAirport.value!.elevation!).toStringAsFixed(2);
-                    controller.initialElevation.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + 3000).toStringAsFixed(2);
-                    controller.failure.value.initialElevation = controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + 3000;
+                    controller.totalAltitudeInDPThirdSegmentN.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment! + controller.selectedAirport.value!.elevation!).toStringAsFixed(2);
+                    controller.initialElevation.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!).toStringAsFixed(2);
+                    controller.failure.value.initialElevation = controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!;
 
 
-                    if ((controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + 3000 + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
+                    if ((controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment! + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
                       controller.thirdSegmentN.value.clearDP = true;
                     } else {
                       controller.thirdSegmentN.value.clearDP = false;

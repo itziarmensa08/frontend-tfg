@@ -23,6 +23,10 @@ class EditAircraftBinding implements Bindings {
       controller.name.text = aircraft.name!;
       controller.metro.text = aircraft.metro!;
       controller.profileImage.value = aircraft.profileImage!;
+      controller.altitude1stSegmentN.text = aircraft.profile!.nMotors!.heightFirstSegment!.toString();
+      controller.altitude2ndSegmentN.text = aircraft.profile!.nMotors!.heightSecondSegment!.toString();
+      controller.altitude1stSegmentFailure.text = aircraft.profile!.failure!.heightFirstSegment!.toString();
+      controller.altitude2ndSegmentFailure.text = aircraft.profile!.failure!.heightSecondSegment!.toString();
     }
   }
 }
