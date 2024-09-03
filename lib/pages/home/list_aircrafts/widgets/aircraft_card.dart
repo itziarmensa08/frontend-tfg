@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/aircraft_model.dart';
+import 'package:frontend_tfg/data/services/procedure.service.dart';
+import 'package:frontend_tfg/pages/home/list_aircrafts/list_aircrafts.controller.dart';
+import 'package:frontend_tfg/pages/home/list_procedures/list_procedures.controller.dart';
+import 'package:frontend_tfg/routes/app.pages.dart';
+import 'package:get/get.dart';
 
 class AircraftCardHome extends StatelessWidget {
   final AircraftModel aircraft;
@@ -12,14 +17,17 @@ class AircraftCardHome extends StatelessWidget {
       cursor: SystemMouseCursors.click,
       child: InkWell(
         onTap: () async {
-          // Action to perform when the card is clicked
-          print('Card clicked for ${aircraft.name}'); // Example: Print airport name to console
-          // You can also navigate to another screen or show a dialog
-          // Navigator.push(context, MaterialPageRoute(builder: (context) => AirportDetailsPage(airport: airport)));
+          final ListAircraftsHomeController controller = Get.put(ListAircraftsHomeController());
+          final ListProceduresHomeController controllerProc = Get.put(ListProceduresHomeController());
+          var procedures = await ProcedureService.getProcedureByAirportnadAircraft(controller.airport.value.id!, aircraft.id!);
+          controllerProc.procedures.value = procedures;
+          controllerProc.airport.value = controller.airport.value;
+          controllerProc.aircraft.value = aircraft;
+          Get.toNamed(Routes.homeProcedures);
         },
         child: Card(
           elevation: 4,
-          margin: EdgeInsets.all(16),
+          margin: const EdgeInsets.all(16),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
@@ -32,20 +40,20 @@ class AircraftCardHome extends StatelessWidget {
                     fit: BoxFit.cover,
                   )
                 else
-                  Icon(
-                    Icons.airplane_ticket, // Plane icon when no image is available
+                  const Icon(
+                    Icons.airplane_ticket,
                     size: 100,
                     color: Colors.black,
                   ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       aircraft.name ?? '',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text('${aircraft.metro}'),
                   ],
                 ),

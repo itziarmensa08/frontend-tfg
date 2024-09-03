@@ -139,4 +139,35 @@ class ProcedureService {
     return null;
   }
 
+  static Future<dynamic> getProcedureByAirportnadAircraft(String idAirport, String idAircraft) async {
+    ApiResponse response;
+
+    try {
+      response = await MyApi().get(
+        '/procedures/list/airport/$idAirport/aircraft/$idAircraft',
+      );
+
+      if (response.statusCode == 200) {
+
+        dynamic data = response.data;
+
+        if (data is List) {
+          List<Procedure> procedures = data.map((procedureJson) => Procedure.fromJson(procedureJson)).toList();
+          return procedures;
+        } else {
+          ToastUtils.showErrorToast('Invalid data format');
+        }
+
+        return data;
+
+      } else {
+        ToastUtils.showErrorToast(response.data);
+      }
+
+    } catch (error) {
+      ToastUtils.showErrorToast('Error Getting Procedures: $error');
+    }
+    return null;
+  }
+
 }

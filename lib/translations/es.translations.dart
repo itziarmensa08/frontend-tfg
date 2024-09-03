@@ -56,6 +56,8 @@ final Map<String, String> es = {
   'settings': 'Configuración',
   'airportsListProc': 'Lista de aeropuertos con procedimientos realizados:',
   'aircraftsListProc': 'Lista de aeronaves con procedimientos realizados en ',
+  'procedureListProc1': 'Lista de procedimiento realizados en ',
+  'procedureListProc2': ' con la aeronave ',
 
   //Admin page
   'dashboard': 'Panel de administrador',
