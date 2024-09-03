@@ -1,4 +1,5 @@
 
+import 'package:frontend_tfg/data/models/aircraft_model.dart';
 import 'package:frontend_tfg/data/models/airport_model.dart';
 import 'package:frontend_tfg/data/models/procedure.model.dart';
 import 'package:frontend_tfg/data/provider/api.dart';
@@ -102,7 +103,38 @@ class ProcedureService {
       }
 
     } catch (error) {
-      ToastUtils.showErrorToast('Error Getting Procedures: $error');
+      ToastUtils.showErrorToast('Error Getting Airports: $error');
+    }
+    return null;
+  }
+
+  static Future<dynamic> getAircraftsByAirport(String id) async {
+    ApiResponse response;
+
+    try {
+      response = await MyApi().get(
+        '/procedures/list/aircrafts/$id',
+      );
+
+      if (response.statusCode == 200) {
+
+        dynamic data = response.data;
+
+        if (data is List) {
+          List<AircraftModel> aircrafts = data.map((aircraftJson) => AircraftModel.fromJson(aircraftJson)).toList();
+          return aircrafts;
+        } else {
+          ToastUtils.showErrorToast('Invalid data format');
+        }
+
+        return data;
+
+      } else {
+        ToastUtils.showErrorToast(response.data);
+      }
+
+    } catch (error) {
+      ToastUtils.showErrorToast('Error Getting Aircrafts: $error');
     }
     return null;
   }

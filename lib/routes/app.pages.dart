@@ -14,6 +14,8 @@ import 'package:frontend_tfg/pages/edit_user/edit_user.binding.dart';
 import 'package:frontend_tfg/pages/edit_user/edit_user.page.dart';
 import 'package:frontend_tfg/pages/home/home.binding.dart';
 import 'package:frontend_tfg/pages/home/home.page.dart';
+import 'package:frontend_tfg/pages/home/list_aircrafts/list_aircrafts.binding.dart';
+import 'package:frontend_tfg/pages/home/list_aircrafts/list_aircrafts.page.dart';
 import 'package:frontend_tfg/pages/list_aircrafts/list_aircrafts.binding.dart';
 import 'package:frontend_tfg/pages/list_aircrafts/list_aircrafts.page.dart';
 import 'package:frontend_tfg/pages/list_airports/list_airports.binding.dart';
@@ -59,6 +61,11 @@ abstract class AppPages {
       name: Routes.home,
       page:() => const HomePage(),
       binding: HomeBinding()
+    ),
+    GetPage(
+      name: Routes.homeAircrafts,
+      page:() => const ListAircraftsHomePage(),
+      binding: ListAircraftsHomeBinding()
     ),
     GetPage(
       name: Routes.newAnalysis,

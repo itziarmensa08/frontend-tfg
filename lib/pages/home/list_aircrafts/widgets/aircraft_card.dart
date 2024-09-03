@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_tfg/data/models/airport_model.dart';
-import 'package:frontend_tfg/data/services/procedure.service.dart';
-import 'package:frontend_tfg/pages/home/list_aircrafts/list_aircrafts.controller.dart';
-import 'package:frontend_tfg/routes/app.pages.dart';
-import 'package:get/get.dart';
+import 'package:frontend_tfg/data/models/aircraft_model.dart';
 
-class AirportCardHome extends StatelessWidget {
-  final AirportModel airport;
+class AircraftCardHome extends StatelessWidget {
+  final AircraftModel aircraft;
 
-  const AirportCardHome({super.key, required this.airport});
+  const AircraftCardHome({super.key, required this.aircraft});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +12,10 @@ class AirportCardHome extends StatelessWidget {
       cursor: SystemMouseCursors.click,
       child: InkWell(
         onTap: () async {
-          var aircrafts = await ProcedureService.getAircraftsByAirport(airport.id!);
-          final ListAircraftsHomeController controller = Get.put(ListAircraftsHomeController());
-          controller.aircrafts.value = aircrafts;
-          controller.airport.value = airport;
-          Get.toNamed(Routes.homeAircrafts);
+          // Action to perform when the card is clicked
+          print('Card clicked for ${aircraft.name}'); // Example: Print airport name to console
+          // You can also navigate to another screen or show a dialog
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => AirportDetailsPage(airport: airport)));
         },
         child: Card(
           elevation: 4,
@@ -29,16 +24,16 @@ class AirportCardHome extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
-                if (airport.profileImage != null)
+                if (aircraft.profileImage != null)
                   Image.network(
-                    airport.profileImage!,
+                    aircraft.profileImage!,
                     width: 100,
                     height: 100,
                     fit: BoxFit.cover,
                   )
                 else
                   Icon(
-                    Icons.connecting_airports, // Plane icon when no image is available
+                    Icons.airplane_ticket, // Plane icon when no image is available
                     size: 100,
                     color: Colors.black,
                   ),
@@ -47,11 +42,11 @@ class AirportCardHome extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      airport.name ?? '',
+                      aircraft.name ?? '',
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 8),
-                    Text('${airport.iataCode} / ${airport.oaciCode}'),
+                    Text('${aircraft.metro}'),
                   ],
                 ),
               ],
