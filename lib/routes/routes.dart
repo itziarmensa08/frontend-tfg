@@ -8,6 +8,7 @@ abstract class Routes{
   static const home = '/home';
   static const homeAircrafts = '/home/aircrafts';
   static const homeProcedures = '/home/procedures';
+  static const homeProcedureDetail = '/home/procedures/detail';
   static const newAnalysis = '/newAnalysis';
   static const tasks = '/tasks';
   static const profile = '/profile';

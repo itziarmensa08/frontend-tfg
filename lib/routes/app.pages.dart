@@ -18,6 +18,8 @@ import 'package:frontend_tfg/pages/home/list_aircrafts/list_aircrafts.binding.da
 import 'package:frontend_tfg/pages/home/list_aircrafts/list_aircrafts.page.dart';
 import 'package:frontend_tfg/pages/home/list_procedures/list_procedures.binding.dart';
 import 'package:frontend_tfg/pages/home/list_procedures/list_procedures.page.dart';
+import 'package:frontend_tfg/pages/home/procedure_detail/procedure_detail.binding.dart';
+import 'package:frontend_tfg/pages/home/procedure_detail/procedure_detail.page.dart';
 import 'package:frontend_tfg/pages/list_aircrafts/list_aircrafts.binding.dart';
 import 'package:frontend_tfg/pages/list_aircrafts/list_aircrafts.page.dart';
 import 'package:frontend_tfg/pages/list_airports/list_airports.binding.dart';
@@ -73,6 +75,11 @@ abstract class AppPages {
       name: Routes.homeProcedures,
       page:() => const ListProceduresHomePage(),
       binding: ListProceduresHomeBinding()
+    ),
+    GetPage(
+      name: Routes.homeProcedureDetail,
+      page:() => const ProcedureDetailPage(),
+      binding: ProcedureDetailBinding()
     ),
     GetPage(
       name: Routes.newAnalysis,

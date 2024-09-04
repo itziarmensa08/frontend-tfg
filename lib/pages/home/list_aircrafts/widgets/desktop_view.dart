@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/pages/home/list_aircrafts/list_aircrafts.controller.dart';
 import 'package:frontend_tfg/pages/home/list_aircrafts/widgets/aircraft_card.dart';
@@ -17,16 +18,34 @@ Widget desktopView(double height, TickerProviderStateMixin page, BuildContext co
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  '${'aircraftsListProc'.tr}${controller.airport.value.name ?? ''}:',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Theme.of(context).primaryColor),
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'aircraftsListProc'.tr,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Theme.of(context).primaryColor),
+                      ),
+                      TextSpan(
+                        text: controller.airport.value.name ?? '',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      TextSpan(
+                        text: ':',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Theme.of(context).primaryColor),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
-              Expanded(
+              Flexible(
                 child: Obx(
                   () => ListView.builder(
                     itemCount: controller.aircrafts.length,

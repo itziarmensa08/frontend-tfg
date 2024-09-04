@@ -58,6 +58,16 @@ final Map<String, String> es = {
   'aircraftsListProc': 'Lista de aeronaves con procedimientos realizados en ',
   'procedureListProc1': 'Lista de procedimiento realizados en ',
   'procedureListProc2': ' con la aeronave ',
+  'procedureDetail': 'Detalles del procedimiento:',
+  'airport': 'Aeropuerto',
+  'aircraft': 'Aeronave',
+  'nMotors': 'N MOTORES',
+  '1stSegment': '1r Segmento',
+  'velocityIAS': 'Velocidad IAS',
+  'velocityTAS': 'Velocidad TAS',
+  'yesArrive2': "En este punto la aeronave ha alcanzado el punto crítico:",
+  'noArrive2': "En este punto la aeronave aún no ha alcanzado el punto crítico.",
+  '2ndSegment': '2o Segmento',
 
   //Admin page
   'dashboard': 'Panel de administrador',
