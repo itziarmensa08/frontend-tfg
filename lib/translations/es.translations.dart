@@ -68,6 +68,7 @@ final Map<String, String> es = {
   'yesArrive2': "En este punto la aeronave ha alcanzado el punto crítico:",
   'noArrive2': "En este punto la aeronave aún no ha alcanzado el punto crítico.",
   '2ndSegment': '2o Segmento',
+  'failure': 'N - 1 motores',
 
   //Admin page
   'dashboard': 'Panel de administrador',
