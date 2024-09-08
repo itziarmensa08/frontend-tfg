@@ -69,6 +69,11 @@ final Map<String, String> es = {
   'noArrive2': "En este punto la aeronave aún no ha alcanzado el punto crítico.",
   '2ndSegment': '2o Segmento',
   'failure': 'N - 1 motores',
+  'mergeProcedures': 'Unir procedimientos',
+  'gradientRestriction': 'Restricción de gradiente',
+  'gradientValue': 'Gradiente mínimo',
+  'altitudeRestriction': 'Restricción de altitud',
+  'dpElevation': 'Altitud del DP',
 
   //Admin page
   'dashboard': 'Panel de administrador',
@@ -210,5 +215,12 @@ final Map<String, String> es = {
 
 
   'step4title': "Conclusión",
+
+  // Settings page
+  'notifications': 'Notificaciones',
+  'appearance': 'Apariencia',
+  'privacy': 'Privacidad',
+  'help': 'Ayuda',
+  'about': 'Sobre nosotros'
 
 };

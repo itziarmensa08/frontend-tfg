@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/procedure.model.dart';
+import 'package:frontend_tfg/data/services/procedure.service.dart';
 import 'package:frontend_tfg/pages/home/list_procedures/list_procedures.controller.dart';
 import 'package:frontend_tfg/pages/home/procedure_detail/procedure_detail.controller.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProcedureCardHome extends StatelessWidget {
   final Procedure procedure;
@@ -46,6 +48,38 @@ class ProcedureCardHome extends StatelessWidget {
                       _buildProcedureDetailColumn('sidName'.tr, procedure.sidName ?? ''),
                       _buildProcedureDetailColumn('rwyName'.tr, procedure.rwyName ?? ''),
                       _buildProcedureDetailColumn('dpName'.tr, procedure.dpName ?? ''),
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: IconButton(
+                          icon: const Icon(Icons.picture_as_pdf),
+                          color: Colors.grey,
+                          onPressed: () async {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              },
+                            );
+                            try {
+                              var url = await ProcedureService.downloadPdfProcedure(procedure.id!);
+                              final Uri uri = Uri.parse(url['url']);
+                              if (await canLaunchUrl(uri)) {
+                                await launchUrl(uri);
+                              } else {
+                                throw 'No se puede abrir la URL: $uri';
+                              }
+                            } catch (e) {
+                              print(e);
+                            } finally {
+                              Navigator.of(context).pop();
+                            }
+                          },
+                          tooltip: 'Descargar PDF',
+                        ),
+                      ),
                     ],
                   ),
                 ),

@@ -1671,6 +1671,7 @@ Widget desktopView(
                               Visibility(
                                 visible: controller.procedure.value.failure!.gradient!.state!,
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const SizedBox(height: 20),
                                     Padding(

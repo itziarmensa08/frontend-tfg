@@ -77,6 +77,31 @@ class ProcedureService {
     return null;
   }
 
+  static Future<dynamic> downloadPdfProcedureCombined(List<String?> idsProcedure) async {
+    ApiResponse response;
+
+    final Map<String, dynamic> requestData = {'ids': idsProcedure};
+
+    try {
+      response = await MyApi().post(
+        '/pdf/generate',
+        data: requestData
+      );
+
+      if (response.statusCode == 200) {
+
+        return response.data;
+
+      } else {
+        ToastUtils.showErrorToast(response.data);
+      }
+
+    } catch (error) {
+      ToastUtils.showErrorToast('Error Downloading Procedure: $error');
+    }
+    return null;
+  }
+
   static Future<dynamic> getAirportsWithProcedures() async {
     ApiResponse response;
 
