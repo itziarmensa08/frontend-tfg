@@ -87,7 +87,7 @@ class FirstStep extends StatelessWidget {
                     controller: fieldTextEditingController,
                     focusNode: fieldFocusNode,
                     decoration: InputDecoration(
-                      hintText: 'searchAircraft'.tr,
+                      hintText: controller.selectedAircraft.value == null ? 'searchAircraft'.tr : controller.selectedAircraft.value?.name,
                       hintStyle: Theme.of(context).textTheme.titleMedium,
                       border: const OutlineInputBorder(),
                     ),

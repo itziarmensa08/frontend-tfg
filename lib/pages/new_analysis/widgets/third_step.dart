@@ -232,15 +232,27 @@ class ThirdStepState extends State<ThirdStep> {
           if (controller.gradientRestriction.value == true) {
             return Column(
               children: [
+                Text('enter2Data'.tr, style: Theme.of(context).textTheme.titleMedium),
+                const SizedBox(height: 30),
                 Row(
                   children: [
                     Expanded(
                       child: TextFormField(
                         controller: controller.dpDistanceGradient,
                         onChanged: (value) {
+                          controller.distanceChanged.value = true;
                           controller.gradient.value.dpDistance = double.parse(value);
                           controller.failure.value.gradient = controller.gradient.value;
                           controller.newProcedure.value.failure = controller.failure.value;
+                          if (controller.gradientChanged.value == false && controller.altitudeChanged.value == true) {
+                            controller.gradient.value.gradientValue = double.parse(controller.gradientAltitude.text) / controller.gradient.value.dpDistance!;
+                            controller.failure.value.gradient = controller.gradient.value;
+                            controller.newProcedure.value.failure = controller.failure.value;
+                            controller.gradientRestrictionValue.text = controller.gradient.value.gradientValue.toString();
+                          }
+                          if (controller.altitudeChanged.value == false && controller.gradientChanged.value == true) {
+                            controller.gradientAltitude.text = (controller.gradient.value.gradientValue! * 0.01 * controller.gradient.value.dpDistance!).toStringAsFixed(2);
+                          }
                         },
                         decoration: InputDecoration(
                           labelText: 'dpDistance'.tr,
@@ -260,11 +272,58 @@ class ThirdStepState extends State<ThirdStep> {
                     const SizedBox(width: 20),
                     Expanded(
                       child: TextFormField(
+                        controller: controller.gradientAltitude,
+                        onChanged: (value) {
+                          controller.altitudeChanged.value = true;
+                          double? value = double.tryParse(controller.gradientAltitude.text);
+                          if (value != null) {
+                            if (controller.gradientChanged.value == false && controller.distanceChanged.value == true) {
+                              controller.gradient.value.gradientValue = (value / (controller.gradient.value.dpDistance! / 0.000164579)) * 100;
+                              controller.failure.value.gradient = controller.gradient.value;
+                              controller.newProcedure.value.failure = controller.failure.value;
+                              controller.gradientRestrictionValue.text = controller.gradient.value.gradientValue.toString();
+                            }
+                            if (controller.distanceChanged.value == false && controller.gradientChanged.value == true) {
+                              controller.gradient.value.dpDistance = (value / (controller.gradient.value.gradientValue! * 0.01)) * 0.000164579;
+                              controller.failure.value.gradient = controller.gradient.value;
+                              controller.newProcedure.value.failure = controller.failure.value;
+                              controller.dpDistanceGradient.text = controller.gradient.value.dpDistance!.toStringAsFixed(2);
+                            }
+                          }
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'altitude'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
                         controller: controller.gradientRestrictionValue,
                         onChanged: (value) {
+                          controller.gradientChanged.value = true;
                           controller.gradient.value.gradientValue = double.parse(value);
                           controller.failure.value.gradient = controller.gradient.value;
                           controller.newProcedure.value.failure = controller.failure.value;
+                          if (controller.distanceChanged.value == false && controller.altitudeChanged.value == true) {
+                            controller.gradient.value.dpDistance = (double.parse(controller.gradientAltitude.text) / (controller.gradient.value.gradientValue! * 0.01)) * 0.000164579;
+                            controller.failure.value.gradient = controller.gradient.value;
+                            controller.newProcedure.value.failure = controller.failure.value;
+                            controller.dpDistanceGradient.text = controller.gradient.value.dpDistance!.toStringAsFixed(2);
+                          }
+                          if (controller.altitudeChanged.value == false && controller.distanceChanged.value == true) {
+                            controller.gradientAltitude.text = (controller.gradient.value.gradientValue! * 0.01 * controller.gradient.value.dpDistance!).toStringAsFixed(2);
+                          }
                         },
                         decoration: InputDecoration(
                           labelText: 'gradient'.tr,
@@ -367,7 +426,7 @@ class ThirdStepState extends State<ThirdStep> {
 
                             controller.firstSegmentN1.value.altitudeInDP = ((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.firstSegmentN1.value.rateClimb!) / 100;
                             controller.altitudeInDPFirstSegmentN1.text = (((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.firstSegmentN1.value.rateClimb!) / 100).toString();
-                            controller.totalAltitudeInDPFirstSegmentN1.text = (controller.firstSegmentN1.value.altitudeInDP! + controller.selectedAirport.value!.elevation! + controller.failure.value.initialElevation!).toString();
+                            controller.totalAltitudeInDPFirstSegmentN1.text = (controller.firstSegmentN1.value.altitudeInDP! + controller.failure.value.initialElevation!).toString();
                             var height = controller.firstSegmentN1.value.altitudeInDP!;
                             var distanceFeet = controller.gradient.value.dpDistance! * 6076.12;
                             controller.gradient.value.finalGradient = (height / distanceFeet) * 100;
@@ -435,8 +494,13 @@ class ThirdStepState extends State<ThirdStep> {
 
                               controller.secondSegmentN1.value.altitudeInDP = ((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.secondSegmentN1.value.rateClimb!) / 100;
                               controller.altitudeInDPSecondSegmentN1.text = (((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.secondSegmentN1.value.rateClimb!) / 100).toString();
-                              controller.totalAltitudeInDPSecondSegmentN1.text = (controller.secondSegmentN1.value.altitudeInDP! + widget.controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! + controller.selectedAirport.value!.elevation!).toString();
-                              var height = controller.secondSegmentN1.value.altitudeInDP! + widget.controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - controller.selectedAirport.value!.elevation!;
+
+                              if (controller.failure.value.initialElevation! < widget.controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) {
+                                controller.totalAltitudeInDPSecondSegmentN1.text = (controller.secondSegmentN1.value.altitudeInDP! + widget.controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! + controller.selectedAirport.value!.elevation!).toString();
+                              } else {
+                                controller.totalAltitudeInDPSecondSegmentN1.text = (controller.secondSegmentN1.value.altitudeInDP! + controller.failure.value.initialElevation!).toString();
+                              }
+                              var height = double.parse(controller.totalAltitudeInDPSecondSegmentN1.text);
                               var distanceFeet = controller.gradient.value.dpDistance! * 6076.12;
                               controller.gradient.value.finalGradient = (height / distanceFeet) * 100;
                               controller.finalGradientN1.text = ((height / distanceFeet) * 100).toStringAsFixed(2);
@@ -496,8 +560,12 @@ class ThirdStepState extends State<ThirdStep> {
                           controller.thirdSegmentN1.value.altitudeInDP = controller.thirdSegmentN1.value.timeToDP! * controller.thirdSegmentN1.value.rateClimb!;
                           controller.altitudeInDPThirdSegmentN1.text = (controller.thirdSegmentN1.value.timeToDP! * controller.thirdSegmentN1.value.rateClimb!).toStringAsFixed(2);
 
-                          controller.totalAltitudeInDPThirdSegmentN1.text = (controller.thirdSegmentN1.value.altitudeInDP! + widget.controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! + controller.selectedAirport.value!.elevation!).toString();
-                          var height = controller.thirdSegmentN1.value.altitudeInDP! + widget.controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAirport.value!.elevation!;
+                          if (controller.failure.value.initialElevation! < widget.controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment!) {
+                            controller.totalAltitudeInDPThirdSegmentN1.text = (controller.thirdSegmentN1.value.altitudeInDP! + widget.controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! + controller.selectedAirport.value!.elevation!).toString();
+                          } else {
+                            controller.totalAltitudeInDPThirdSegmentN1.text = (controller.thirdSegmentN1.value.altitudeInDP! + controller.failure.value.initialElevation!).toString();
+                          }
+                          var height = double.parse(controller.totalAltitudeInDPThirdSegmentN1.text);
                           var distanceFeet = controller.gradient.value.dpDistance! * 6076.12;
                           controller.gradient.value.finalGradient = (height / distanceFeet) * 100;
                           controller.finalGradientN1.text = ((height / distanceFeet) * 100).toStringAsFixed(2);
@@ -663,9 +731,9 @@ class ThirdStepState extends State<ThirdStep> {
 
                             controller.firstSegmentN1.value.altitudeInDP = ((controller.altitude.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.firstSegmentN1.value.rateClimb!) / 100;
                             controller.altitudeInDPFirstSegmentN1.text = (((controller.altitude.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.firstSegmentN1.value.rateClimb!) / 100).toString();
-                            controller.totalAltitudeInDPFirstSegmentN1.text = (controller.firstSegmentN1.value.altitudeInDP! + controller.selectedAirport.value!.elevation! + controller.failure.value.initialElevation!).toString();
+                            controller.totalAltitudeInDPFirstSegmentN1.text = (controller.firstSegmentN1.value.altitudeInDP! + controller.failure.value.initialElevation!).toString();
 
-                            if ((controller.firstSegmentN1.value.altitudeInDP! + controller.selectedAirport.value!.elevation! + controller.failure.value.initialElevation!) > controller.altitude.value.dpElevation!) {
+                            if ((controller.firstSegmentN1.value.altitudeInDP! + controller.failure.value.initialElevation!) > controller.altitude.value.dpElevation!) {
                               controller.firstSegmentN1.value.clearDP = true;
                             } else {
                               controller.firstSegmentN1.value.clearDP = false;
@@ -727,9 +795,14 @@ class ThirdStepState extends State<ThirdStep> {
 
                               controller.secondSegmentN1.value.altitudeInDP = ((controller.altitude.value.dpDistance! - ((controller.firstSegmentN1.value.distanceToFinish ?? 0) + controller.failure.value.distanceToInitial!)) * 6076.12) * controller.secondSegmentN1.value.rateClimb! / 100;
                               controller.altitudeInDPSecondSegmentN1.text = (((controller.altitude.value.dpDistance! - ((controller.firstSegmentN1.value.distanceToFinish ?? 0) + controller.failure.value.distanceToInitial!)) * 6076.12) * controller.secondSegmentN1.value.rateClimb! / 100).toString();
-                              controller.totalAltitudeInDPSecondSegmentN1.text = (controller.secondSegmentN1.value.altitudeInDP! + widget.controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! + controller.selectedAirport.value!.elevation!).toString();
 
-                              if ((controller.secondSegmentN1.value.altitudeInDP! + controller.selectedAirport.value!.elevation! + widget.controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) > controller.altitude.value.dpElevation!) {
+                              if (controller.failure.value.initialElevation! < widget.controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) {
+                                controller.totalAltitudeInDPSecondSegmentN1.text = (controller.secondSegmentN1.value.altitudeInDP! + widget.controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! + controller.selectedAirport.value!.elevation!).toString();
+                              } else {
+                                controller.totalAltitudeInDPSecondSegmentN1.text = (controller.secondSegmentN1.value.altitudeInDP! + controller.failure.value.initialElevation!).toString();
+                              }
+
+                              if (double.parse(controller.totalAltitudeInDPSecondSegmentN1.text) > controller.altitude.value.dpElevation!) {
                                 controller.secondSegmentN1.value.clearDP = true;
                               } else {
                                 controller.secondSegmentN1.value.clearDP = false;
@@ -787,8 +860,12 @@ class ThirdStepState extends State<ThirdStep> {
                           controller.thirdSegmentN1.value.altitudeInDP = controller.thirdSegmentN1.value.timeToDP! * controller.thirdSegmentN1.value.rateClimb!;
                           controller.altitudeInDPThirdSegmentN1.text = (controller.thirdSegmentN1.value.timeToDP! * controller.thirdSegmentN1.value.rateClimb!).toStringAsFixed(2);
 
-                          controller.totalAltitudeInDPThirdSegmentN1.text = (controller.thirdSegmentN1.value.altitudeInDP! + widget.controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! + controller.selectedAirport.value!.elevation!).toString();
-                          if ((controller.thirdSegmentN1.value.altitudeInDP! + controller.selectedAirport.value!.elevation! + widget.controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment!) > controller.altitude.value.dpElevation!) {
+                          if (controller.failure.value.initialElevation! < widget.controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment!) {
+                            controller.totalAltitudeInDPThirdSegmentN1.text = (controller.thirdSegmentN1.value.altitudeInDP! + widget.controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! + controller.selectedAirport.value!.elevation!).toString();
+                          } else {
+                            controller.totalAltitudeInDPThirdSegmentN1.text = (controller.thirdSegmentN1.value.altitudeInDP! + controller.failure.value.initialElevation!).toString();
+                          }
+                          if (double.parse(controller.totalAltitudeInDPThirdSegmentN1.text) > controller.altitude.value.dpElevation!) {
                             controller.thirdSegmentN1.value.clearDP = true;
                           } else {
                             controller.thirdSegmentN1.value.clearDP = false;

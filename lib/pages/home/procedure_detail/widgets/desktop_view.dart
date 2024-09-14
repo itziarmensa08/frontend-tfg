@@ -431,14 +431,14 @@ Widget desktopView(
                         ),
                         const SizedBox(height: 20),
                         if (controller.procedure.value.nMotors != null && controller.procedure.value.nMotors!.firstSegment != null && controller.procedure.value.nMotors!.firstSegment!.reachDP != null && controller.procedure.value.nMotors!.firstSegment!.reachDP == false)
-                        Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                        Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                         if (controller.procedure.value.nMotors != null && controller.procedure.value.nMotors!.firstSegment != null && controller.procedure.value.nMotors!.firstSegment!.reachDP != null)
                         Visibility(
                           visible: controller.procedure.value.nMotors!.firstSegment!.reachDP!,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                              Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                               const SizedBox(height: 50),
                               Row(
                                 children: [
@@ -686,14 +686,14 @@ Widget desktopView(
                               ),
                               const SizedBox(height: 20),
                               if (controller.procedure.value.nMotors != null && controller.procedure.value.nMotors!.secondSegment != null && controller.procedure.value.nMotors!.secondSegment!.reachDP != null && controller.procedure.value.nMotors!.secondSegment!.reachDP == false)
-                              Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                              Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                               if (controller.procedure.value.nMotors != null && controller.procedure.value.nMotors!.secondSegment != null && controller.procedure.value.nMotors!.secondSegment!.reachDP != null)
                               Visibility(
                                 visible: controller.procedure.value.nMotors!.secondSegment!.reachDP!,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                    Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 50),
                                     Row(
                                       children: [
@@ -944,14 +944,14 @@ Widget desktopView(
                               ),
                               const SizedBox(height: 20),
                               if (controller.procedure.value.nMotors != null && controller.procedure.value.nMotors!.thirdSegment != null && controller.procedure.value.nMotors!.thirdSegment!.reachDP != null && controller.procedure.value.nMotors!.thirdSegment!.reachDP == false)
-                              Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                              Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                               if (controller.procedure.value.nMotors != null && controller.procedure.value.nMotors!.thirdSegment != null && controller.procedure.value.nMotors!.thirdSegment!.reachDP != null)
                               Visibility(
                                 visible: controller.procedure.value.nMotors!.thirdSegment!.reachDP!,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                    Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 50),
                                     Row(
                                       children: [
@@ -1257,14 +1257,14 @@ Widget desktopView(
                                           ),
                                           const SizedBox(height: 20),
                                           if (controller.procedure.value.failure != null && controller.procedure.value.failure!.altitude != null && controller.procedure.value.failure!.altitude!.firstSegment != null && controller.procedure.value.failure!.altitude!.firstSegment!.reachDP != null && controller.procedure.value.failure!.altitude!.firstSegment!.reachDP == false)
-                                          Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                          Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                                           if (controller.procedure.value.failure != null && controller.procedure.value.failure!.altitude != null && controller.procedure.value.failure!.altitude!.firstSegment != null && controller.procedure.value.failure!.altitude!.firstSegment!.reachDP != null)
                                           Visibility(
                                             visible: controller.procedure.value.failure!.altitude!.firstSegment!.reachDP!,
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                                                 const SizedBox(height: 50),
                                                 Row(
                                                   children: [
@@ -1430,14 +1430,14 @@ Widget desktopView(
                                           ),
                                           const SizedBox(height: 20),
                                           if (controller.procedure.value.failure != null && controller.procedure.value.failure!.altitude != null && controller.procedure.value.failure!.altitude!.secondSegment != null && controller.procedure.value.failure!.altitude!.secondSegment!.reachDP != null && controller.procedure.value.failure!.altitude!.secondSegment!.reachDP == false)
-                                          Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                          Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                                           if (controller.procedure.value.failure != null && controller.procedure.value.failure!.altitude != null && controller.procedure.value.failure!.altitude!.secondSegment != null && controller.procedure.value.failure!.altitude!.secondSegment!.reachDP != null)
                                           Visibility(
                                             visible: controller.procedure.value.failure!.altitude!.secondSegment!.reachDP!,
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                                                 const SizedBox(height: 50),
                                                 Row(
                                                   children: [
@@ -1578,14 +1578,14 @@ Widget desktopView(
                                           ),
                                           const SizedBox(height: 20),
                                           if (controller.procedure.value.failure != null && controller.procedure.value.failure!.altitude != null && controller.procedure.value.failure!.altitude!.thirdSegment != null && controller.procedure.value.failure!.altitude!.thirdSegment!.reachDP != null && controller.procedure.value.failure!.altitude!.thirdSegment!.reachDP == false)
-                                          Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                          Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                                           if (controller.procedure.value.failure != null && controller.procedure.value.failure!.altitude != null && controller.procedure.value.failure!.altitude!.thirdSegment != null && controller.procedure.value.failure!.altitude!.thirdSegment!.reachDP != null)
                                           Visibility(
                                             visible: controller.procedure.value.failure!.altitude!.thirdSegment!.reachDP!,
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                                                 const SizedBox(height: 50),
                                                 Row(
                                                   children: [
@@ -1835,14 +1835,14 @@ Widget desktopView(
                                           ),
                                           const SizedBox(height: 20),
                                           if (controller.procedure.value.failure != null && controller.procedure.value.failure!.gradient != null && controller.procedure.value.failure!.gradient!.firstSegment != null && controller.procedure.value.failure!.gradient!.firstSegment!.reachDP != null && controller.procedure.value.failure!.gradient!.firstSegment!.reachDP == false)
-                                          Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                          Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                                           if (controller.procedure.value.failure != null && controller.procedure.value.failure!.gradient != null && controller.procedure.value.failure!.gradient!.firstSegment != null && controller.procedure.value.failure!.gradient!.firstSegment!.reachDP != null)
                                           Visibility(
                                             visible: controller.procedure.value.failure!.gradient!.firstSegment!.reachDP!,
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                                                 const SizedBox(height: 50),
                                                 Row(
                                                   children: [
@@ -2029,14 +2029,14 @@ Widget desktopView(
                                           ),
                                           const SizedBox(height: 20),
                                           if (controller.procedure.value.failure != null && controller.procedure.value.failure!.gradient != null && controller.procedure.value.failure!.gradient!.secondSegment != null && controller.procedure.value.failure!.gradient!.secondSegment!.reachDP != null && controller.procedure.value.failure!.gradient!.secondSegment!.reachDP == false)
-                                          Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                          Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                                           if (controller.procedure.value.failure != null && controller.procedure.value.failure!.gradient != null && controller.procedure.value.failure!.gradient!.secondSegment != null && controller.procedure.value.failure!.gradient!.secondSegment!.reachDP != null)
                                           Visibility(
                                             visible: controller.procedure.value.failure!.gradient!.secondSegment!.reachDP!,
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                                                 const SizedBox(height: 50),
                                                 Row(
                                                   children: [
@@ -2198,14 +2198,14 @@ Widget desktopView(
                                           ),
                                           const SizedBox(height: 20),
                                           if (controller.procedure.value.failure != null && controller.procedure.value.failure!.gradient != null && controller.procedure.value.failure!.gradient!.thirdSegment != null && controller.procedure.value.failure!.gradient!.thirdSegment!.reachDP != null && controller.procedure.value.failure!.gradient!.thirdSegment!.reachDP == false)
-                                          Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                          Text('noArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                                           if (controller.procedure.value.failure != null && controller.procedure.value.failure!.gradient != null && controller.procedure.value.failure!.gradient!.thirdSegment != null && controller.procedure.value.failure!.gradient!.thirdSegment!.reachDP != null)
                                           Visibility(
                                             visible: controller.procedure.value.failure!.gradient!.thirdSegment!.reachDP!,
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium),
+                                                Text('yesArrive2'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                                                 const SizedBox(height: 50),
                                                 Row(
                                                   children: [

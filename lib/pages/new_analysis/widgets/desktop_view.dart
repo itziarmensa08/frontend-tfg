@@ -32,6 +32,18 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
               if (controller.indexStepper.value > 0) {
                 controller.indexStepper.value -= 1;
               }
+              if (controller.indexStepper.value == 1) {
+                deleteDataSecondStep(controller);
+                deleteDataThirdStep(controller);
+                deleteDataFourthStep(controller);
+              }
+              if (controller.indexStepper.value == 2) {
+                deleteDataThirdStep(controller);
+                deleteDataFourthStep(controller);
+              }
+              if (controller.indexStepper.value == 3) {
+                deleteDataFourthStep(controller);
+              }
             },
             onStepContinue: () async {
               if (controller.indexStepper.value == 0) {
@@ -99,8 +111,8 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                     controller.firstSegmentN.value.altitudeInDP = controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb!;
                     controller.altitudeInDPFirstSegment.text = (controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb!).toStringAsFixed(2);
                     controller.totalAltitudeInDPFirstSegmentN.text = (controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb! + controller.selectedAirport.value!.elevation!).toStringAsFixed(2);
-                    controller.initialElevation.text = (controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb!).toStringAsFixed(2);
-                    controller.failure.value.initialElevation = controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb!;
+                    controller.initialElevation.text = controller.totalAltitudeInDPFirstSegmentN.text;
+                    controller.failure.value.initialElevation = controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb! + controller.selectedAirport.value!.elevation!;
 
                     if ((controller.firstSegmentN.value.altitudeInDP! + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
                       controller.firstSegmentN.value.clearDP = true;
@@ -167,8 +179,8 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                       controller.secondSegmentN.value.altitudeInDP = controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!;
                       controller.altitudeInDPSecondSegmentN.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb!).toStringAsFixed(2);
                       controller.totalAltitudeInDPSecondSegmentN.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment! + controller.selectedAirport.value!.elevation!).toStringAsFixed(2);
-                      controller.initialElevation.text = (controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!).toStringAsFixed(2);
-                      controller.failure.value.initialElevation = controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!;
+                      controller.initialElevation.text = controller.totalAltitudeInDPSecondSegmentN.text;
+                      controller.failure.value.initialElevation = controller.secondSegmentN.value.timeToDP! * controller.secondSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment! + controller.selectedAirport.value!.elevation!;
 
                       if ((controller.secondSegmentN.value.altitudeInDP! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment! + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
                         controller.secondSegmentN.value.clearDP = true;
@@ -226,8 +238,8 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                     controller.thirdSegmentN.value.altitudeInDP = controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb!;
                     controller.altitudeInDPThirdSegmentN.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb!).toStringAsFixed(2);
                     controller.totalAltitudeInDPThirdSegmentN.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment! + controller.selectedAirport.value!.elevation!).toStringAsFixed(2);
-                    controller.initialElevation.text = (controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!).toStringAsFixed(2);
-                    controller.failure.value.initialElevation = controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!;
+                    controller.initialElevation.text = controller.totalAltitudeInDPThirdSegmentN.text;
+                    controller.failure.value.initialElevation = controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment! + controller.selectedAirport.value!.elevation!;
 
 
                     if ((controller.thirdSegmentN.value.timeToDP! * controller.thirdSegmentN.value.rateClimb! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment! + controller.selectedAirport.value!.elevation!) > controller.newProcedure.value.dpAltitude!) {
@@ -280,6 +292,18 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
             },
             onStepTapped: (int index) async {
               controller.indexStepper.value = index;
+              if (controller.indexStepper.value == 0) {
+                deleteDataSecondStep(controller);
+                deleteDataThirdStep(controller);
+                deleteDataFourthStep(controller);
+              }
+              if (controller.indexStepper.value == 1) {
+                deleteDataThirdStep(controller);
+                deleteDataFourthStep(controller);
+              }
+              if (controller.indexStepper.value == 2) {
+                deleteDataFourthStep(controller);
+              }
             },
             steps: getSteps(controller)
           ))

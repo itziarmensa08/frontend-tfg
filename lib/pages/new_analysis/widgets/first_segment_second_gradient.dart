@@ -253,13 +253,13 @@ class FirstSegmentSecondStepGradient extends StatelessWidget {
         const SizedBox(height: 50),
         Obx(() {
           if (controller.firstSegmentN1.value.reachDP == false) {
-            return Text('noArrive'.tr, style: Theme.of(context).textTheme.titleMedium);
+            return Text('noArrive'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold));
           } else {
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('yesArrive'.tr, style: Theme.of(context).textTheme.titleMedium),
+                Text('yesArrive'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 50),
                 Row(
                   children: [

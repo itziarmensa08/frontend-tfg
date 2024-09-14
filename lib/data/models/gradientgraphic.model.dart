@@ -66,9 +66,8 @@ class GradientLines {
 }
 
 class Axis {
-
-  List<int>? x;
-  List<int>? y;
+  List<double>? x;
+  List<double>? y;
   String? id;
 
   Axis({
@@ -76,25 +75,27 @@ class Axis {
     this.y,
     this.id,
   });
+
   Axis.fromJson(Map<String, dynamic> json) {
     if (json['x'] != null) {
       final v = json['x'];
-      final arr0 = <int>[];
+      final arr0 = <double>[];
       v.forEach((v) {
-        arr0.add(v.toInt());
+        arr0.add((v as num).toDouble());  // Correctly parse as double
       });
       x = arr0;
     }
     if (json['y'] != null) {
       final v = json['y'];
-      final arr0 = <int>[];
+      final arr0 = <double>[];
       v.forEach((v) {
-        arr0.add(v.toInt());
+        arr0.add((v as num).toDouble());  // Correctly parse as double
       });
       y = arr0;
     }
     id = json['_id']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     if (x != null) {

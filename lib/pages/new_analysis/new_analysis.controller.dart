@@ -126,6 +126,10 @@ class NewAnalaysisController extends GetxController {
 
   final TextEditingController dpDistanceGradient = TextEditingController();
   final TextEditingController gradientRestrictionValue = TextEditingController();
+  final TextEditingController gradientAltitude = TextEditingController();
+  final RxBool distanceChanged = RxBool(false);
+  final RxBool altitudeChanged = RxBool(false);
+  final RxBool gradientChanged = RxBool(false);
 
   final TextEditingController dpDistanceAltitude = TextEditingController();
   final TextEditingController dpAltitudeRestriction = TextEditingController();
@@ -189,7 +193,6 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController altitudeInDPThirdSegmentN1 = TextEditingController();
   final TextEditingController rateOfClimbThirdSegmentN1 = TextEditingController();
   final TextEditingController totalAltitudeInDPThirdSegmentN1 = TextEditingController();
-
   final TextEditingController finalGradientN1 = TextEditingController();
 
   final TextEditingController precedureN = TextEditingController();
@@ -216,6 +219,163 @@ asignAircraftData (NewAnalaysisController controller) {
     controller.altitude1stSegmentFailure.text = controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!.toString();
     controller.altitude2ndSegmentFailure.text = controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment!.toString();
   }
+}
+
+void deleteDataSecondStep(NewAnalaysisController controller) {
+  // Clear or reset the values for all the properties
+
+  // Clearing `nMotors`
+  controller.nMotors.value = NMotors();
+
+  // First Segment N Motors
+  controller.itemsNMotors.clear();
+  controller.loadingAnalysisN.value = false;
+
+  controller.firstSegmentN.value = Segment();
+  controller.data.value = V2TableModel();
+  controller.obtainedData.clear();
+  controller.velocityFirstSegment.clear();
+
+  controller.isatable.value = ISATableModel();
+  controller.obtainedISAData.clear();
+  controller.densityFirstSegment.clear();
+  controller.velocityFirstSegmentTAS.clear();
+
+  controller.rateGraphic.value = RateOfClimbGraphic();
+  controller.resultRate.clear();
+  controller.timeFirstSegment.clear();
+  controller.distanceFirstSegment.clear();
+  controller.timeToDPFirstSegment.clear();
+  controller.altitudeInDPFirstSegment.clear();
+  controller.rateOfClimbFirstSegment.clear();
+  controller.totalAltitudeInDPFirstSegmentN.clear();
+
+  // Second Segment N Motors
+  controller.secondSegmentN.value = Segment();
+  controller.elevationSecondSegmentN.clear();
+  controller.vYtableN.value = VYTableModel();
+  controller.obtainedDataVYN.clear();
+  controller.velocitySecondSegmentN.clear();
+  controller.obtainedISADataSecondSegmentN.clear();
+  controller.densitySecondSegmentN.clear();
+  controller.velocitySecondSegmentTASN.clear();
+  controller.rateGraphicSecondSegmentN.value = RateOfClimbGraphic();
+  controller.resultRateSecondSegmentN.clear();
+  controller.timeSecondSegmentN.clear();
+  controller.distancSecondSegmentN.clear();
+  controller.timeToDPSecondSegmentN.clear();
+  controller.altitudeInDPSecondSegmentN.clear();
+  controller.totalAltitudeInDPSecondSegmentN.clear();
+  controller.rateOfClimbSecondSegmentN.clear();
+
+  // Third Segment N Motors
+  controller.thirdSegmentN.value = Segment();
+  controller.elevationThirdSegmentN.clear();
+  controller.obtainedDataVYThirdSegmentN.clear();
+  controller.velocityThirdSegmentN.clear();
+  controller.obtainedISADataThirdSegmentN.clear();
+  controller.densityThirdSegmentN.clear();
+  controller.velocityThirdSegmentTASN.clear();
+  controller.rateGraphicThirdSegmentN.value = RateOfClimbGraphic();
+  controller.resultRateThirdSegmentN.clear();
+  controller.timeThirdSegmentN.clear();
+  controller.distancThirdSegmentN.clear();
+  controller.timeToDPThirdSegmentN.clear();
+  controller.altitudeInDPThirdSegmentN.clear();
+  controller.rateOfClimbThirdSegmentN.clear();
+  controller.totalAltitudeInDPThirdSegmentN.clear();
+  controller.initialElevation.clear();
+}
+
+void deleteDataThirdStep(NewAnalaysisController controller) {
+  // Clear or reset the values for all the properties
+
+  // ----------------------- N -1 MOTORS ----------------------------------------
+  controller.failure.value = Failure();
+  controller.gradient.value = GradientModel();
+  controller.altitude.value = Altitude();
+  controller.gradientRestriction.value = false;
+  controller.altitudeRestriction.value = false;
+
+  controller.seeAnalysis.value = false;
+  controller.loadingAnalysis.value = false;
+
+  controller.dpDistanceGradient.clear();
+  controller.gradientRestrictionValue.clear();
+  controller.gradientAltitude.clear();
+  controller.distanceChanged.value = false;
+  controller.altitudeChanged.value = false;
+  controller.gradientChanged.value = false;
+
+  controller.dpDistanceAltitude.clear();
+  controller.dpAltitudeRestriction.clear();
+
+  // ----------------------- ALTITUDE RESTRICTION ----------------------------------------
+
+  // ----------------------- N - 1 MOTORS - 1st SEGMENT ----------------------------------------
+  controller.firstSegmentN1.value = Segment();
+  controller.elevationFirstSegmentN1.clear();
+  controller.obtainedDataN1.clear();
+  controller.velocityFirstSegmentN1.clear();
+  controller.obtainedISADataFirstSegmentN1.clear();
+  controller.densityFirstSegmentN1.clear();
+  controller.velocityFirstSegmentTASN1.clear();
+  controller.rateGraphicFirstSegmentN1.value = RateOfClimbGraphic();
+  controller.gradientGraphicFirstSegmentN1.value = GradientGraphic();
+  controller.resultRateFirstSegmentN1.clear();
+  controller.resultGradientFirstSegmentN1.clear();
+  controller.timeFirstSegmentN1.clear();
+  controller.distanceFirstSegmentN1.clear();
+  controller.timeToDPFirstSegmentN1.clear();
+  controller.altitudeInDPFirstSegmentN1.clear();
+  controller.gradientFirstSegmentN1.clear();
+  controller.totalAltitudeInDPFirstSegmentN1.clear();
+
+  // ----------------------- N - 1 MOTORS - 2nd SEGMENT ----------------------------------------
+  controller.secondSegmentN1.value = Segment();
+  controller.elevationSecondSegmentN1.clear();
+  controller.vYtableN1.value = VYTableModel();
+  controller.obtainedDataVYN1.clear();
+  controller.velocitySecondSegmentN1.clear();
+  controller.obtainedISADataSecondSegmentN1.clear();
+  controller.densitySecondSegmentN1.clear();
+  controller.velocitySecondSegmentTASN1.clear();
+  controller.rateGraphicSecondSegmentN1.value = RateOfClimbGraphic();
+  controller.gradientGraphicSecondSegmentN1.value = GradientGraphic();
+  controller.resultRateSecondSegmentN1.clear();
+  controller.resultGradientSecondSegmentN1.clear();
+  controller.timeSecondSegmentN1.clear();
+  controller.distanceSecondSegmentN1.clear();
+  controller.timeToDPSecondSegmentN1.clear();
+  controller.altitudeInDPSecondSegmentN1.clear();
+  controller.gradientSecondSegmentN1.clear();
+  controller.totalAltitudeInDPSecondSegmentN1.clear();
+
+  // ----------------------- N - 1 MOTORS - 3rd SEGMENT ----------------------------------------
+  controller.thirdSegmentN1.value = Segment();
+  controller.elevationThirdSegmentN1.clear();
+  controller.obtainedDataThirdVYN1.clear();
+  controller.velocityThirdSegmentN1.clear();
+  controller.obtainedISADataThirdSegmentN1.clear();
+  controller.densityThirdSegmentN1.clear();
+  controller.velocityThirdSegmentTASN1.clear();
+  controller.rateGraphicThirdSegmentN1.value = RateOfClimbGraphic();
+  controller.gradientGraphicThirdSegmentN1.value = GradientGraphic();
+  controller.resultRateThirdSegmentN1.clear();
+  controller.resultGradientThirdSegmentN1.clear();
+  controller.timeThirdSegmentN1.clear();
+  controller.distanceThirdSegmentN1.clear();
+  controller.timeToDPThirdSegmentN1.clear();
+  controller.altitudeInDPThirdSegmentN1.clear();
+  controller.rateOfClimbThirdSegmentN1.clear();
+  controller.totalAltitudeInDPThirdSegmentN1.clear();
+  controller.finalGradientN1.clear();
+}
+
+void deleteDataFourthStep(NewAnalaysisController controller) {
+  // Clear the TextEditingControllers for procedures
+  controller.precedureN.clear();
+  controller.precedureN1.clear();
 }
 
 Future<void> launchForeFlight() async {
