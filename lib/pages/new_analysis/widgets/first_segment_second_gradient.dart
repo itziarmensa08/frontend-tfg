@@ -61,6 +61,26 @@ class FirstSegmentSecondStepGradient extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(width: 20),
+            Expanded(
+              child: TextFormField(
+                controller: TextEditingController(text: controller.firstSegmentN1.value.temperature!.toStringAsFixed(2)),
+                readOnly: true,
+                decoration: InputDecoration(
+                  labelText: 'referenceTemperature'.tr,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 50),

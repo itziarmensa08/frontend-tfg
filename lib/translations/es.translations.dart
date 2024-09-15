@@ -216,6 +216,23 @@ final Map<String, String> es = {
 
 
   'step4title': "Conclusión",
+  'Conclusión para N motores': 'Conclusión para N motores',
+  'El decision point se encuentra en el primer segmento y la aeronave es capaz de sobrepasarlo.': 'El decision point se encuentra en el primer segmento y la aeronave es capaz de sobrepasarlo.',
+  'El decision point se encuentra en el primer segmento y la aeronave NO es capaz de sobrepasarlo.': 'El decision point se encuentra en el primer segmento y la aeronave NO es capaz de sobrepasarlo.',
+  'El decision point se encuentra en el segundo segmento y la aeronave es capaz de sobrepasarlo.': 'El decision point se encuentra en el segundo segmento y la aeronave es capaz de sobrepasarlo.',
+  'El decision point se encuentra en el segundo segmento y la aeronave NO es capaz de sobrepasarlo.': 'El decision point se encuentra en el segundo segmento y la aeronave NO es capaz de sobrepasarlo.',
+  'El decision point se encuentra en el tercer segmento y la aeronave es capaz de sobrepasarlo.': 'El decision point se encuentra en el tercer segmento y la aeronave es capaz de sobrepasarlo.',
+  'El decision point se encuentra en el tercer segmento y la aeronave NO es capaz de sobrepasarlo.': 'El decision point se encuentra en el tercer segmento y la aeronave NO es capaz de sobrepasarlo.',
+  'Escribe el procedimiento para N motores': 'Escribe el procedimiento para N motores',
+  'Procedimiento': 'Procedimiento',
+  'Conclusión para N - 1 motores:': 'Conclusión para N - 1 motores:',
+  'Escribe el procedimiento para N - 1 motores': 'Escribe el procedimiento para N - 1 motores',
+  'Siguiente paso': 'Siguiente paso',
+  "¿Quieres seguir analizando otras SID's / DP's?": "¿Quieres seguir analizando otras SID's / DP's?",
+  'Guardar': 'Guardar',
+  'not_conclusion': "Cómo hemos librado el decision point con N motores, no es necesario escribir conclusión en este caso.",
+  'initialElevation': "Elevación inicial",
+  'distanceToInitial': "Distancia al punto inicial",
 
   // Settings page
   'notifications': 'Notificaciones',

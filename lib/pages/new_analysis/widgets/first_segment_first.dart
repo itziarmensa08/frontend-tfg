@@ -64,7 +64,7 @@ class FirstSegmentFirstStep extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: TextFormField(
-                controller: controller.referenceTemperature,
+                controller: TextEditingController(text: controller.firstSegmentN.value.temperature.toString()),
                 readOnly: true,
                 decoration: InputDecoration(
                   labelText: 'referenceTemperature'.tr,

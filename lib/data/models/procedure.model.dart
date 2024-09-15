@@ -85,7 +85,7 @@ class Procedure {
 }
 
 class Segment {
-
+  double? temperature;
   double? velocityIAS;
   double? density;
   double? velocityTAS;
@@ -99,6 +99,7 @@ class Segment {
   String? id;
 
   Segment({
+    this.temperature,
     this.velocityIAS,
     this.velocityTAS,
     this.rateClimb,
@@ -112,6 +113,7 @@ class Segment {
     this.clearDP
   });
   Segment.fromJson(Map<String, dynamic> json) {
+    temperature = json['temperature']?.toDouble();
     velocityIAS = json['velocityIAS']?.toDouble();
     density = json['density']?.toDouble();
     velocityTAS = json['velocityTAS']?.toDouble();
@@ -126,6 +128,7 @@ class Segment {
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
+    data['temperature'] = temperature;
     data['velocityIAS'] = velocityIAS;
     data['density'] = density;
     data['velocityTAS'] = velocityTAS;
