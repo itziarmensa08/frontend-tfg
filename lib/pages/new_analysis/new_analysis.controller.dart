@@ -340,6 +340,7 @@ void deleteDataThirdStep(NewAnalaysisController controller) {
 
   // ----------------------- N -1 MOTORS ----------------------------------------
   controller.failure.value = Failure();
+  controller.newProcedure.value.failure = controller.failure.value;
   controller.gradient.value = GradientModel();
   controller.altitude.value = Altitude();
   controller.gradientRestriction.value = false;
@@ -506,8 +507,8 @@ Future<Map<String, bool>> calculateDataNMotors(NewAnalaysisController controller
     } else {
       controller.firstSegmentN.value.reachDP = true;
       reachDP1 = true;
-      controller.firstSegmentN.value.timeToDP = controller.newProcedure.value.dpDistance! / (controller.firstSegmentN.value.velocityTAS! * 60);
-      controller.timeToDPFirstSegment.text = (controller.newProcedure.value.dpDistance! / (controller.firstSegmentN.value.velocityTAS! * 60)).toStringAsFixed(2);
+      controller.firstSegmentN.value.timeToDP = controller.newProcedure.value.dpDistance! / (controller.firstSegmentN.value.velocityTAS! / 60);
+      controller.timeToDPFirstSegment.text = (controller.newProcedure.value.dpDistance! / (controller.firstSegmentN.value.velocityTAS! / 60)).toStringAsFixed(2);
 
       controller.firstSegmentN.value.altitudeInDP = controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb!;
       controller.altitudeInDPFirstSegment.text = (controller.firstSegmentN.value.timeToDP! * controller.firstSegmentN.value.rateClimb!).toStringAsFixed(2);
@@ -1044,7 +1045,7 @@ Future<Map<String, bool>> calculateDataFailureGradient(NewAnalaysisController co
         controller.firstSegmentN1.value.altitudeInDP = ((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.firstSegmentN1.value.rateClimb!) / 100;
         controller.altitudeInDPFirstSegmentN1.text = (((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.firstSegmentN1.value.rateClimb!) / 100).toString();
         controller.totalAltitudeInDPFirstSegmentN1.text = (controller.firstSegmentN1.value.altitudeInDP! + controller.failure.value.initialElevation!).toString();
-        var height = controller.firstSegmentN1.value.altitudeInDP!;
+        var height = controller.firstSegmentN1.value.altitudeInDP! + controller.failure.value.initialElevation!;
         var distanceFeet = controller.gradient.value.dpDistance! * 6076.12;
         controller.gradient.value.finalGradient = (height / distanceFeet) * 100;
         controller.finalGradientN1.text = ((height / distanceFeet) * 100).toStringAsFixed(2);
@@ -1120,8 +1121,14 @@ Future<Map<String, bool>> calculateDataFailureGradient(NewAnalaysisController co
           controller.secondSegmentN1.value.reachDP = true;
           reachDP2 = true;
 
-          controller.secondSegmentN1.value.altitudeInDP = ((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.secondSegmentN1.value.rateClimb!) / 100;
-          controller.altitudeInDPSecondSegmentN1.text = (((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.secondSegmentN1.value.rateClimb!) / 100).toString();
+          if (controller.failure.value.distanceToInitial! > controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) {
+            controller.secondSegmentN1.value.altitudeInDP = ((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.secondSegmentN1.value.rateClimb!) / 100;
+            controller.altitudeInDPSecondSegmentN1.text = (((controller.gradient.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.secondSegmentN1.value.rateClimb!) / 100).toString();
+          } else {
+            controller.secondSegmentN1.value.altitudeInDP = ((controller.gradient.value.dpDistance! - controller.failure.value.gradient!.firstSegment!.distanceToFinish! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.secondSegmentN1.value.rateClimb!) / 100;
+            controller.altitudeInDPSecondSegmentN1.text = (((controller.gradient.value.dpDistance! - controller.failure.value.gradient!.firstSegment!.distanceToFinish! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.secondSegmentN1.value.rateClimb!) / 100).toString();
+          }
+
 
           if (controller.failure.value.initialElevation! < controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) {
             controller.totalAltitudeInDPSecondSegmentN1.text = (controller.secondSegmentN1.value.altitudeInDP! + controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! + controller.selectedAirport.value!.elevation!).toString();
