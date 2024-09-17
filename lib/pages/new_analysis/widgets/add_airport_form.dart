@@ -133,6 +133,7 @@ class AddAirportForm extends Container {
                 AirportModel? airportAdded = await AirportService.addAirport(airport);
                 if (airportAdded != null) {
                   controller.selectedAirport.value = airportAdded;
+                  asignAirportData(controller);
                 }
                 if (!context.mounted) return;
                 Navigator.of(context).pop();

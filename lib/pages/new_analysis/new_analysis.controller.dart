@@ -341,6 +341,8 @@ void deleteDataThirdStep(NewAnalaysisController controller) {
   // ----------------------- N -1 MOTORS ----------------------------------------
   controller.failure.value = Failure();
   controller.newProcedure.value.failure = controller.failure.value;
+  controller.newProcedure.value.procedureN = null;
+  controller.newProcedure.value.procedureN1 = null;
   controller.gradient.value = GradientModel();
   controller.altitude.value = Altitude();
   controller.gradientRestriction.value = false;
