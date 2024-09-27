@@ -51,6 +51,7 @@ dependencies:
   uuid: ^4.3.3
   syncfusion_flutter_charts: ^25.1.42+1
   table_calendar: ^3.1.1
+  breadcrumbs: ^0.1.0
 
 dev_dependencies:
   flutter_test:

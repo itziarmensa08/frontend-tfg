@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/user.model.dart';
 import 'package:frontend_tfg/data/services/cloudinary.service.dart';
@@ -21,6 +22,50 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
     children: [
       if(tabs.length > 5)
       CustomTabBar(page: page, number: 5),
+      const SizedBox(height: 20),
+      Padding(
+        padding: const EdgeInsets.only(top: 20.0, left: 30.0),
+        child: Obx(() {
+          final String userName = '${controller.user.value.name} ${controller.user.value.surname}';
+
+          return RichText(
+            text: TextSpan(
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).primaryColor),
+              children: [
+                TextSpan(
+                  text: 'admin'.tr,
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Get.toNamed(Routes.admin);
+                    },
+                ),
+                TextSpan(
+                  text: ' > ',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).primaryColor),
+                ),
+                TextSpan(
+                  text: 'usersList'.tr,
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Get.toNamed(Routes.listUsers);
+                    },
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).primaryColor),
+                ),
+                TextSpan(
+                  text: ' > ',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).primaryColor),
+                ),
+                TextSpan(
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).primaryColor),
+                  text: userName,
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {},
+                ),
+              ],
+            ),
+          );
+        }),
+      ),
       SizedBox(height: MediaQuery.of(context).size.height * 0.15),
       Expanded(
         child: Padding(
