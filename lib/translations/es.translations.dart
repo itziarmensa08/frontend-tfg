@@ -74,6 +74,15 @@ final Map<String, String> es = {
   'gradientValue': 'Gradiente mínimo',
   'altitudeRestriction': 'Restricción de altitud',
   'dpElevation': 'Altitud del DP',
+  'Descargar PDF': 'Descargar PDF',
+  'Eliminar': 'Eliminar',
+  'deletedCorrectly': 'El procedimiento se ha eliminado correctamente',
+  'deleteProcedure': 'Eliminar procedimiento',
+  'confirmDeleteProcedure': '¿Estás seguro de que quieres borrar este procedimiento?',
+  'successEdit': 'El procedimiento se ha actualizado correctamente',
+  'saveEditedData': 'Guardar datos editados',
+  'Descargar SID': 'Descargar SID',
+  'Descargar RWY': 'Descargar RWY',
 
   //Admin page
   'dashboard': 'Panel de administrador',

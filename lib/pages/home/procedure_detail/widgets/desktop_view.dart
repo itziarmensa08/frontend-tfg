@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_tfg/data/services/procedure.service.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/pages/home/procedure_detail/procedure_detail.controller.dart';
 import 'package:get/get.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Widget desktopView(
   double height,
@@ -92,10 +94,22 @@ Widget desktopView(
                                 children: [
                                   Obx(() {
                                     if (controller.procedure.value.sidDoc != null) {
-                                      return SizedBox(
-                                        width: double.infinity,
-                                        height: MediaQuery.of(context).size.height,
-                                        child: PdfViewer.openFile(controller.procedure.value.sidDoc!),
+                                      return Column(
+                                        children: [
+                                          SizedBox(
+                                            width: double.infinity,
+                                            height: MediaQuery.of(context).size.height * 0.5,
+                                            child: PdfViewer.openFile(controller.procedure.value.sidDoc!),
+                                          ),
+                                          const SizedBox(height: 20),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              final Uri uri = Uri.parse(controller.procedure.value.sidDoc!);
+                                              launchUrl(uri);
+                                            },
+                                            child: Text("Descargar SID".tr),
+                                          ),
+                                        ],
                                       );
                                     } else {
                                       return Container();
@@ -111,10 +125,22 @@ Widget desktopView(
                                 children: [
                                   Obx(() {
                                     if (controller.procedure.value.rwyDoc != null) {
-                                      return SizedBox(
-                                        width: double.infinity,
-                                        height: MediaQuery.of(context).size.height,
-                                        child: PdfViewer.openFile(controller.procedure.value.rwyDoc!),
+                                      return Column(
+                                        children: [
+                                          SizedBox(
+                                            width: double.infinity,
+                                            height: MediaQuery.of(context).size.height * 0.5,
+                                            child: PdfViewer.openFile(controller.procedure.value.rwyDoc!),
+                                          ),
+                                          const SizedBox(height: 20),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              final Uri uri = Uri.parse(controller.procedure.value.rwyDoc!);
+                                              launchUrl(uri);
+                                            },
+                                            child: Text("Descargar RWY".tr),
+                                          ),
+                                        ],
                                       );
                                     } else {
                                       return Container();
@@ -131,7 +157,7 @@ Widget desktopView(
                             Expanded(
                               child: TextFormField(
                                 controller: TextEditingController(text: controller.procedure.value.sidName),
-                                readOnly: true,
+                                onChanged: (value) => controller.procedure.value.sidName = value,
                                 decoration: InputDecoration(
                                   labelText: 'sidName'.tr,
                                   enabledBorder: OutlineInputBorder(
@@ -151,9 +177,29 @@ Widget desktopView(
                             Expanded(
                               child: TextFormField(
                                 controller: TextEditingController(text: controller.procedure.value.rwyName),
-                                readOnly: true,
+                                onChanged: (value) => controller.procedure.value.rwyName = value,
                                 decoration: InputDecoration(
                                   labelText: 'rwyName'.tr,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            Expanded(
+                              child: TextFormField(
+                                controller: TextEditingController(text: controller.procedure.value.dpName),
+                                onChanged: (value) => controller.procedure.value.dpName = value,
+                                decoration: InputDecoration(
+                                  labelText: 'dpName'.tr,
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Theme.of(context).primaryColor,
@@ -170,28 +216,22 @@ Widget desktopView(
                           ],
                         ),
                         const SizedBox(height: 20),
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await ProcedureService.updateProcedureFields(
+                                controller.procedure.value.id!,
+                                sidName: controller.procedure.value.sidName!,
+                                rwyName: controller.procedure.value.rwyName!,
+                                dpName: controller.procedure.value.dpName!,
+                              );
+                            },
+                            child: Text('saveEditedData'.tr),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
                         Row(
                           children: [
-                            Expanded(
-                              child: TextFormField(
-                                controller: TextEditingController(text: controller.procedure.value.dpName),
-                                readOnly: true,
-                                decoration: InputDecoration(
-                                  labelText: 'dpName'.tr,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 20),
                             Expanded(
                               child: TextFormField(
                                 controller: TextEditingController(text: controller.procedure.value.dpDistance.toString()),
@@ -211,11 +251,7 @@ Widget desktopView(
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: [
+                            const SizedBox(width: 20),
                             Expanded(
                               child: TextFormField(
                                 controller: TextEditingController(text: controller.procedure.value.dpAltitude.toString()),
@@ -297,7 +333,9 @@ Widget desktopView(
                             const SizedBox(width: 20),
                             Expanded(
                               child: TextFormField(
-                                controller: TextEditingController(text: controller.airport.value.referenceTemperature.toString()),
+                                controller: TextEditingController(
+                                  text: (controller.procedure.value.nMotors?.firstSegment?.temperature ?? controller.airport.value.referenceTemperature).toString(),
+                                ),
                                 readOnly: true,
                                 decoration: InputDecoration(
                                   labelText: 'referenceTemperature'.tr,
@@ -552,7 +590,9 @@ Widget desktopView(
                                   const SizedBox(width: 20),
                                   Expanded(
                                     child: TextFormField(
-                                      controller: TextEditingController(text: controller.airport.value.referenceTemperature.toString()),
+                                      controller: TextEditingController(
+                                        text: (controller.procedure.value.nMotors?.secondSegment?.temperature ?? controller.airport.value.referenceTemperature).toString(),
+                                      ),
                                       readOnly: true,
                                       decoration: InputDecoration(
                                         labelText: 'referenceTemperature'.tr,
@@ -810,7 +850,9 @@ Widget desktopView(
                                   const SizedBox(width: 20),
                                   Expanded(
                                     child: TextFormField(
-                                      controller: TextEditingController(text: controller.airport.value.referenceTemperature.toString()),
+                                      controller: TextEditingController(
+                                        text: (controller.procedure.value.nMotors?.thirdSegment?.temperature ?? controller.airport.value.referenceTemperature).toString(),
+                                      ),
                                       readOnly: true,
                                       decoration: InputDecoration(
                                         labelText: 'referenceTemperature'.tr,
@@ -1031,7 +1073,7 @@ Widget desktopView(
                           ),
                         ),
                         Visibility(
-                          visible: (controller.procedure.value.failure != null),
+                          visible: (controller.procedure.value.failure != null && controller.procedure.value.failure!.distanceToInitial != null),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

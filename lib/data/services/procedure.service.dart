@@ -4,6 +4,7 @@ import 'package:frontend_tfg/data/models/airport_model.dart';
 import 'package:frontend_tfg/data/models/procedure.model.dart';
 import 'package:frontend_tfg/data/provider/api.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
+import 'package:get/get.dart';
 
 class ProcedureService {
   static Future<dynamic> postProcedure(Procedure procedure) async {
@@ -44,6 +45,55 @@ class ProcedureService {
         dynamic data = response.data;
 
         return data;
+
+      } else {
+        ToastUtils.showErrorToast(response.data);
+      }
+
+    } catch (error) {
+      ToastUtils.showErrorToast('Error Getting Procedures: $error');
+    }
+    return null;
+  }
+
+  static Future<dynamic> updateProcedureFields(String id, {required String sidName, required String rwyName, required String dpName}) async {
+    ApiResponse response;
+
+    final Map<String, dynamic> data = {};
+
+    data['sidName'] = sidName;
+    data['rwyName'] = rwyName;
+    data['dpName'] = dpName;
+
+    try {
+      response = await MyApi().put(
+        '/procedures/$id',
+        data: data,
+      );
+
+      if (response.statusCode == 200) {
+        ToastUtils.showSuccessToast('successEdit'.tr);
+        return response.data;
+      } else {
+        ToastUtils.showErrorToast(response.data);
+      }
+    } catch (error) {
+      ToastUtils.showErrorToast('Error Actualizando Procedure: $error');
+    }
+    return null;
+  }
+
+  static Future<dynamic> deleteProcedure(String id) async {
+    ApiResponse response;
+
+    try {
+      response = await MyApi().delete(
+        '/procedures/$id',
+      );
+
+      if (response.statusCode == 200) {
+
+        ToastUtils.showSuccessToast('deletedCorrectly'.tr);
 
       } else {
         ToastUtils.showErrorToast(response.data);

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/procedure.model.dart';
 import 'package:frontend_tfg/data/services/procedure.service.dart';
+import 'package:frontend_tfg/general_widgets/alert.dart';
+import 'package:frontend_tfg/pages/home/list_aircrafts/list_aircrafts.controller.dart';
 import 'package:frontend_tfg/pages/home/list_procedures/list_procedures.controller.dart';
 import 'package:frontend_tfg/pages/home/procedure_detail/procedure_detail.controller.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
@@ -48,37 +50,82 @@ class ProcedureCardHome extends StatelessWidget {
                       _buildProcedureDetailColumn('sidName'.tr, procedure.sidName ?? ''),
                       _buildProcedureDetailColumn('rwyName'.tr, procedure.rwyName ?? ''),
                       _buildProcedureDetailColumn('dpName'.tr, procedure.dpName ?? ''),
-                      MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: IconButton(
-                          icon: const Icon(Icons.picture_as_pdf),
-                          color: Colors.grey,
-                          onPressed: () async {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (BuildContext context) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
+                      Column(
+                        children: <Widget>[
+                          MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: IconButton(
+                              icon: const Icon(Icons.picture_as_pdf),
+                              color: Colors.grey,
+                              onPressed: () async {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  },
+                                );
+                                try {
+                                  var url = await ProcedureService.downloadPdfProcedure(procedure.id!);
+                                  final Uri uri = Uri.parse(url['url']);
+                                  if (await canLaunchUrl(uri)) {
+                                    await launchUrl(uri);
+                                  } else {
+                                    throw 'No se puede abrir la URL: $uri';
+                                  }
+                                } catch (e) {
+                                  print(e);
+                                } finally {
+                                  Navigator.of(context).pop();
+                                }
+                              },
+                              tooltip: 'Descargar PDF'.tr,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: IconButton(
+                              icon: const Icon(Icons.delete),
+                              color: Colors.grey,
+                              onPressed: () async {
+                                WidgetsBinding.instance.addPostFrameCallback((_) {
+                                  showAlert(
+                                    context,
+                                    'deleteProcedure'.tr,
+                                    'confirmDeleteProcedure'.tr,
+                                    'yes'.tr,
+                                    'no'.tr,
+                                    const Color.fromRGBO(255, 0, 0, 1),
+                                    const Color.fromARGB(255, 255, 255, 255),
+                                    () async {
+                                      try {
+                                        await ProcedureService.deleteProcedure(procedure.id!);
+                                        final ListAircraftsHomeController controller = Get.put(ListAircraftsHomeController());
+                                        final ListProceduresHomeController controllerProc = Get.put(ListProceduresHomeController());
+                                        var procedures = await ProcedureService.getProcedureByAirportnadAircraft(controller.airport.value.id!, controllerProc.aircraft.value.id!);
+                                        controllerProc.procedures.value = procedures;
+                                        Navigator.of(context).pop();
+                                        if (controllerProc.procedures.isEmpty) {
+                                          Get.toNamed(Routes.home);
+                                        }
+                                      } catch (e) {
+                                        print(e);
+                                      }
+                                    },
+                                    () {
+                                      Navigator.of(context).pop();
+                                    }
+                                  );
+                                }
                                 );
                               },
-                            );
-                            try {
-                              var url = await ProcedureService.downloadPdfProcedure(procedure.id!);
-                              final Uri uri = Uri.parse(url['url']);
-                              if (await canLaunchUrl(uri)) {
-                                await launchUrl(uri);
-                              } else {
-                                throw 'No se puede abrir la URL: $uri';
-                              }
-                            } catch (e) {
-                              print(e);
-                            } finally {
-                              Navigator.of(context).pop();
-                            }
-                          },
-                          tooltip: 'Descargar PDF',
-                        ),
+                              tooltip: 'Eliminar'.tr,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
