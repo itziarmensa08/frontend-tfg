@@ -20,6 +20,8 @@ import 'package:frontend_tfg/pages/home/list_procedures/list_procedures.binding.
 import 'package:frontend_tfg/pages/home/list_procedures/list_procedures.page.dart';
 import 'package:frontend_tfg/pages/home/procedure_detail/procedure_detail.binding.dart';
 import 'package:frontend_tfg/pages/home/procedure_detail/procedure_detail.page.dart';
+import 'package:frontend_tfg/pages/home/write_procedure/wirte_procedure.binding.dart';
+import 'package:frontend_tfg/pages/home/write_procedure/write_procedure.page.dart';
 import 'package:frontend_tfg/pages/list_aircrafts/list_aircrafts.binding.dart';
 import 'package:frontend_tfg/pages/list_aircrafts/list_aircrafts.page.dart';
 import 'package:frontend_tfg/pages/list_airports/list_airports.binding.dart';
@@ -80,6 +82,11 @@ abstract class AppPages {
       name: Routes.homeProcedureDetail,
       page:() => const ProcedureDetailPage(),
       binding: ProcedureDetailBinding()
+    ),
+    GetPage(
+      name: Routes.homeProcedureWrite,
+      page:() => const WriteProcedurePage(),
+      binding: WriteProcedureBinding()
     ),
     GetPage(
       name: Routes.newAnalysis,

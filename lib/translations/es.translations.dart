@@ -69,7 +69,7 @@ final Map<String, String> es = {
   'noArrive2': "En este punto la aeronave aún no ha alcanzado el punto crítico.",
   '2ndSegment': '2o Segmento',
   'failure': 'N - 1 motores',
-  'mergeProcedures': 'Unir procedimientos',
+  'mergeProcedures': 'Descargar PDF de càlculos con los procedimiento unidos',
   'gradientRestriction': 'Restricción de gradiente',
   'gradientValue': 'Gradiente mínimo',
   'altitudeRestriction': 'Restricción de altitud',
@@ -83,6 +83,9 @@ final Map<String, String> es = {
   'saveEditedData': 'Guardar datos editados',
   'Descargar SID': 'Descargar SID',
   'Descargar RWY': 'Descargar RWY',
+  'writeProcedure': "Escribir procedimiento tripulación",
+  "writeData": "A continuación se sugiere un procedimiento, puedes editarlo si es necesario:",
+  'succesAddCrewProc': 'Procedimiento de tripulación registrado correctamente',
 
   //Admin page
   'dashboard': 'Panel de administrador',

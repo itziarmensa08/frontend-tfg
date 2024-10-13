@@ -4,6 +4,7 @@ import 'package:frontend_tfg/data/services/procedure.service.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/pages/home/list_procedures/list_procedures.controller.dart';
 import 'package:frontend_tfg/pages/home/list_procedures/widgets/procedure_card.dart';
+import 'package:frontend_tfg/pages/home/write_procedure/write_procedure.controller.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -92,6 +93,25 @@ Widget desktopView(double height, TickerProviderStateMixin page, BuildContext co
                 ),
               ),
               if (controller.procedures.length > 1)
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        final WriteProcedureController controllerWrite = Get.put(WriteProcedureController());
+                        controllerWrite.aircraft = controller.aircraft;
+                        controllerWrite.airport = controller.airport;
+                        controllerWrite.procedures = controller.procedures;
+                        Get.toNamed(Routes.homeProcedureWrite);
+                      },
+                      child: Text('writeProcedure'.tr),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(height: 20),
               if (controller.procedures.length > 1)
               Padding(
