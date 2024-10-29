@@ -12,6 +12,8 @@ import 'package:frontend_tfg/pages/edit_airport/edit_airport.binding.dart';
 import 'package:frontend_tfg/pages/edit_airport/edit_airport.page.dart';
 import 'package:frontend_tfg/pages/edit_user/edit_user.binding.dart';
 import 'package:frontend_tfg/pages/edit_user/edit_user.page.dart';
+import 'package:frontend_tfg/pages/forgot_pass/forgot.binding.dart';
+import 'package:frontend_tfg/pages/forgot_pass/forgot.page.dart';
 import 'package:frontend_tfg/pages/home/home.binding.dart';
 import 'package:frontend_tfg/pages/home/home.page.dart';
 import 'package:frontend_tfg/pages/home/list_aircrafts/list_aircrafts.binding.dart';
@@ -57,6 +59,11 @@ abstract class AppPages {
       name: Routes.login,
       page:() => const LoginPage(),
       binding: LoginBinding()
+    ),
+    GetPage(
+      name: Routes.forgotPass,
+      page:() => const ForgotPassPage(),
+      binding: ForgotPassBinding()
     ),
     GetPage(
       name: Routes.register,

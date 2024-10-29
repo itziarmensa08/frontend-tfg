@@ -23,14 +23,6 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
             ),
             const Divider(),
             SettingsItem(
-              icon: Icons.visibility,
-              title: 'appearance'.tr,
-              onTap: () {
-                // Navigate to appearance settings
-              },
-            ),
-            const Divider(),
-            SettingsItem(
               icon: Icons.lock,
               title: 'privacy'.tr,
               onTap: () {

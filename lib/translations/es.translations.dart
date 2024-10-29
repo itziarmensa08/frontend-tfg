@@ -26,6 +26,7 @@ final Map<String, String> es = {
   'Incorrect password': 'Contraseña incorrecta',
   'successValidate': 'Se ha validado el usuario correctamente',
   'notValidated': 'El usuario no está validado',
+  'send': 'Enviar',
 
   //Register
   'email': 'Correo electrónico',
