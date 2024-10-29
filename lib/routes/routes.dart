@@ -25,6 +25,9 @@ abstract class Routes{
   static const addAirport = '/addAirport';
   static const editAirport = '/editAirport';
   static const settings = '/settings';
+  static const notis = '/notis';
+  static const help = '/help';
+  static const privacity = '/privacity';
 
 }
 

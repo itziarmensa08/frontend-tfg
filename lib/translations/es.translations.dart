@@ -252,6 +252,20 @@ final Map<String, String> es = {
   'appearance': 'Apariencia',
   'privacy': 'Privacidad',
   'help': 'Ayuda',
-  'about': 'Sobre nosotros'
+  'about': 'Sobre nosotros',
+  'wantNotis': '¿Quiere recibir notificaciones de correo electrónico?',
+  'Enable Notifications': 'Activar notificaciones',
+  'Elige cómo quieres acceder a la información:': 'Elige cómo quieres acceder a la información:',
+  'Acceder al PDF': 'Acceder al PDF',
+  'Ver el Video': 'Ver el Video',
+  'Configuración de Privacidad': 'Configuración de Privacidad',
+  'Control de permisos de datos': 'Control de permisos de datos',
+  'Gestiona los permisos de uso de tus datos': 'Gestiona los permisos de uso de tus datos',
+  'Revisión de Políticas de Privacidad': 'Revisión de Políticas de Privacidad',
+  'Consulta las políticas sobre el uso y protección de datos': 'Consulta las políticas sobre el uso y protección de datos',
+  'Cambiar contraseña': 'Cambiar contraseña',
+  'Accede para actualizar la contraseña': 'Accede para actualizar la contraseña',
+  'Eliminar cuenta y datos': 'Eliminar cuenta y datos',
+  'Solicita la eliminación completa de tu cuenta y datos personales': 'Solicita la eliminación completa de tu cuenta y datos personales',
 
 };

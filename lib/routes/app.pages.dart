@@ -38,6 +38,12 @@ import 'package:frontend_tfg/pages/profile/profile.binding.dart';
 import 'package:frontend_tfg/pages/profile/profile.page.dart';
 import 'package:frontend_tfg/pages/register/register.binding.dart';
 import 'package:frontend_tfg/pages/register/register.page.dart';
+import 'package:frontend_tfg/pages/settings/pages/info/info.binding.dart';
+import 'package:frontend_tfg/pages/settings/pages/info/info.page.dart';
+import 'package:frontend_tfg/pages/settings/pages/notis/notifications.binding.dart';
+import 'package:frontend_tfg/pages/settings/pages/notis/notifications.page.dart';
+import 'package:frontend_tfg/pages/settings/pages/privacity/privacity.binding.dart';
+import 'package:frontend_tfg/pages/settings/pages/privacity/privacity.page.dart';
 import 'package:frontend_tfg/pages/settings/settings.binding.dart';
 import 'package:frontend_tfg/pages/settings/settings.page.dart';
 import 'package:frontend_tfg/pages/splash/splash.binding.dart';
@@ -165,5 +171,20 @@ abstract class AppPages {
       page:() => const SettingsPage(),
       binding: SettingsBinding()
     ),
+    GetPage(
+      name: Routes.notis,
+      page:() => const NotisPage(),
+      binding: NotisBinding()
+    ),
+    GetPage(
+      name: Routes.help,
+      page:() => const InfoPage(),
+      binding: InfoBinding()
+    ),
+    GetPage(
+      name: Routes.privacity,
+      page:() => const PrivacityPage(),
+      binding: PrivacityBinding()
+    )
   ];
 }

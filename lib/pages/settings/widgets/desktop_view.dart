@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/pages/settings/widgets/settings_item.dart';
+import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Widget desktopView(double height, BuildContext context, TickerProviderStateMixin page) {
   return Column(
@@ -18,7 +20,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
               icon: Icons.notifications,
               title: 'notifications'.tr,
               onTap: () {
-                // Navigate to notifications settings
+                Get.toNamed(Routes.notis);
               },
             ),
             const Divider(),
@@ -26,23 +28,28 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
               icon: Icons.lock,
               title: 'privacy'.tr,
               onTap: () {
-                // Navigate to privacy & security settings
+                Get.toNamed(Routes.privacity);
               },
             ),
             const Divider(),
             SettingsItem(
               icon: Icons.help,
               title: 'help'.tr,
-              onTap: () {
-                // Navigate to help and support settings
+              onTap: () async {
+                Get.toNamed(Routes.help);
               },
             ),
             const Divider(),
             SettingsItem(
               icon: Icons.info,
               title: 'about'.tr,
-              onTap: () {
-                // Navigate to about settings
+              onTap: () async {
+                final uri = Uri.parse('https://flightlinebcn.com/');
+                if (await canLaunchUrl(uri)) {
+                  await launchUrl(uri);
+                } else {
+                  print("No se pudo abrir el enlace");
+                }
               },
             ),
             const Divider(),
