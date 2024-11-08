@@ -209,6 +209,79 @@ class ThirdSegmentFirstStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
+        if (controller.dpDistance.text.isEmpty)
+        Obx(() {
+          if (controller.thirdSegmentN.value.reachDP == true) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('yesArriveNoDistanceDP'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 50),
+                Row(
+                  children: [
+                    Text('timeToDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.timeToDPThirdSegmentN,
+                        onChanged: (value) {
+                          controller.thirdSegmentN.value.timeToDP = double.parse(value);
+                          controller.nMotors.value.thirdSegment = controller.thirdSegmentN.value;
+                          controller.newProcedure.value.nMotors = controller.nMotors.value;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'time'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 50),
+                Row(
+                  children: [
+                    Text('distanceInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: TextEditingController(text: controller.newProcedure.value.dpDistance!.toStringAsFixed(2)),
+                        onChanged: (value) {
+                          controller.newProcedure.value.dpDistance = double.parse(value);
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'distance'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          } else {
+            return const CircularProgressIndicator();
+          }
+        }),
+        if (controller.dpDistance.text.isNotEmpty)
         Obx(() {
           if (controller.thirdSegmentN.value.reachDP == true) {
             return Column(
@@ -309,6 +382,7 @@ class ThirdSegmentFirstStep extends StatelessWidget {
           }
         }),
         const SizedBox(height: 50),
+        if (controller.dpDistance.text.isNotEmpty)
         Obx(() {
           if (controller.thirdSegmentN.value.clearDP == true && controller.thirdSegmentN.value.reachDP == true) {
             return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green, fontSize: 20));

@@ -249,7 +249,7 @@ class ThirdStepState extends State<ThirdStep> {
                           }
                         },
                         decoration: InputDecoration(
-                          labelText: 'dpDistance'.tr,
+                          labelText: 'dpDistanceNoOptional'.tr,
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Theme.of(context).primaryColor,

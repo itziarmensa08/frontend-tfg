@@ -454,7 +454,9 @@ Future<Map<String, bool>> calculateDataNMotors(NewAnalaysisController controller
 
   // ---------------------- N MOTORES - 1 SEGMENTO -------------------------------------------
   controller.newProcedure.value.weight = double.parse(controller.weight.text);
-  controller.newProcedure.value.dpDistance = double.parse(controller.dpDistance.text);
+  if (controller.dpDistance.text.isNotEmpty) {
+    controller.newProcedure.value.dpDistance = double.parse(controller.dpDistance.text);
+  }
   controller.newProcedure.value.rwyName = controller.rwyName.text;
   controller.newProcedure.value.dpName = controller.dpName.text;
   controller.newProcedure.value.sidName = controller.sidName.text;
@@ -523,6 +525,19 @@ Future<Map<String, bool>> calculateDataNMotors(NewAnalaysisController controller
       } else {
         controller.firstSegmentN.value.clearDP = false;
       }
+    }
+  } else if (controller.firstSegmentN.value.distanceToFinish != null && controller.newProcedure.value.dpDistance == null) {
+    controller.firstSegmentN.value.clearDP = false;
+    if (controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment! < controller.newProcedure.value.dpAltitude!) {
+      controller.firstSegmentN.value.reachDP = false;
+    } else {
+      controller.firstSegmentN.value.reachDP = true;
+      reachDP1 = true;
+      controller.firstSegmentN.value.timeToDP = controller.newProcedure.value.dpAltitude! / controller.firstSegmentN.value.rateClimb!;
+      controller.timeToDPFirstSegment.text = controller.firstSegmentN.value.timeToDP!.toStringAsFixed(2);
+      controller.newProcedure.value.dpDistance = controller.firstSegmentN.value.timeToDP! * (controller.firstSegmentN.value.velocityTAS! / 60);
+      controller.initialElevation.text = controller.newProcedure.value.dpAltitude!.toStringAsFixed(2);
+      controller.failure.value.initialElevation = controller.newProcedure.value.dpAltitude!;
     }
   }
   controller.nMotors.value.firstSegment = controller.firstSegmentN.value;
@@ -604,6 +619,19 @@ Future<Map<String, bool>> calculateDataNMotors(NewAnalaysisController controller
           controller.secondSegmentN.value.clearDP = false;
         }
       }
+    } else if (controller.secondSegmentN.value.distanceToFinish != null && controller.firstSegmentN.value.distanceToFinish != null && controller.newProcedure.value.dpDistance == null) {
+      controller.secondSegmentN.value.clearDP = false;
+      if (controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment! < controller.newProcedure.value.dpAltitude!) {
+        controller.secondSegmentN.value.reachDP = false;
+      } else {
+        controller.secondSegmentN.value.reachDP = true;
+        reachDP2 = true;
+        controller.secondSegmentN.value.timeToDP = (controller.newProcedure.value.dpAltitude! - controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!) / controller.secondSegmentN.value.rateClimb!;
+        controller.timeToDPSecondSegmentN.text = controller.secondSegmentN.value.timeToDP!.toStringAsFixed(2);
+        controller.newProcedure.value.dpDistance = controller.firstSegmentN.value.distanceToFinish! + controller.secondSegmentN.value.timeToDP! * (controller.secondSegmentN.value.velocityTAS! / 60);
+        controller.initialElevation.text = controller.newProcedure.value.dpAltitude!.toStringAsFixed(2);
+        controller.failure.value.initialElevation = controller.newProcedure.value.dpAltitude!;
+      }
     }
 
     controller.nMotors.value.secondSegment = controller.secondSegmentN.value;
@@ -672,6 +700,15 @@ Future<Map<String, bool>> calculateDataNMotors(NewAnalaysisController controller
       } else {
         controller.thirdSegmentN.value.clearDP = false;
       }
+    } else {
+      controller.thirdSegmentN.value.reachDP = true;
+      reachDP3 = true;
+      controller.thirdSegmentN.value.clearDP = false;
+      controller.thirdSegmentN.value.timeToDP = (controller.newProcedure.value.dpAltitude! - controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!) / controller.thirdSegmentN.value.rateClimb!;
+      controller.timeToDPThirdSegmentN.text = controller.thirdSegmentN.value.timeToDP!.toStringAsFixed(2);
+      controller.newProcedure.value.dpDistance = controller.firstSegmentN.value.distanceToFinish! + controller.secondSegmentN.value.distanceToFinish! + controller.thirdSegmentN.value.timeToDP! * (controller.thirdSegmentN.value.velocityTAS! / 60);
+      controller.initialElevation.text = controller.newProcedure.value.dpAltitude!.toStringAsFixed(2);
+      controller.failure.value.initialElevation = controller.newProcedure.value.dpAltitude!;
     }
     controller.nMotors.value.thirdSegment = controller.thirdSegmentN.value;
   }
@@ -691,28 +728,40 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
   var reachDP3 = false;
   controller.loadingAnalysis.value = true;
   if (double.parse(controller.initialElevation.text) < controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) {
-    var resultrateresponseN = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphic.value.id!, controller.selectedAirport.value!.referenceTemperature!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text));
-    if (resultrateresponseN != null) {
-      if (controller.firstSegmentN.value.velocityTAS != null) {
-        controller.failure.value.distanceToInitial = controller.firstSegmentN.value.velocityTAS! * (((controller.failure.value.initialElevation! - 50) / resultrateresponseN['finalPoint']['x'])/60);
+    if (controller.dpDistance.text.isNotEmpty) {
+      var resultrateresponseN = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphic.value.id!, controller.selectedAirport.value!.referenceTemperature!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text));
+      if (resultrateresponseN != null) {
+        if (controller.firstSegmentN.value.velocityTAS != null) {
+          controller.failure.value.distanceToInitial = controller.firstSegmentN.value.velocityTAS! * (((controller.failure.value.initialElevation! - 50) / resultrateresponseN['finalPoint']['x'])/60);
+        }
       }
+    } else {
+      controller.failure.value.distanceToInitial = controller.newProcedure.value.dpDistance;
     }
   } else if ((double.parse(controller.initialElevation.text) < controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! || (double.parse(controller.initialElevation.text) > controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! && double.parse(controller.initialElevation.text) < controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment!))) {
-    var resultrateresponseN = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphic.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.selectedAirport.value!.elevation! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!), double.parse(controller.weight.text));
-    if (resultrateresponseN != null) {
-      if (controller.firstSegmentN.value.velocityTAS != null) {
-        var distance = controller.firstSegmentN.value.velocityTAS! * (((controller.failure.value.initialElevation! - controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!) / resultrateresponseN['finalPoint']['x'])/60);
-        controller.failure.value.distanceToInitial = controller.firstSegmentN.value.distanceToFinish! + distance;
+    if (controller.dpDistance.text.isNotEmpty) {
+      var resultrateresponseN = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphic.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.selectedAirport.value!.elevation! + controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!), double.parse(controller.weight.text));
+      if (resultrateresponseN != null) {
+        if (controller.firstSegmentN.value.velocityTAS != null) {
+          var distance = controller.firstSegmentN.value.velocityTAS! * (((controller.failure.value.initialElevation! - controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment!) / resultrateresponseN['finalPoint']['x'])/60);
+          controller.failure.value.distanceToInitial = controller.firstSegmentN.value.distanceToFinish! + distance;
+        }
       }
+    } else {
+      controller.failure.value.distanceToInitial = controller.newProcedure.value.dpDistance;
     }
     controller.firstSegmentN1.value.reachDP = false;
   } else {
-    var resultrateresponseN = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphic.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.selectedAirport.value!.elevation! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!), double.parse(controller.weight.text));
-    if (resultrateresponseN != null) {
-      if (controller.firstSegmentN.value.velocityTAS != null) {
-        var distance = controller.firstSegmentN.value.velocityTAS! * (((controller.failure.value.initialElevation! - controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!) / resultrateresponseN['finalPoint']['x'])/60);
-        controller.failure.value.distanceToInitial = controller.firstSegmentN.value.distanceToFinish! + controller.secondSegmentN.value.distanceToFinish! + distance;
+    if (controller.dpDistance.text.isNotEmpty) {
+      var resultrateresponseN = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphic.value.id!, controller.selectedAirport.value!.referenceTemperature!, (controller.selectedAirport.value!.elevation! + controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!), double.parse(controller.weight.text));
+      if (resultrateresponseN != null) {
+        if (controller.firstSegmentN.value.velocityTAS != null) {
+          var distance = controller.firstSegmentN.value.velocityTAS! * (((controller.failure.value.initialElevation! - controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!) / resultrateresponseN['finalPoint']['x'])/60);
+          controller.failure.value.distanceToInitial = controller.firstSegmentN.value.distanceToFinish! + controller.secondSegmentN.value.distanceToFinish! + distance;
+        }
       }
+    } else {
+      controller.failure.value.distanceToInitial = controller.newProcedure.value.dpDistance;
     }
     controller.firstSegmentN1.value.reachDP = false;
     controller.secondSegmentN1.value.reachDP = false;

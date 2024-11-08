@@ -288,6 +288,79 @@ class FirstSegmentFirstStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
+        if (controller.dpDistance.text.isEmpty)
+        Obx(() {
+          if (controller.firstSegmentN.value.reachDP == false) {
+            return Text('noArriveNoDistanceDP'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold));
+          } else {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('yesArriveNoDistanceDP'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 50),
+                Row(
+                  children: [
+                    Text('timeToDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.timeToDPFirstSegment,
+                        onChanged: (value) {
+                          controller.firstSegmentN.value.timeToDP = double.parse(value);
+                          controller.nMotors.value.firstSegment = controller.firstSegmentN.value;
+                          controller.newProcedure.value.nMotors = controller.nMotors.value;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'time'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 50),
+                Row(
+                  children: [
+                    Text('distanceInDP'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: TextEditingController(text: controller.newProcedure.value.dpDistance!.toStringAsFixed(2)),
+                        onChanged: (value) {
+                          controller.newProcedure.value.dpDistance = double.parse(value);
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'distance'.tr,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          }
+        }),
+        if (controller.dpDistance.text.isNotEmpty)
         Obx(() {
           if (controller.firstSegmentN.value.reachDP == false) {
             return Text('noArrive'.tr, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold));
@@ -390,6 +463,7 @@ class FirstSegmentFirstStep extends StatelessWidget {
           }
         }),
         const SizedBox(height: 50),
+        if (controller.dpDistance.text.isNotEmpty)
         Obx(() {
           if (controller.firstSegmentN.value.clearDP == true && controller.firstSegmentN.value.reachDP == true) {
             return Text('clearDP'.tr, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.green, fontSize: 20));
