@@ -9,9 +9,11 @@ import 'package:frontend_tfg/translations/app.translations.dart';
 import 'package:get/get.dart';
 import 'package:json_theme/json_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  setPathUrlStrategy();
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   final themeStr = await rootBundle.loadString('assets/appainter_theme.json');

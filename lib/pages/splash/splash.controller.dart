@@ -12,9 +12,7 @@ class SplashScreenController extends GetxController {
 
   Future<void> checkUser() async {
     isUserLoggedIn.value = await userService.getUserLoggedSplash();
-    if (isUserLoggedIn.value == true) {
-      Get.toNamed(Routes.home);
-    } else {
+    if (isUserLoggedIn.value == false) {
       Get.toNamed(Routes.login);
     }
   }

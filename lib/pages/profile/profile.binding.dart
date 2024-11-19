@@ -12,6 +12,7 @@ class ProfileBinding implements Bindings {
   }
 
   static Future<void> updateUserData() async {
+    await Future.delayed(const Duration(seconds: 1));
     final controller = Get.put(ProfileController());
     var idUser = Auth.id;
     if (idUser != null) {
