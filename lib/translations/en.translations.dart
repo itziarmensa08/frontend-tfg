@@ -24,7 +24,7 @@ final Map<String, String> en = {
   'Not found user': 'No user found with this username',
   'Incorrect password': 'Incorrect password',
   'successValidate': 'User validated successfully',
-  'notValidated': 'User is not validated',
+  'notValidated': 'User is not validated, please check your email to validate your account.',
   'send': 'Send',
 
   //Register
@@ -43,7 +43,7 @@ final Map<String, String> en = {
   'equalPass': "Passwords do not match",
   'longPass': "Password must be more than 7 characters",
   'validEmail': 'Please enter a valid email (flightlinebcn.com)',
-  'successRegister': 'User registered successfully',
+  'successRegister': 'User successfully registered, please check your email to validate your account.',
 
   //Home
   'EOSIDcalculation': 'EOSID Calculation',

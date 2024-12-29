@@ -24,6 +24,7 @@ class ProcedureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: const Color.fromRGBO(230, 238, 246, 1),
       margin: const EdgeInsets.all(10.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),

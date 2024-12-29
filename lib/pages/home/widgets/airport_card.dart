@@ -23,8 +23,9 @@ class AirportCardHome extends StatelessWidget {
           Get.toNamed(Routes.homeAircrafts);
         },
         child: Card(
+          color: const Color.fromRGBO(230, 238, 246, 1),
           elevation: 4,
-          margin: EdgeInsets.all(16),
+          margin: const EdgeInsets.all(16),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
@@ -38,7 +39,7 @@ class AirportCardHome extends StatelessWidget {
                   )
                 else
                   Icon(
-                    Icons.connecting_airports, // Plane icon when no image is available
+                    Icons.connecting_airports,
                     size: 100,
                     color: Colors.black,
                   ),

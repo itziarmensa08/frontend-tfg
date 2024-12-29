@@ -44,10 +44,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                'Configuración de Privacidad'.tr,
-                style: Theme.of(context).textTheme.headline6,
-              ),
+              Text('Configuración de Privacidad'.tr),
               const SizedBox(height: 20),
               ListTile(
                 leading: Icon(Icons.person_outline),

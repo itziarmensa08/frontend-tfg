@@ -24,7 +24,7 @@ final Map<String, String> ca = {
   'Not found user': "No s'ha trobat cap usuari amb aquest nom",
   'Incorrect password': 'Contrasenya incorrecta',
   'successValidate': 'Usuari validat correctament',
-  'notValidated': 'Usuari no validat',
+  'notValidated': 'Usuari no validat, revisa el teu correu electrònic per validar el compte.',
   'send': 'Enviar',
 
   //Register
@@ -43,7 +43,7 @@ final Map<String, String> ca = {
   'equalPass': "Les contrasenyes no coincideixen",
   'longPass': "La contrasenya ha de contenir més de 7 caràcters",
   'validEmail': 'Introdueix un correu vàlid (flightlinebcn.com)',
-  'successRegister': 'Usuari registrat correctament',
+  'successRegister': 'Usuari registrat correctament, revisa el correu electrònic per validar el compte.',
 
   //Home
   'EOSIDcalculation': 'Càlcul EOSID',

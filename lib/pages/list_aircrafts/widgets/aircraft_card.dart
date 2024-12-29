@@ -41,6 +41,7 @@ class AircraftCardState extends State<AircraftCard> {
         child: SizedBox(
           width: 330,
           child: Card(
+            color: const Color.fromRGBO(230, 238, 246, 1),
             elevation: 3,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),

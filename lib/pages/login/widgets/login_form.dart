@@ -1,46 +1,45 @@
-
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend_tfg/data/services/user.service.dart';
+import 'package:frontend_tfg/general_widgets/toast.dart';
 import 'package:frontend_tfg/pages/login/login.controller.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
-import 'dart:async';
 
-
-class LoginForm extends Container {
+class LoginForm extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final controller = Get.put(LoginController());
 
   LoginForm({super.key});
 
-  Future<String?> validatorUsername (String? value) async {
-    if (value == null || value.isEmpty)  {
+  String? validatorUsername(String? value) {
+    if (value == null || value.isEmpty) {
       return 'enterText'.tr;
-    } else {
-      var response = await UserService.login(controller.username.text, controller.password.text);
-      if (response == 'Not found user') {
-        return 'Not found user'.tr;
-      }
     }
     return null;
   }
 
-  Future<String?> validatorPassword (String? value) async {
-    if (value == null || value.isEmpty)  {
+  String? validatorPassword(String? value) {
+    if (value == null || value.isEmpty) {
       return 'enterText'.tr;
-    } else {
-      var response = await UserService.login(controller.username.text, controller.password.text);
-      if (response == 'Incorrect password') {
-        return 'Incorrect password'.tr;
-      }
     }
     return null;
   }
 
-  late String? validateUsername;
-  late String? validatePassword;
+  Future<String?> loginValidator() async {
+    var response =
+        await UserService.login(controller.username.text, controller.password.text);
+    if (response == 'Not found user') {
+      return 'Not found user'.tr;
+    }
+    if (response == 'Incorrect password') {
+      return 'Incorrect password'.tr;
+    }
+    if (response != '200') {
+      return 'Unexpected error'.tr;
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,15 +63,7 @@ class LoginForm extends Container {
               ),
               suffixIcon: const Icon(Icons.person),
             ),
-            onChanged: (value) async {
-              validateUsername = await validatorUsername(value);
-            },
-            validator: (_) {
-              if (validateUsername != null) {
-                return validateUsername;
-              }
-              return null;
-            },
+            validator: (value) => validatorUsername(value),
           ),
           const SizedBox(height: 20),
           TextFormField(
@@ -92,32 +83,24 @@ class LoginForm extends Container {
               ),
               suffixIcon: const Icon(Icons.key),
             ),
-            onChanged: (value) async {
-              validatePassword = await validatorPassword(value);
-            },
-            validator: (value) {
-              if (validatePassword != null) {
-                return validatePassword;
-              }
-              return null;
-            },
+            validator: (value) => validatorPassword(value),
           ),
           const SizedBox(height: 40),
           ElevatedButton(
             onPressed: () async {
-              validateUsername = await validatorUsername(controller.username.text);
-              validatePassword = await validatorPassword(controller.password.text);
               if (_formKey.currentState!.validate()) {
-                var login = await UserService.login(controller.username.text, controller.password.text);
-                if (login == '200') {
+                var error = await loginValidator();
+                if (error == null) {
                   Get.toNamed(Routes.home);
+                } else {
+                  ToastUtils.showErrorToast(error);
                 }
               }
             },
             child: Text('getIn'.tr),
           ),
         ],
-      )
+      ),
     );
   }
 }

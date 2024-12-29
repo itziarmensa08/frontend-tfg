@@ -86,6 +86,7 @@ Widget procedureListView(BuildContext context) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                   child: Card(
+                    color: const Color.fromRGBO(230, 238, 246, 1),
                     elevation: 4,
                     child: Padding(
                       padding: const EdgeInsets.all(30.0),

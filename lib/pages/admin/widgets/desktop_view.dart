@@ -26,7 +26,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.4,
                   child: Card(
-                    color: Colors.white,
+                    color: const Color.fromRGBO(230, 238, 246, 1),
                     shadowColor: Colors.white,
                     elevation: 3,
                     child: Padding(
@@ -70,7 +70,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.4,
                   child: Card(
-                    color: Colors.white,
+                    color: const Color.fromRGBO(230, 238, 246, 1),
                     shadowColor: Colors.white,
                     elevation: 3,
                     child: Padding(
@@ -114,7 +114,7 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.4,
                   child: Card(
-                    color: Colors.white,
+                    color: const Color.fromRGBO(230, 238, 246, 1),
                     shadowColor: Colors.white,
                     elevation: 3,
                     child: Padding(

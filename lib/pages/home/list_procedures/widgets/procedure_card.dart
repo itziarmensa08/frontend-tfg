@@ -31,6 +31,7 @@ class ProcedureCardHome extends StatelessWidget {
           Get.toNamed(Routes.homeProcedureDetail);
         },
         child: Card(
+          color: const Color.fromRGBO(230, 238, 246, 1),
           elevation: 4,
           margin: const EdgeInsets.all(16),
           child: Padding(
