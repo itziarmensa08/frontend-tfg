@@ -34,13 +34,14 @@ class LoginForm extends StatelessWidget {
   }
 
   Future<String?> loginValidator(BuildContext context) async {
-    var response =
-        await UserService.login(controller.username.text, controller.password.text);
+    var response = await UserService.login(controller.username.text, controller.password.text);
     if (response == 'Not found user') {
       notFound = true;
+      return null;
     }
     if (response == 'Incorrect password') {
       incorrectPass = true;
+      return null;
     }
     if (response == 'notValidated') {
       showAlert(
@@ -59,8 +60,9 @@ class LoginForm extends StatelessWidget {
           Navigator.of(context).pop();
         }
       );
+      return null;
     }
-    return null;
+    return response;
   }
 
   @override
@@ -112,7 +114,7 @@ class LoginForm extends StatelessWidget {
             onPressed: () async {
               var response = await loginValidator(context);
               if (_formKey.currentState!.validate()) {
-                if (response != null) Get.toNamed(Routes.home);
+                if (response == '200') Get.toNamed(Routes.home);
               }
             },
             child: Text('getIn'.tr),

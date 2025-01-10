@@ -2,6 +2,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:frontend_tfg/data/services/user.service.dart';
 import 'package:frontend_tfg/pages/forgot_pass/forgot.controller.dart';
 import 'package:get/get.dart';
 
@@ -53,7 +54,7 @@ class ForgotForm extends Container {
           ElevatedButton(
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-
+                await UserService.forgotPassword(controller.email.text);
               }
             },
             child: Text('send'.tr),

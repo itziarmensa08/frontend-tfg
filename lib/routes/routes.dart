@@ -6,6 +6,7 @@ abstract class Routes{
   static const login = '/login';
   static const confirm = '/confirm';
   static const forgotPass = '/forgotPass';
+  static const restorePass = '/restorePass';
   static const register = '/register';
   static const home = '/home';
   static const homeAircrafts = '/home/aircrafts';

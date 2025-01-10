@@ -19,6 +19,7 @@ import 'package:frontend_tfg/pages/edit_user/edit_user.page.dart';
 import 'package:frontend_tfg/pages/forgot_pass/forgot.binding.dart';
 import 'package:frontend_tfg/pages/forgot_pass/forgot.page.dart';
 import 'package:frontend_tfg/pages/home/home.binding.dart';
+import 'package:frontend_tfg/pages/home/home.controller.dart';
 import 'package:frontend_tfg/pages/home/home.page.dart';
 import 'package:frontend_tfg/pages/home/list_aircrafts/list_aircrafts.binding.dart';
 import 'package:frontend_tfg/pages/home/list_aircrafts/list_aircrafts.page.dart';
@@ -42,6 +43,8 @@ import 'package:frontend_tfg/pages/profile/profile.binding.dart';
 import 'package:frontend_tfg/pages/profile/profile.page.dart';
 import 'package:frontend_tfg/pages/register/register.binding.dart';
 import 'package:frontend_tfg/pages/register/register.page.dart';
+import 'package:frontend_tfg/pages/restore_pass/restore.binding.dart';
+import 'package:frontend_tfg/pages/restore_pass/restore.page.dart';
 import 'package:frontend_tfg/pages/settings/pages/info/info.binding.dart';
 import 'package:frontend_tfg/pages/settings/pages/info/info.page.dart';
 import 'package:frontend_tfg/pages/settings/pages/notis/notifications.binding.dart';
@@ -62,9 +65,6 @@ class AuthMiddleware extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    if (!userService.getUserLoggedSplash()) {
-      return const RouteSettings(name: '/login');
-    }
     return null;
   }
 }
@@ -91,6 +91,11 @@ abstract class AppPages {
       name: Routes.forgotPass,
       page:() => const ForgotPassPage(),
       binding: ForgotPassBinding()
+    ),
+    GetPage(
+      name: Routes.restorePass,
+      page:() => const RestorePassPage(),
+      binding: RestorePassBinding()
     ),
     GetPage(
       name: Routes.register,

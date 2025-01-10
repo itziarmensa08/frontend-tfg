@@ -254,4 +254,48 @@ class UserService {
     }
   }
 
+  static Future<void> forgotPassword(String email) async {
+    ApiResponse response;
+
+    try {
+      response = await MyApi().put(
+        '/auth/forgot',
+        data: {
+          'email': email
+        }
+      );
+
+      if (response.statusCode == 200) {
+        ToastUtils.showSuccessToast('successResend'.tr);
+      } else {
+        ToastUtils.showErrorToast('${response.data}'.tr);
+      }
+    } catch (error) {
+      ToastUtils.showErrorToast('Error forgot: $error');
+    }
+  }
+
+  static Future<bool> restorePassword(String userId, String password) async {
+    ApiResponse response;
+
+    try {
+      response = await MyApi().put(
+        '/auth/restore/password/$userId',
+        data: {
+          'password': password
+        }
+      );
+
+      if (response.statusCode == 200) {
+        ToastUtils.showSuccessToast('successChangePass'.tr);
+        return true;
+      } else {
+        ToastUtils.showErrorToast('${response.data}'.tr);
+      }
+    } catch (error) {
+      ToastUtils.showErrorToast('Error restore: $error');
+    }
+    return false;
+  }
+
 }
