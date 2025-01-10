@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y \
 # Clone a specific version of Flutter
 RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
 WORKDIR /usr/local/flutter
-RUN git checkout 68bfaea224  # Check out the specific version
+RUN git checkout tags/3.27.1
 
 # Set flutter path
 ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PATH}"
