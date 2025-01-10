@@ -12,15 +12,18 @@ class ForgotForm extends Container {
 
   ForgotForm({super.key});
 
-  validator (String? value) async {
-    if (value == null || value.isEmpty)  {
+  String? emailValidator(String? value) {
+    if (value == null || value.isEmpty) {
       return 'enterText'.tr;
+    } else {
+      //const pattern = r'\b[A-Za-z0-9._%+-]+@flightlinebcn\.com\b';
+      const pattern = r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$';
+      if (!RegExp(pattern).hasMatch(value)) {
+        return 'validEmail'.tr;
+      }
     }
     return null;
   }
-
-  late String? validateUsername;
-  late String? validatePassword;
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +47,7 @@ class ForgotForm extends Container {
               ),
               suffixIcon: const Icon(Icons.mail),
             ),
-            validator: (value) {
-              if (validateUsername != null) {
-                return validator(value);
-              }
-              return null;
-            },
+            validator: (value) => emailValidator(value),
           ),
           const SizedBox(height: 40),
           ElevatedButton(

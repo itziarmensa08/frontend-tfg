@@ -3,7 +3,8 @@ part of 'app.pages.dart';
 abstract class Routes{
 
   static const initial = '/';
-  static const login = '/login/:id';
+  static const login = '/login';
+  static const confirm = '/confirm';
   static const forgotPass = '/forgotPass';
   static const register = '/register';
   static const home = '/home';

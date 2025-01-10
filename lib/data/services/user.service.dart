@@ -68,17 +68,19 @@ class UserService {
       } else if (response.statusCode == 404 ||  response.statusCode == 400) {
         return response.data;
       } else if (response.statusCode == 401) {
-        ToastUtils.showErrorToast('notValidated'.tr);
+        //ToastUtils.showErrorToast('notValidated'.tr);
+        return 'notValidated';
       } else {
         ToastUtils.showErrorToast(response.data);
+        return null;
       }
     } catch (error) {
       ToastUtils.showErrorToast('Error Login: $error');
+      return null;
     }
-    return null;
   }
 
-  static Future<void> register(UserModel user) async {
+  static Future<bool> register(UserModel user) async {
     ApiResponse response;
 
     try {
@@ -89,11 +91,14 @@ class UserService {
 
       if (response.statusCode == 201) {
         ToastUtils.showSuccessToast('successRegister'.tr);
+        return true;
       } else {
         ToastUtils.showErrorToast('${response.data}'.tr);
+        return false;
       }
     } catch (error) {
       ToastUtils.showErrorToast('Error Register: $error');
+      return false;
     }
   }
 
@@ -226,6 +231,27 @@ class UserService {
       ToastUtils.showErrorToast('Error AssignTask: $error');
     }
     return null;
+  }
+
+  static Future<void> resendValidation(String username) async {
+    ApiResponse response;
+
+    try {
+      response = await MyApi().put(
+        '/auth/resend/validation',
+        data: {
+          'username': username
+        }
+      );
+
+      if (response.statusCode == 200) {
+        ToastUtils.showSuccessToast('successResend'.tr);
+      } else {
+        ToastUtils.showErrorToast('${response.data}'.tr);
+      }
+    } catch (error) {
+      ToastUtils.showErrorToast('Error resend: $error');
+    }
   }
 
 }

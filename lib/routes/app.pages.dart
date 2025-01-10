@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+import 'package:frontend_tfg/data/services/user.service.dart';
 import 'package:frontend_tfg/pages/add_aircraft/add_aircraft.binding.dart';
 import 'package:frontend_tfg/pages/add_aircraft/add_aircraft.page.dart';
 import 'package:frontend_tfg/pages/add_airport/add_airport.binding.dart';
@@ -6,6 +8,8 @@ import 'package:frontend_tfg/pages/add_user/add_user.binding.dart';
 import 'package:frontend_tfg/pages/add_user/add_user.page.dart';
 import 'package:frontend_tfg/pages/admin/admin.binding.dart';
 import 'package:frontend_tfg/pages/admin/admin.page.dart';
+import 'package:frontend_tfg/pages/confirm/confirm.binding.dart';
+import 'package:frontend_tfg/pages/confirm/confirm.page.dart';
 import 'package:frontend_tfg/pages/edit_aircraft/edit_aircraft.binding.dart';
 import 'package:frontend_tfg/pages/edit_aircraft/edit_aircraft.page.dart';
 import 'package:frontend_tfg/pages/edit_airport/edit_airport.binding.dart';
@@ -53,6 +57,18 @@ import 'package:frontend_tfg/pages/tasks/tasks.page.dart';
 import 'package:get/get.dart';
 part './routes.dart';
 
+class AuthMiddleware extends GetMiddleware {
+  final UserService userService = UserService();
+
+  @override
+  RouteSettings? redirect(String? route) {
+    if (!userService.getUserLoggedSplash()) {
+      return const RouteSettings(name: '/login');
+    }
+    return null;
+  }
+}
+
 abstract class AppPages {
 
   static final pages = [
@@ -67,6 +83,11 @@ abstract class AppPages {
       binding: LoginBinding()
     ),
     GetPage(
+      name: Routes.confirm,
+      page:() => const ConfirmPage(),
+      binding: ConfirmBinding()
+    ),
+    GetPage(
       name: Routes.forgotPass,
       page:() => const ForgotPassPage(),
       binding: ForgotPassBinding()
@@ -79,112 +100,134 @@ abstract class AppPages {
     GetPage(
       name: Routes.home,
       page:() => const HomePage(),
-      binding: HomeBinding()
+      binding: HomeBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.homeAircrafts,
       page:() => const ListAircraftsHomePage(),
-      binding: ListAircraftsHomeBinding()
+      binding: ListAircraftsHomeBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.homeProcedures,
       page:() => const ListProceduresHomePage(),
-      binding: ListProceduresHomeBinding()
+      binding: ListProceduresHomeBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.homeProcedureDetail,
       page:() => const ProcedureDetailPage(),
-      binding: ProcedureDetailBinding()
+      binding: ProcedureDetailBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.homeProcedureWrite,
       page:() => const WriteProcedurePage(),
-      binding: WriteProcedureBinding()
+      binding: WriteProcedureBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.newAnalysis,
       page:() => const NewAnalysisPage(),
-      binding: NewAnalysisBinding()
+      binding: NewAnalysisBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.tasks,
       page:() => const TasksPage(),
-      binding: TasksBinding()
+      binding: TasksBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.profile,
       page:() => const ProfilePage(),
-      binding: ProfileBinding()
+      binding: ProfileBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.admin,
       page:() => const AdminPage(),
-      binding: AdminBinding()
+      binding: AdminBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.listUsers,
       page:() => const ListUsersPage(),
-      binding: ListUsersBinding()
+      binding: ListUsersBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.addUser,
       page:() => const AddUserPage(),
-      binding: AddUserBinding()
+      binding: AddUserBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.editUser,
       page:() => const EditUserPage(),
-      binding: EditUserBinding()
+      binding: EditUserBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.listAircrafts,
       page:() => const ListAircraftsPage(),
-      binding: ListAircraftsBinding()
+      binding: ListAircraftsBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.addAircraft,
       page:() => const AddAircraftPage(),
-      binding: AddAircraftBinding()
+      binding: AddAircraftBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.editAircraft,
       page:() => const EditAircraftPage(),
-      binding: EditAircraftBinding()
+      binding: EditAircraftBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.listAirports,
       page:() => const ListAirportsPage(),
-      binding: ListAirportsBinding()
+      binding: ListAirportsBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.addAirport,
       page:() => const AddAirportPage(),
-      binding: AddAirportBinding()
+      binding: AddAirportBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.editAirport,
       page:() => const EditAirportPage(),
-      binding: EditAirportBinding()
+      binding: EditAirportBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.settings,
       page:() => const SettingsPage(),
-      binding: SettingsBinding()
+      binding: SettingsBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.notis,
       page:() => const NotisPage(),
-      binding: NotisBinding()
+      binding: NotisBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.help,
       page:() => const InfoPage(),
-      binding: InfoBinding()
+      binding: InfoBinding(),
+      middlewares: [AuthMiddleware()]
     ),
     GetPage(
       name: Routes.privacity,
       page:() => const PrivacityPage(),
-      binding: PrivacityBinding()
+      binding: PrivacityBinding(),
+      middlewares: [AuthMiddleware()]
     )
   ];
 }

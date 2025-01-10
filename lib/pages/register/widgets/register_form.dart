@@ -34,7 +34,8 @@ class RegisterForm extends Container {
     if (value == null || value.isEmpty) {
       return 'enterText'.tr;
     } else {
-      const pattern = r'\b[A-Za-z0-9._%+-]+@flightlinebcn\.com\b';
+      //const pattern = r'\b[A-Za-z0-9._%+-]+@flightlinebcn\.com\b';
+      const pattern = r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$';
       if (!RegExp(pattern).hasMatch(value)) {
         return 'validEmail'.tr;
       }
@@ -178,8 +179,8 @@ class RegisterForm extends Container {
                   language: prefs.getString('language') ?? 'es',
                   validated: false
                 );
-                await UserService.register(user);
-                Get.toNamed(Routes.login);
+                var success = await UserService.register(user);
+                if (success) Get.toNamed(Routes.login);
               }
             },
             child: Text('putRegister'.tr),

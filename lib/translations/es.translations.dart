@@ -26,6 +26,7 @@ final Map<String, String> es = {
   'Incorrect password': 'Contraseña incorrecta',
   'successValidate': 'Se ha validado el usuario correctamente',
   'notValidated': 'El usuario no está validado, revisa el correo electrónico para validar su cuenta.',
+  'notValidatedMessage': 'Si no lo encuentras, ¿quieres que te volvamos a enviar el correo de confirmación?',
   'send': 'Enviar',
 
   //Register
@@ -45,6 +46,12 @@ final Map<String, String> es = {
   'longPass': "La contraseña debe contener más de 7 carácteres",
   'validEmail': 'Por favor introduce un email válido (flightlinebcn.com)',
   'successRegister': 'Usuario registrado correctamente, revisa el correo electrónico para validar su cuenta.',
+
+  //Confirmar
+  'confirmAccount': 'Confirmar la cuenta',
+  'confirmAccountText': 'Haz clic en el siguiente botón para confirmar tu cuenta',
+  'validate': 'Confirmar',
+  'successResend': 'Correo enviado correctamente',
 
   //Home
   'EOSIDcalculation': 'Cálculo EOSID',
