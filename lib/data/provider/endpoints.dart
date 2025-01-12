@@ -1,6 +1,7 @@
 class Endpoints {
   static const String ipApiDevelopment = 'http://localhost:3001';
-  static const String ipApiProduction = 'https://apieosidcalculator.ftlbcn.com';
+  //static const String ipApiProduction = 'https://apieosidcalculator.ftlbcn.com';
+  static const String ipApiProduction = 'https://api.eosidcalculator.com';
 
   static const String environment = String.fromEnvironment('env', defaultValue: 'development');
 
