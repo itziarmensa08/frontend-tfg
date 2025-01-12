@@ -19,7 +19,6 @@ import 'package:frontend_tfg/pages/edit_user/edit_user.page.dart';
 import 'package:frontend_tfg/pages/forgot_pass/forgot.binding.dart';
 import 'package:frontend_tfg/pages/forgot_pass/forgot.page.dart';
 import 'package:frontend_tfg/pages/home/home.binding.dart';
-import 'package:frontend_tfg/pages/home/home.controller.dart';
 import 'package:frontend_tfg/pages/home/home.page.dart';
 import 'package:frontend_tfg/pages/home/list_aircrafts/list_aircrafts.binding.dart';
 import 'package:frontend_tfg/pages/home/list_aircrafts/list_aircrafts.page.dart';
