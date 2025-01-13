@@ -81,13 +81,13 @@ class FirstStep extends StatelessWidget {
                     asignAircraftData(controller);
                   }
                 },
-                displayStringForOption: (AircraftModel option) => option.name ?? '',
+                displayStringForOption: (AircraftModel option) => '${option.metro} (${option.name})',
                 fieldViewBuilder: (BuildContext context, TextEditingController fieldTextEditingController, FocusNode fieldFocusNode, VoidCallback onFieldSubmitted) {
                   return TextFormField(
                     controller: fieldTextEditingController,
                     focusNode: fieldFocusNode,
                     decoration: InputDecoration(
-                      hintText: controller.selectedAircraft.value == null ? 'searchAircraft'.tr : controller.selectedAircraft.value?.name,
+                      hintText: controller.selectedAircraft.value == null ? 'searchAircraft'.tr : '${controller.selectedAircraft.value?.metro} (${controller.selectedAircraft.value?.name})',
                       hintStyle: Theme.of(context).textTheme.titleMedium,
                       border: const OutlineInputBorder(),
                     ),
