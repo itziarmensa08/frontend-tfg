@@ -28,7 +28,7 @@ class NewAnalysisBinding implements Bindings {
     List<AircraftModel>? aircrafts = await AircraftService.getAircrafts();
 
     if (aircrafts != null) {
-      controller.aircrafts.value = aircrafts;
+      controller.aircrafts.value = aircrafts.where((aircraft) => aircraft.visible == true).toList();
     }
   }
 }

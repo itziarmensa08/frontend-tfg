@@ -75,7 +75,26 @@ class ThirdStepState extends State<ThirdStep> {
           if (widget.controller.firstSegmentN.value.clearDP != false && widget.controller.secondSegmentN.value.clearDP != false && widget.controller.thirdSegmentN.value.clearDP != false) {
             return Text('not_necessary'.tr, style: Theme.of(context).textTheme.titleMedium);
           } else {
-            return _buildPanel(widget.controller);
+            return Column(
+              children: [
+                Row(
+                  children: [
+                    Text('ignoreFailure'.tr, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(width: 20),
+                    ElevatedButton(onPressed: () {
+                      widget.controller.ignoreFailure.value = true;
+                      widget.controller.indexStepper.value = 3;
+                    }, child: Text('yes'.tr)),
+                    const SizedBox(width: 20),
+                    ElevatedButton(onPressed: () {
+                      widget.controller.ignoreFailure.value = false;
+                    }, child: Text('no'.tr))
+                  ],
+                ),
+                if (widget.controller.ignoreFailure.value == false)
+                _buildPanel(widget.controller)
+              ],
+            );
           }
         }),
       );

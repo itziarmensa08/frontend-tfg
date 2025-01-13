@@ -102,6 +102,8 @@ class NewAnalaysisController extends GetxController {
 
   // ------------------------- THIRD SEGMENT N MOTORS ----------------------------------
 
+  final RxnBool ignoreFailure = RxnBool(null);
+
   final Rx<Segment> thirdSegmentN = Segment().obs;
   final TextEditingController elevationThirdSegmentN = TextEditingController();
   final RxList<VYtableRowsPressures> obtainedDataVYThirdSegmentN = RxList<VYtableRowsPressures>();

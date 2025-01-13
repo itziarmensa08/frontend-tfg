@@ -2,6 +2,7 @@ class AircraftModel {
   String? id;
   String? name;
   String? metro;
+  bool? visible;
   String? createdAt;
   String? updatedAt;
   String? profileImage;
@@ -16,12 +17,14 @@ class AircraftModel {
     this.updatedAt,
     this.profileImage,
     this.profile,
-    this.elevationImage
+    this.elevationImage,
+    this.visible
   });
   AircraftModel.fromJson(Map<String, dynamic> json) {
     id = json['_id']?.toString();
     name = json['name']?.toString();
     metro = json['metro']?.toString();
+    visible = json['visible'];
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
     profileImage = json['profileImage']?.toString();
@@ -33,6 +36,7 @@ class AircraftModel {
     data['_id'] = id;
     data['name'] = name;
     data['metro'] = metro;
+    data['visible'] = visible;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['profileImage'] = profileImage;

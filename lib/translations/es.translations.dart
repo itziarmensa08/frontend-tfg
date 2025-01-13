@@ -258,6 +258,8 @@ final Map<String, String> es = {
   'initialElevation': "Elevación inicial",
   'distanceToInitial': "Distancia al punto inicial",
 
+  'ignoreFailure': "¿Quieres omitir este paso?",
+
   // Settings page
   'notifications': 'Notificaciones',
   'appearance': 'Apariencia',

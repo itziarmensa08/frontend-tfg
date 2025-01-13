@@ -256,6 +256,8 @@ final Map<String, String> ca = {
   'initialElevation': "Elevació inicial",
   'distanceToInitial': "Distància al punt inicial",
 
+  'ignoreFailure': "Vols omitir aquest pas?",
+
   // Settings page
   'notifications': 'Notificacions',
   'appearance': 'Aparença',

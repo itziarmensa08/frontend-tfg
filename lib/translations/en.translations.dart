@@ -256,6 +256,8 @@ final Map<String, String> en = {
   'initialElevation': "Initial elevation",
   'distanceToInitial': "Distance to initial point",
 
+  'ignoreFailure': "Do you want to skip this step?",
+
   // Settings page
   'notifications': 'Notifications',
   'appearance': 'Appearance',
