@@ -1,48 +1,61 @@
-# Stage 1 - Install dependencies and build the app
+# Stage 1 - Build the Flutter app
 FROM debian:latest AS build-env
 
-# Install flutter dependencies
+# Install Flutter dependencies
 RUN apt-get update && apt-get install -y \
-  curl \
-  git \
-  wget \
-  unzip \
-  libgconf-2-4 \
-  gdb \
-  libstdc++6 \
-  libglu1-mesa \
-  fonts-droid-fallback \
-  lib32stdc++6 \
-  python3 \
-  && apt-get clean
+    curl \
+    git \
+    wget \
+    unzip \
+    libgconf-2-4 \
+    gdb \
+    libstdc++6 \
+    libglu1-mesa \
+    fonts-droid-fallback \
+    lib32stdc++6 \
+    python3 \
+    && apt-get clean
 
-# Clone a specific version of Flutter
+# Clone Flutter repository and checkout the specified version
 RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
 WORKDIR /usr/local/flutter
 RUN git checkout tags/3.27.1
 
-# Set flutter path
+# Set Flutter binary path
 ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PATH}"
 
-# Run flutter doctor
+# Run Flutter doctor to check setup
 RUN flutter doctor
 
-# Enable flutter web
-RUN flutter config --enable-web
-RUN flutter config --no-enable-macos-desktop --no-enable-windows-desktop --no-enable-linux-desktop --no-enable-android --no-enable-ios
+# Enable Flutter for web only
+RUN flutter config --enable-web \
+    && flutter config --no-enable-macos-desktop \
+    --no-enable-windows-desktop \
+    --no-enable-linux-desktop \
+    --no-enable-android \
+    --no-enable-ios
 
-# Copy files to container and build
-COPY . /app/
-WORKDIR /app/
+# Set the working directory for the app
+WORKDIR /app
+
+# Copy the app source code into the container
+COPY . .
+
+# Fetch dependencies and build the app
 RUN flutter pub get
 RUN flutter build web --dart-define=env=production --no-tree-shake-icons
 
-# Stage 2 - Create the run-time image
+# Stage 2 - Run the built Flutter web app using NGINX
 FROM nginx:stable-alpine AS runner
 
-COPY default.conf /etc/nginx/conf.d
-# COPY package.json /usr/share/nginx/html
-COPY --from=builder /app/build/web /usr/share/nginx/html
+# Copy the nginx configuration
+COPY default.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 80
+# Copy the build output from the previous stage
+COPY --from=build-env /app/build/web /usr/share/nginx/html
+
+# Expose port 80 for web traffic
 EXPOSE 80
+
+# Start NGINX server
+CMD ["nginx", "-g", "daemon off;"]
