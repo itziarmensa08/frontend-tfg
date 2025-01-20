@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/models/v2table.model.dart';
 
@@ -68,13 +69,13 @@ class SpeedTable extends StatelessWidget {
   }
 
   TableRow _buildTemperaturesRow() {
-    List<int> values = [-30, -10, 0, 10, 20, 40, 55];
+    List<double> values = table.temperatures!;
     List<Widget> cells = [
       const SizedBox(),
       const SizedBox(),
     ];
 
-    for (int value in values) {
+    for (double value in values) {
       for (int i = 0; i < 4; i++) {
         cells.add(Text('$value'));
       }
