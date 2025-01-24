@@ -52,12 +52,12 @@ class AirportCardState extends State<AirportCard> {
             ),
             child: Padding(
               padding: const EdgeInsets.all(15.0),
-              child: Column(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 300,
-                    height: 200,
+                    width: 50,
+                    height: 50,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
@@ -74,24 +74,30 @@ class AirportCardState extends State<AirportCard> {
                               widget.airport.profileImage!,
                               fit: BoxFit.cover,
                             )
-                          : const Icon(Icons.connecting_airports, size: 80),
+                          : const Icon(Icons.connecting_airports, size: 50),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Text(
-                    '${widget.airport.name}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    '${widget.airport.iataCode} / ${widget.airport.oaciCode}',
-                    style: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
+                  const SizedBox(width: 10),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${widget.airport.name}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        '${widget.airport.iataCode} / ${widget.airport.oaciCode}',
+                        style: const TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

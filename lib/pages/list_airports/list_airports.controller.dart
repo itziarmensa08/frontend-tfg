@@ -4,5 +4,6 @@ import 'package:get/get.dart';
 class ListAirportsController extends GetxController {
 
   final RxList<AirportModel> airports = RxList<AirportModel>();
+  final RxList<AirportModel> filteredairports= RxList<AirportModel>();
 
 }

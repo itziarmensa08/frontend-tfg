@@ -14,6 +14,7 @@ class ListAirportsBinding implements Bindings {
 
     if (airports != null) {
       controller.airports.value = airports;
+      controller.filteredairports.value = airports;
     }
 
 

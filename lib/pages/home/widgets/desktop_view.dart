@@ -62,14 +62,26 @@ Widget desktopView(double height, TickerProviderStateMixin page, BuildContext co
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: Obx(
-                  () => ListView.builder(
-                    itemCount: controller.filteredairports.length,
-                    itemBuilder: (context, index) {
-                      final airport = controller.filteredairports[index];
-                      return AirportCardHome(airport: airport);
-                    },
-                  ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Obx(() => Wrap(
+                          spacing: 20.0,
+                          runSpacing: 20.0,
+                          children: List.generate(
+                            controller.filteredairports.length,
+                            (index) => AirportCardHome(
+                              airport: controller.filteredairports[index],
+                            ),
+                          ),
+                        )),
+                      ],
+                    ),
+                  )
                 ),
               ),
             ],

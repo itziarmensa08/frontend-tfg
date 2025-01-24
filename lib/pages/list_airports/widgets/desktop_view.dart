@@ -7,7 +7,23 @@ import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 
 Widget desktopView(double height, BuildContext context, TickerProviderStateMixin page) {
+  TextEditingController searchController = TextEditingController();
   final ListAirportsController controller = Get.put(ListAirportsController());
+
+  void searchAirports(String query) {
+    if (query.isEmpty) {
+      controller.filteredairports.value = controller.airports;
+    } else {
+      controller.filteredairports.value = controller.airports.where((airport) {
+        final nameLower = airport.name!.toLowerCase();
+        final queryLower = query.toLowerCase();
+        return nameLower.contains(queryLower) ||
+          airport.iataCode!.toLowerCase().contains(queryLower) ||
+          airport.oaciCode!.toLowerCase().contains(queryLower);
+      }).toList();
+    }
+  }
+
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -38,6 +54,27 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
           ),
         ),
       ),
+      TextField(
+        controller: searchController,
+        decoration: const InputDecoration(
+          prefixIcon: Icon(Icons.search),
+          hintText: 'Buscar...',
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.transparent,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.transparent,
+            ),
+          ),
+        ),
+        onChanged: (value) {
+          searchAirports(value);
+        },
+      ),
+      const SizedBox(height: 20),
       Expanded(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -50,9 +87,9 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
                   spacing: 20.0,
                   runSpacing: 20.0,
                   children: List.generate(
-                    controller.airports.length,
+                    controller.filteredairports.length,
                     (index) => AirportCard(
-                      airport: controller.airports[index],
+                      airport: controller.filteredairports[index],
                     ),
                   ),
                 )),
