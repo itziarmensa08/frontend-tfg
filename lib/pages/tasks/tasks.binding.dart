@@ -12,7 +12,13 @@ class TasksBinding implements Bindings {
   @override
   Future<void> dependencies() async {
     final controller = Get.put(TasksController());
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? username = prefs.getString('username');
+    String? profileImage = prefs.getString('profileImage');
+    if (username != null) controller.username.value = username;
+    if (profileImage != null) controller.profileImage.value = profileImage;
+    
     String? userId = prefs.getString('id');
     if (userId != null) {
       controller.idUser.value = userId;

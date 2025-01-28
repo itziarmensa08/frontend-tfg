@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
+import 'package:frontend_tfg/general_widgets/user_profile.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/first_segment_first.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/second_segment_first.dart';
@@ -15,6 +16,10 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      Obx(() => UserProfileWidget(
+        username: controller.username.value,
+        profileImageUrl: controller.profileImage.value.isNotEmpty ? controller.profileImage.value : null
+      )),
       CustomTabBar(page: page, number: 1),
       Expanded(
         child: Padding(

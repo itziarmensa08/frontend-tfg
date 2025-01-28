@@ -14,6 +14,8 @@ class UserService {
     String? userId = prefs.getString('id');
     await Future.delayed(const Duration(seconds: 2));
     if (userId != null) {
+      String? username = prefs.getString('username');
+      Auth.username = username;
       return true;
     } else {
       return false;
@@ -45,9 +47,11 @@ class UserService {
       if (response.statusCode == 200) {
         dynamic data = response.data;
         UserModel userModel = UserModel.fromJson(data['user']);
+        print(userModel.toJson());
         Auth.token = data['token'];
         Auth.id = userModel.id!;
         Auth.language = userModel.language!;
+        Auth.username = userModel.username!;
         Get.updateLocale(Locale(userModel.language!));
         if (userModel.role == 'admin') {
           Auth.isAdmin = true;
@@ -58,6 +62,8 @@ class UserService {
         prefs.setString('token', data['token']);
         prefs.setString('id', userModel.id!);
         prefs.setString('language', userModel.language!);
+        prefs.setString('username', userModel.username!);
+        prefs.setString('profileImage', userModel.profileImage!);
         if (userModel.role == 'admin') {
           prefs.setBool('isAdmin', true);
         } else {

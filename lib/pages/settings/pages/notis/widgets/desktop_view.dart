@@ -1,15 +1,22 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
+import 'package:frontend_tfg/general_widgets/user_profile.dart';
 import 'package:frontend_tfg/pages/settings/pages/notis/notifications.controller.dart';
+import 'package:frontend_tfg/pages/settings/settings.controller.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 
 Widget desktopView(double height, BuildContext context, TickerProviderStateMixin page) {
   final NotisController controller = Get.put(NotisController());
+  final SettingsController setcontroller = Get.put(SettingsController());
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      Obx(() => UserProfileWidget(
+        username: setcontroller.username.value,
+        profileImageUrl: setcontroller.profileImage.value.isNotEmpty ? setcontroller.profileImage.value : null
+      )),
       CustomTabBar(page: page, number: 4),
       Padding(
         padding: const EdgeInsets.only(top: 20.0, left: 30.0),

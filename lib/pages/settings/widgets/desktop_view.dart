@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
+import 'package:frontend_tfg/general_widgets/user_profile.dart';
+import 'package:frontend_tfg/pages/settings/settings.controller.dart';
 import 'package:frontend_tfg/pages/settings/widgets/settings_item.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Widget desktopView(double height, BuildContext context, TickerProviderStateMixin page) {
+  final SettingsController controller = Get.put(SettingsController());
+
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      Obx(() => UserProfileWidget(
+        username: controller.username.value,
+        profileImageUrl: controller.profileImage.value.isNotEmpty ? controller.profileImage.value : null
+      )),
       CustomTabBar(page: page, number: 4),
       SizedBox(height: MediaQuery.of(context).size.height * 0.05),
       Expanded(

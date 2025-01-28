@@ -4,6 +4,7 @@ import 'package:frontend_tfg/data/services/cloudinary.service.dart';
 import 'package:frontend_tfg/data/services/user.service.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/general_widgets/toast.dart';
+import 'package:frontend_tfg/general_widgets/user_profile.dart';
 import 'package:frontend_tfg/pages/profile/profile.binding.dart';
 import 'package:frontend_tfg/pages/profile/profile.controller.dart';
 import 'package:frontend_tfg/pages/profile/widgets/edit_user_form.dart';
@@ -18,6 +19,10 @@ Widget desktopView(double height, BuildContext context, TickerProviderStateMixin
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      Obx(() => UserProfileWidget(
+        username: controller.user.value.username ?? '',
+        profileImageUrl: controller.user.value.profileImage != null ? (controller.user.value.profileImage!.isNotEmpty ? controller.profileImage.value : null) : null
+      )),
       CustomTabBar(page: page, number: 3),
       SizedBox(height: MediaQuery.of(context).size.height * 0.15),
       Expanded(

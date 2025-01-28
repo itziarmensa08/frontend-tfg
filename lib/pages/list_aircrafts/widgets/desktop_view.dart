@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
+import 'package:frontend_tfg/general_widgets/user_profile.dart';
+import 'package:frontend_tfg/pages/admin/admin.controller.dart';
 import 'package:frontend_tfg/pages/list_aircrafts/list_aircrafts.controller.dart';
 import 'package:frontend_tfg/pages/list_aircrafts/widgets/aircraft_card.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
@@ -8,9 +10,14 @@ import 'package:get/get.dart';
 
 Widget desktopView(double height, BuildContext context, TickerProviderStateMixin page) {
   final ListAircraftsController controller = Get.put(ListAircraftsController());
+  final AdminController admincontroller = Get.put(AdminController());
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      Obx(() => UserProfileWidget(
+        username: admincontroller.username.value,
+        profileImageUrl: admincontroller.profileImage.value.isNotEmpty ? admincontroller.profileImage.value : null
+      )),
       if(tabs.length > 5)
       CustomTabBar(page: page, number: 5),
       const SizedBox(height: 20),

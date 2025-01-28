@@ -5,11 +5,18 @@ import 'package:frontend_tfg/data/services/aircraft.service.dart';
 import 'package:frontend_tfg/data/services/airport.service.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NewAnalysisBinding implements Bindings {
   @override
   Future<void> dependencies() async {
     final NewAnalaysisController controller = Get.put(NewAnalaysisController());
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? username = prefs.getString('username');
+    String? profileImage = prefs.getString('profileImage');
+    if (username != null) controller.username.value = username;
+    if (profileImage != null) controller.profileImage.value = profileImage;
 
     await getAircraftList(controller);
     await getAirportsList(controller);

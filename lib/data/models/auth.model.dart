@@ -3,6 +3,7 @@ class Auth {
   static String? id;
   static String? token;
   static String? language;
+  static String? username;
 
   static Map<String, dynamic> toJson() {
     return {
@@ -10,6 +11,7 @@ class Auth {
       'id': id,
       'token': token,
       'language': language,
+      'username': username
     };
   }
 
@@ -18,6 +20,7 @@ class Auth {
     id = json['id'];
     token = json['token'];
     language = json['language'];
+    username = json['username'];
   }
 
 }

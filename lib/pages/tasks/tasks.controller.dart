@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class TasksController extends GetxController {
+  RxString username = RxString('');
+  RxString profileImage = RxString('');
   Rx<DateTime> focusedDay = Rx<DateTime>(DateTime.now());
   RxString idUser = RxString('');
   Rx<CalendarFormat> calendarFormat = Rx<CalendarFormat>(CalendarFormat.month);

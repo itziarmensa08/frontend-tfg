@@ -20,6 +20,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 class NewAnalaysisController extends GetxController {
 
+  RxString username = RxString('');
+  RxString profileImage = RxString('');
+
   final Rx<Procedure> newProcedure = Procedure().obs;
 
   final RxInt indexStepper = RxInt(0);
