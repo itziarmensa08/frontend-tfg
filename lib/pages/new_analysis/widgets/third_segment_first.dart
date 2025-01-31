@@ -171,6 +171,10 @@ class ThirdSegmentFirstStep extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
+                  suffixIcon: Tooltip(
+                    message: 'Velocity IAS / sqrt(density) = ${controller.velocityThirdSegmentN.text} / sqrt(${controller.densityThirdSegmentN.text})',
+                    child: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
+                  ),
                 ),
               ),
             ),
@@ -242,6 +246,10 @@ class ThirdSegmentFirstStep extends StatelessWidget {
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
+                          suffixIcon: Tooltip(
+                            message: '(Altitude DP - height second segment) / rate of climb = (${controller.newProcedure.value.dpAltitude} - ${controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment}) / ${controller.thirdSegmentN.value.rateClimb}',
+                            child: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
+                          ),
                         ),
                       ),
                     ),
@@ -269,6 +277,10 @@ class ThirdSegmentFirstStep extends StatelessWidget {
                             borderSide: BorderSide(
                               color: Theme.of(context).primaryColor,
                             ),
+                          ),
+                          suffixIcon: Tooltip(
+                            message: 'Distance first segment + Distance second segment + Time to DP * (Velocity TAS / 60) = ${controller.firstSegmentN.value.distanceToFinish} + ${controller.secondSegmentN.value.distanceToFinish} + ${controller.thirdSegmentN.value.timeToDP} * (${controller.thirdSegmentN.value.velocityTAS} / 60)',
+                            child: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
                           ),
                         ),
                       ),
@@ -312,6 +324,10 @@ class ThirdSegmentFirstStep extends StatelessWidget {
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
+                          suffixIcon: Tooltip(
+                            message: '(Distance to DP - (Distance first segment + Distance second segment)) / (Velocity TAS / 60) = (${controller.newProcedure.value.dpDistance} - (${controller.firstSegmentN.value.distanceToFinish!.toStringAsFixed(2)} + ${controller.secondSegmentN.value.distanceToFinish!.toStringAsFixed(2)})) / (${controller.thirdSegmentN.value.velocityTAS!.toStringAsFixed(2)} / 60)',
+                            child: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
+                          ),
                         ),
                       ),
                     ),
@@ -342,6 +358,10 @@ class ThirdSegmentFirstStep extends StatelessWidget {
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
+                          suffixIcon: Tooltip(
+                            message: 'Time to DP * rate of climb = ${controller.thirdSegmentN.value.timeToDP!.toStringAsFixed(2)} * ${controller.thirdSegmentN.value.rateClimb}',
+                            child: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
+                          ),
                         ),
                       ),
                     ),
@@ -370,6 +390,10 @@ class ThirdSegmentFirstStep extends StatelessWidget {
                                 color: Theme.of(context).primaryColor,
                               ),
                             ),
+                            suffixIcon: Tooltip(
+                            message: 'Altitude in DP + Height second segment + airport elevation = ${controller.thirdSegmentN.value.altitudeInDP!.toStringAsFixed(2)} + ${controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment} + ${controller.selectedAirport.value!.elevation}',
+                            child: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
+                          ),
                           ),
                         ),
                       ),

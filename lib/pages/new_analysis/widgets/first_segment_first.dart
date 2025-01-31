@@ -184,9 +184,14 @@ class FirstSegmentFirstStep extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
+                  suffixIcon: Tooltip(
+                    message: 'Velocity IAS / sqrt(density) = ${controller.velocityFirstSegment.text} / sqrt(${controller.densityFirstSegment.text})',
+                    child: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
+                  ),
                 ),
               ),
             ),
+            
           ],
         ),
         const SizedBox(height: 50),
@@ -252,6 +257,10 @@ class FirstSegmentFirstStep extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
+                  suffixIcon: Tooltip(
+                    message: '(Height first segment - 50ft) / rate of climb = (${controller.selectedAircraft.value!.profile!.nMotors!.heightFirstSegment} - 50) / ${controller.firstSegmentN.value.rateClimb!.toStringAsFixed(2)}',
+                    child: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
+                  ),
                 ),
               ),
             ),
@@ -281,6 +290,10 @@ class FirstSegmentFirstStep extends StatelessWidget {
                     borderSide: BorderSide(
                       color: Theme.of(context).primaryColor,
                     ),
+                  ),
+                  suffixIcon: Tooltip(
+                    message: 'Velocity TAS * (Time first segment / 60) = ${controller.firstSegmentN.value.velocityTAS!.toStringAsFixed(2)} * (${controller.firstSegmentN.value.timeToFinish!.toStringAsFixed(2)} / 60)',
+                    child: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
                   ),
                 ),
               ),
@@ -323,6 +336,10 @@ class FirstSegmentFirstStep extends StatelessWidget {
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
+                          suffixIcon: Tooltip(
+                            message: 'Altitude DP / rate of climb = ${controller.newProcedure.value.dpAltitude} / ${controller.firstSegmentN.value.rateClimb}',
+                            child: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
+                          ),
                         ),
                       ),
                     ),
@@ -350,6 +367,10 @@ class FirstSegmentFirstStep extends StatelessWidget {
                             borderSide: BorderSide(
                               color: Theme.of(context).primaryColor,
                             ),
+                          ),
+                          suffixIcon: Tooltip(
+                            message: 'Time to DP * (Velocity TAS / 60) = ${controller.firstSegmentN.value.timeToDP} * (${controller.firstSegmentN.value.velocityTAS} / 60)',
+                            child: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
                           ),
                         ),
                       ),
@@ -395,6 +416,10 @@ class FirstSegmentFirstStep extends StatelessWidget {
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
+                          suffixIcon: Tooltip(
+                            message: 'Distance to DP / (Velocity TAS / 60) = ${controller.newProcedure.value.dpDistance} / (${controller.firstSegmentN.value.velocityTAS} / 60)',
+                            child: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
+                          ),
                         ),
                       ),
                     ),
@@ -425,6 +450,10 @@ class FirstSegmentFirstStep extends StatelessWidget {
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
+                          suffixIcon: Tooltip(
+                            message: 'Time to DP * rate of climb = ${controller.firstSegmentN.value.timeToDP} * ${controller.firstSegmentN.value.rateClimb}',
+                            child: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
+                          ),
                         ),
                       ),
                     ),
@@ -452,6 +481,10 @@ class FirstSegmentFirstStep extends StatelessWidget {
                             borderSide: BorderSide(
                               color: Theme.of(context).primaryColor,
                             ),
+                          ),
+                          suffixIcon: Tooltip(
+                            message: 'Altitude in DP + airport elevation = ${controller.firstSegmentN.value.altitudeInDP} + ${controller.selectedAirport.value!.elevation}',
+                            child: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
                           ),
                         ),
                       ),
