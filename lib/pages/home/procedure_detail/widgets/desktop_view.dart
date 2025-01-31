@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:frontend_tfg/data/services/procedure.service.dart';
 import 'package:frontend_tfg/general_widgets/custom_tab_bar.dart';
 import 'package:frontend_tfg/pages/home/procedure_detail/procedure_detail.controller.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/isa_table.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/v2_table.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/vy_table.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
@@ -414,6 +418,11 @@ Widget desktopView(
                                 ),
                               ),
                             ),
+                            IconButton(onPressed: () {
+                              controller.v2First.value = !controller.v2First.value;
+                              controller.rateFirst.value = false;
+                              controller.isaFirst.value = false;
+                            }, icon: const Icon(Icons.info_outline)),
                             const SizedBox(width: 20),
                             if (controller.procedure.value.nMotors != null && controller.procedure.value.nMotors!.firstSegment != null && controller.procedure.value.nMotors!.firstSegment!.velocityTAS != null)
                             Expanded(
@@ -435,6 +444,11 @@ Widget desktopView(
                                 ),
                               ),
                             ),
+                            IconButton(onPressed: () {
+                              controller.isaFirst.value = !controller.rateFirst.value;
+                              controller.v2First.value = false;
+                              controller.rateFirst.value = false;
+                            }, icon: const Icon(Icons.info_outline)),
                             const SizedBox(width: 20),
                             if (controller.procedure.value.nMotors != null && controller.procedure.value.nMotors!.firstSegment != null && controller.procedure.value.nMotors!.firstSegment!.rateClimb != null)
                             Expanded(
@@ -456,8 +470,25 @@ Widget desktopView(
                                 ),
                               ),
                             ),
+                            IconButton(onPressed: () {
+                              controller.rateFirst.value = !controller.rateFirst.value;
+                              controller.v2First.value = false;
+                              controller.isaFirst.value = false;
+                            }, icon: const Icon(Icons.info_outline)),
                           ],
                         ),
+                        if (controller.v2First.value == true)
+                          const SizedBox(height: 20),
+                        if (controller.v2First.value == true)
+                          Center(child: SpeedTable(table: controller.v2TableFirst.value, obtainedData: controller.obtainedDatav2TableFirst)),
+                        if (controller.isaFirst.value == true)
+                          const SizedBox(height: 20),
+                        if (controller.isaFirst.value == true)
+                          Center(child: ISATable(table: controller.isatable.value, obtainedData: controller.obtainedISADataFirst)),
+                        if (controller.rateFirst.value == true)
+                          const SizedBox(height: 20),
+                        if (controller.rateFirst.value == true)
+                          Center(child: RateChart(rateGraphic: controller.rateGraphicFirst.value, resultRate: controller.resultRateFirst)),
                         const SizedBox(height: 20),
                         Row(
                           children: [
@@ -671,6 +702,11 @@ Widget desktopView(
                                       ),
                                     ),
                                   ),
+                                  IconButton(onPressed: () {
+                                    controller.v2Second.value = !controller.v2Second.value;
+                                    controller.rateSecond.value = false;
+                                    controller.isaSecond.value = false;
+                                  }, icon: const Icon(Icons.info_outline)),
                                   const SizedBox(width: 20),
                                   if (controller.procedure.value.nMotors != null && controller.procedure.value.nMotors!.secondSegment != null && controller.procedure.value.nMotors!.secondSegment!.velocityTAS != null)
                                   Expanded(
@@ -692,6 +728,11 @@ Widget desktopView(
                                       ),
                                     ),
                                   ),
+                                  IconButton(onPressed: () {
+                                    controller.isaSecond.value = !controller.isaSecond.value;
+                                    controller.rateSecond.value = false;
+                                    controller.v2Second.value = false;
+                                  }, icon: const Icon(Icons.info_outline)),
                                   const SizedBox(width: 20),
                                   if (controller.procedure.value.nMotors != null && controller.procedure.value.nMotors!.secondSegment != null && controller.procedure.value.nMotors!.secondSegment!.rateClimb != null)
                                   Expanded(
@@ -713,8 +754,25 @@ Widget desktopView(
                                       ),
                                     ),
                                   ),
+                                  IconButton(onPressed: () {
+                                    controller.rateSecond.value = !controller.rateSecond.value;
+                                    controller.isaSecond.value = false;
+                                    controller.v2Second.value = false;
+                                  }, icon: const Icon(Icons.info_outline)),
                                 ],
                               ),
+                              if (controller.v2Second.value == true)
+                                const SizedBox(height: 20),
+                              if (controller.v2Second.value == true)
+                                Center(child: VyTable(table: controller.vYtableN.value, obtainedData: controller.obtainedDataVYN)),
+                              if (controller.isaSecond.value == true)
+                                const SizedBox(height: 20),
+                              if (controller.isaSecond.value == true)
+                                Center(child: ISATable(table: controller.isatable.value, obtainedData: controller.obtainedISADataSecond)),
+                              if (controller.rateSecond.value == true)
+                                const SizedBox(height: 20),
+                              if (controller.rateSecond.value == true)
+                                Center(child: RateChart(rateGraphic: controller.rateGraphicSecond.value, resultRate: controller.resultRateSecond)),
                               const SizedBox(height: 20),
                               Row(
                                 children: [
@@ -931,6 +989,11 @@ Widget desktopView(
                                       ),
                                     ),
                                   ),
+                                  IconButton(onPressed: () {
+                                    controller.v2Third.value = !controller.v2Third.value;
+                                    controller.isaThird.value = false;
+                                    controller.rateThird.value = false;
+                                  }, icon: const Icon(Icons.info_outline)),
                                   const SizedBox(width: 20),
                                   if (controller.procedure.value.nMotors != null && controller.procedure.value.nMotors!.thirdSegment != null && controller.procedure.value.nMotors!.thirdSegment!.velocityTAS != null)
                                   Expanded(
@@ -952,6 +1015,11 @@ Widget desktopView(
                                       ),
                                     ),
                                   ),
+                                  IconButton(onPressed: () {
+                                    controller.isaThird.value = !controller.isaThird.value;
+                                    controller.v2Third.value = false;
+                                    controller.rateThird.value = false;
+                                  }, icon: const Icon(Icons.info_outline)),
                                   const SizedBox(width: 20),
                                   if (controller.procedure.value.nMotors != null && controller.procedure.value.nMotors!.thirdSegment != null && controller.procedure.value.nMotors!.thirdSegment!.rateClimb != null)
                                   Expanded(
@@ -973,8 +1041,25 @@ Widget desktopView(
                                       ),
                                     ),
                                   ),
+                                  IconButton(onPressed: () {
+                                    controller.rateThird.value = !controller.rateThird.value;
+                                    controller.v2Third.value = false;
+                                    controller.isaThird.value = false;
+                                  }, icon: const Icon(Icons.info_outline)),
                                 ],
                               ),
+                              if (controller.v2Third.value == true)
+                                const SizedBox(height: 20),
+                              if (controller.v2Third.value == true)
+                                Center(child: VyTable(table: controller.vYtableN.value, obtainedData: controller.obtainedDataVYNThird)),
+                              if (controller.isaThird.value == true)
+                                const SizedBox(height: 20),
+                              if (controller.isaThird.value == true)
+                                Center(child: ISATable(table: controller.isatable.value, obtainedData: controller.obtainedISADataThird)),
+                              if (controller.rateThird.value == true)
+                                const SizedBox(height: 20),
+                              if (controller.rateThird.value == true)
+                                Center(child: RateChart(rateGraphic: controller.rateGraphicThird.value, resultRate: controller.resultRateThird)),
                               const SizedBox(height: 20),
                               Row(
                                 children: [
