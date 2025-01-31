@@ -5,6 +5,7 @@ import 'package:frontend_tfg/general_widgets/alert.dart';
 import 'package:frontend_tfg/pages/home/list_aircrafts/list_aircrafts.controller.dart';
 import 'package:frontend_tfg/pages/home/list_procedures/list_procedures.controller.dart';
 import 'package:frontend_tfg/pages/home/procedure_detail/procedure_detail.controller.dart';
+import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:frontend_tfg/routes/app.pages.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -124,6 +125,33 @@ class ProcedureCardHome extends StatelessWidget {
                                 );
                               },
                               tooltip: 'Eliminar'.tr,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: IconButton(
+                              icon: const Icon(Icons.next_plan),
+                              color: Colors.grey,
+                              onPressed: () {
+                                final ListProceduresHomeController listController = Get.put(ListProceduresHomeController());
+                                final NewAnalaysisController newAnalaysisController = Get.put(NewAnalaysisController());
+                                newAnalaysisController.newProcedure.value = procedure;
+                                newAnalaysisController.selectedAircraft.value = listController.aircraft.value;
+                                newAnalaysisController.selectedAirport.value = listController.airport.value;
+                                newAnalaysisController.aircraftCorrect.value = true;
+                                newAnalaysisController.airportCorrect.value = true;
+                                newAnalaysisController.sidDoc.value = procedure.sidDoc;
+                                newAnalaysisController.rwyDoc.value = procedure.rwyDoc;
+                                newAnalaysisController.rwyName.text = procedure.rwyName ?? '';
+                                newAnalaysisController.sidName.text = procedure.sidName ?? '';
+                                newAnalaysisController.dpName.text = procedure.dpName ?? '';
+                                newAnalaysisController.dpDistance.text = procedure.dpDistance.toString();
+                                newAnalaysisController.dpAltitude.text = procedure.dpAltitude.toString();
+                                newAnalaysisController.weight.text = procedure.weight.toString();
+                                Get.toNamed(Routes.newAnalysis);
+                              },
+                              tooltip: 'Continue'.tr,
                             ),
                           ),
                         ],

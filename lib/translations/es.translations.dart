@@ -260,6 +260,8 @@ final Map<String, String> es = {
 
   'ignoreFailure': "¿Quieres omitir este paso?",
 
+  'Continue': 'Continuar',
+
   // Settings page
   'notifications': 'Notificaciones',
   'appearance': 'Apariencia',

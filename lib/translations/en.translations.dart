@@ -258,6 +258,8 @@ final Map<String, String> en = {
 
   'ignoreFailure': "Do you want to skip this step?",
 
+  'Continue': 'Continue',
+
   // Settings page
   'notifications': 'Notifications',
   'appearance': 'Appearance',

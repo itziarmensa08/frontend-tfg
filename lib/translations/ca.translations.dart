@@ -258,6 +258,8 @@ final Map<String, String> ca = {
 
   'ignoreFailure': "Vols omitir aquest pas?",
 
+  'Continue': 'Continuar',
+
   // Settings page
   'notifications': 'Notificacions',
   'appearance': 'Aparença',
