@@ -9,11 +9,13 @@ import 'package:frontend_tfg/data/models/isatable.model.dart';
 import 'package:frontend_tfg/data/models/procedure.model.dart';
 import 'package:frontend_tfg/data/models/rateofclimbgraphic.model.dart';
 import 'package:frontend_tfg/data/models/v2table.model.dart';
+import 'package:frontend_tfg/data/models/vxtable.model.dart';
 import 'package:frontend_tfg/data/models/vytable.model.dart';
 import 'package:frontend_tfg/data/services/gradientgraphic.service.dart';
 import 'package:frontend_tfg/data/services/isatable.service.dart';
 import 'package:frontend_tfg/data/services/rateofclimbgraphic.service.dart';
 import 'package:frontend_tfg/data/services/v2table.service.dart';
+import 'package:frontend_tfg/data/services/vXtable.service.dart';
 import 'package:frontend_tfg/data/services/vYtable.service.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -67,6 +69,8 @@ class NewAnalaysisController extends GetxController {
 
   final Rx<Segment> firstSegmentN = Segment().obs;
   final Rx<V2TableModel> data = V2TableModel().obs;
+  final Rx<VXTableModel> dataSAA226TC = VXTableModel().obs;
+  final RxList<VXtableRowsWeights> obtainedDataSAA226TC = RxList<VXtableRowsWeights>();
   final RxList<V2TableRowData> obtainedData = RxList<V2TableRowData>();
   final TextEditingController velocityFirstSegment = TextEditingController();
 
@@ -466,15 +470,28 @@ Future<Map<String, bool>> calculateDataNMotors(NewAnalaysisController controller
   controller.newProcedure.value.dpName = controller.dpName.text;
   controller.newProcedure.value.sidName = controller.sidName.text;
   controller.firstSegmentN.value.temperature = controller.selectedAirport.value!.referenceTemperature!;
-  var response = await V2TableService.getV2tableByAircraft(controller.selectedAircraft.value!.id!);
-  if (response != null) {
-    controller.data.value = response;
-  }
-  var obtainedData = await V2TableService.getObtainedData(controller.selectedAircraft.value!.id!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text), controller.firstSegmentN.value.temperature!, "V50");
-  if (obtainedData != null) {
-    controller.obtainedData.value = obtainedData.dataList;
-    controller.velocityFirstSegment.text = obtainedData.velocityValue.toStringAsFixed(2);
-    controller.firstSegmentN.value.velocityIAS = obtainedData.velocityValue;
+  if (controller.selectedAircraft.value!.metro != 'SA226TC') {
+    var response = await V2TableService.getV2tableByAircraft(controller.selectedAircraft.value!.id!);
+    if (response != null) {
+      controller.data.value = response;
+    }
+    var obtainedData = await V2TableService.getObtainedData(controller.selectedAircraft.value!.id!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text), controller.firstSegmentN.value.temperature!, "V50");
+    if (obtainedData != null) {
+      controller.obtainedData.value = obtainedData.dataList;
+      controller.velocityFirstSegment.text = obtainedData.velocityValue.toStringAsFixed(2);
+      controller.firstSegmentN.value.velocityIAS = obtainedData.velocityValue;
+    }
+  } else {
+    var responseVY = await VXTableService.getVXtableByAircraft(controller.selectedAircraft.value!.id!, "nMotors");
+    if (responseVY != null) {
+      controller.dataSAA226TC.value = responseVY;
+    }
+    var obtainedDataVY = await VXTableService.getObtainedData(controller.selectedAircraft.value!.id!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text), "nMotors");
+    if (obtainedDataVY != null) {
+      controller.obtainedDataSAA226TC.value = obtainedDataVY.dataList;
+      controller.velocityFirstSegment.text = obtainedDataVY.velocityValue.toStringAsFixed(2);
+      controller.firstSegmentN.value.velocityIAS = obtainedDataVY.velocityValue;
+    }
   }
   var isatableresponse = await ISATableService.getISATables();
   if (isatableresponse != null) {
@@ -486,8 +503,8 @@ Future<Map<String, bool>> calculateDataNMotors(NewAnalaysisController controller
     controller.densityFirstSegment.text = obtainedDataISA.densityValue.toStringAsFixed(2);
     controller.firstSegmentN.value.density = obtainedDataISA.densityValue;
   }
-  if (obtainedData != null && obtainedDataISA != null) {
-    double velocityTAS = obtainedData.velocityValue / sqrt(obtainedDataISA.densityValue);
+  if (controller.firstSegmentN.value.velocityIAS != null && obtainedDataISA != null) {
+    double velocityTAS = controller.firstSegmentN.value.velocityIAS! / sqrt(obtainedDataISA.densityValue);
     controller.firstSegmentN.value.velocityTAS = velocityTAS;
     controller.velocityFirstSegmentTAS.text = velocityTAS.toStringAsFixed(2);
   }

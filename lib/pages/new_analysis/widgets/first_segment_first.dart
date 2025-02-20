@@ -4,6 +4,8 @@ import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/isa_table.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/v2_table.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/vx_table.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/vy_table.dart';
 import 'package:get/get.dart';
 
 class FirstSegmentFirstStep extends StatelessWidget {
@@ -84,13 +86,22 @@ class FirstSegmentFirstStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() {
-          if (controller.obtainedData.isNotEmpty) {
-            return SpeedTable(table: controller.data.value, obtainedData: controller.obtainedData);
-          } else {
-            return const LinearProgressIndicator();
-          }
-        })),
+        if (controller.selectedAircraft.value!.metro != 'SA226TC')
+          Center(child: Obx(() {
+            if (controller.obtainedData.isNotEmpty) {
+              return SpeedTable(table: controller.data.value, obtainedData: controller.obtainedData);
+            } else {
+              return const LinearProgressIndicator();
+            }
+          })),
+        if (controller.selectedAircraft.value!.metro == 'SA226TC')
+          Center(child: Obx(() {
+            if (controller.obtainedData.isNotEmpty) {
+              return VxTable(table: controller.dataSAA226TC.value, obtainedData: controller.obtainedDataSAA226TC);
+            } else {
+              return const LinearProgressIndicator();
+            }
+          })),
         const SizedBox(height: 50),
         Row(
           children: [
