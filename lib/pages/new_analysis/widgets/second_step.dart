@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/vx_table.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/vy_table.dart';
 import 'package:get/get.dart';
 
 class SecondStep extends StatefulWidget {
@@ -18,21 +16,17 @@ class SecondStep extends StatefulWidget {
 
 class SecondStepState extends State<SecondStep> {
 
-  final controller = Get.put(NewAnalaysisController());
-
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       if (widget.controller.indexStepper.value == 1 && widget.controller.loadingAnalysisN.value == false && widget.controller.itemsNMotors.isNotEmpty) {
-        return VxTable(table: controller.dataSAA226TC.value, obtainedData: controller.obtainedDataSAA226TC);
-        /* return SingleChildScrollView(
+        return SingleChildScrollView(
           child: Container(
             child: _buildPanel(),
           ),
-        ); */
+        );
       } else {
-        return VxTable(table: controller.dataSAA226TC.value, obtainedData: controller.obtainedDataSAA226TC);
-        //return const LinearProgressIndicator();
+        return const LinearProgressIndicator();
       }
     });
   }

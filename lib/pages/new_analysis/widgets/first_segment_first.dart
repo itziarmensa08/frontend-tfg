@@ -5,7 +5,6 @@ import 'package:frontend_tfg/pages/new_analysis/widgets/isa_table.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/v2_table.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/vx_table.dart';
-import 'package:frontend_tfg/pages/new_analysis/widgets/vy_table.dart';
 import 'package:get/get.dart';
 
 class FirstSegmentFirstStep extends StatelessWidget {
