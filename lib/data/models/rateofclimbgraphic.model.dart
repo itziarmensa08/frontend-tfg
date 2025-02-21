@@ -152,9 +152,9 @@ class PressureLines {
 
 class Axis {
 
-  List<int>? x;
-  List<int>? yWeight;
-  List<int>? yAltitud;
+  List<double>? x;
+  List<double>? yWeight;
+  List<double>? yAltitud;
   String? id;
 
   Axis({
@@ -166,25 +166,25 @@ class Axis {
   Axis.fromJson(Map<String, dynamic> json) {
     if (json['x'] != null) {
       final v = json['x'];
-      final arr0 = <int>[];
+      final arr0 = <double>[];
       v.forEach((v) {
-        arr0.add(v.toInt());
+        arr0.add(v.toDouble());
       });
       x = arr0;
     }
     if (json['yWeight'] != null) {
       final v = json['yWeight'];
-      final arr0 = <int>[];
+      final arr0 = <double>[];
       v.forEach((v) {
-        arr0.add(v.toInt());
+        arr0.add(v.toDouble());
       });
       yWeight = arr0;
     }
     if (json['yAltitud'] != null) {
       final v = json['yAltitud'];
-      final arr0 = <int>[];
+      final arr0 = <double>[];
       v.forEach((v) {
-        arr0.add(v.toInt());
+        arr0.add(v.toDouble());
       });
       yAltitud = arr0;
     }

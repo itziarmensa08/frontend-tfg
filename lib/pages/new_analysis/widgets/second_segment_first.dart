@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/isa_table.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/vx_table.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/vy_table.dart';
 import 'package:get/get.dart';
 
@@ -83,7 +84,10 @@ class SecondSegmentFirstStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => VyTable(table: controller.vYtableN.value, obtainedData: controller.obtainedDataVYN))),
+        if (controller.selectedAircraft.value!.metro != 'SA226TC')
+          Center(child: Obx(() => VyTable(table: controller.vYtableN.value, obtainedData: controller.obtainedDataVYN))),
+        if (controller.selectedAircraft.value!.metro == 'SA226TC')
+          Center(child: Obx(() => VxTable(table: controller.vXtableN.value, obtainedData: controller.obtainedDataVXN))),
         const SizedBox(height: 50),
         Row(
           children: [

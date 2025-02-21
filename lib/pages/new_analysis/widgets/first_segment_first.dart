@@ -90,15 +90,15 @@ class FirstSegmentFirstStep extends StatelessWidget {
             if (controller.obtainedData.isNotEmpty) {
               return SpeedTable(table: controller.data.value, obtainedData: controller.obtainedData);
             } else {
-              return const LinearProgressIndicator();
+              return Container();
             }
           })),
         if (controller.selectedAircraft.value!.metro == 'SA226TC')
           Center(child: Obx(() {
-            if (controller.obtainedData.isNotEmpty) {
+            if (controller.obtainedDataSAA226TC.isNotEmpty) {
               return VxTable(table: controller.dataSAA226TC.value, obtainedData: controller.obtainedDataSAA226TC);
             } else {
-              return const LinearProgressIndicator();
+              return Container();
             }
           })),
         const SizedBox(height: 50),

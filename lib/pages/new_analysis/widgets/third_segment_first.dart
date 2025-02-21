@@ -82,7 +82,9 @@ class ThirdSegmentFirstStep extends StatelessWidget {
             ),
           ],
         ),
+        if (controller.selectedAircraft.value!.metro != 'SA226TC')
         const SizedBox(height: 50),
+        if (controller.selectedAircraft.value!.metro != 'SA226TC')
         Center(child: Obx(() => VyTable(table: controller.vYtableN.value, obtainedData: controller.obtainedDataVYThirdSegmentN))),
         const SizedBox(height: 50),
         Row(
@@ -181,7 +183,7 @@ class ThirdSegmentFirstStep extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => RateChart(rateGraphic: controller.rateGraphicSecondSegmentN.value, resultRate: controller.resultRateThirdSegmentN))),
+        Center(child: Obx(() => RateChart(rateGraphic: controller.rateGraphicThirdSegmentN.value, resultRate: controller.resultRateThirdSegmentN))),
         const SizedBox(height: 50),
         Row(
           children: [
