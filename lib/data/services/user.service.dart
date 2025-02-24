@@ -47,12 +47,11 @@ class UserService {
       if (response.statusCode == 200) {
         dynamic data = response.data;
         UserModel userModel = UserModel.fromJson(data['user']);
-        print(userModel.toJson());
         Auth.token = data['token'];
-        Auth.id = userModel.id!;
-        Auth.language = userModel.language!;
-        Auth.username = userModel.username!;
-        Get.updateLocale(Locale(userModel.language!));
+        Auth.id = userModel.id;
+        Auth.language = userModel.language;
+        Auth.username = userModel.username;
+        Get.updateLocale(Locale(userModel.language ?? 'es'));
         if (userModel.role == 'admin') {
           Auth.isAdmin = true;
         } else {
@@ -60,10 +59,10 @@ class UserService {
         }
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('token', data['token']);
-        prefs.setString('id', userModel.id!);
-        prefs.setString('language', userModel.language!);
-        prefs.setString('username', userModel.username!);
-        prefs.setString('profileImage', userModel.profileImage!);
+        prefs.setString('id', userModel.id ?? '');
+        prefs.setString('language', userModel.language ?? 'es');
+        prefs.setString('username', userModel.username ?? '');
+        prefs.setString('profileImage', userModel.profileImage ?? '');
         if (userModel.role == 'admin') {
           prefs.setBool('isAdmin', true);
         } else {
