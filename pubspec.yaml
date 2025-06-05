@@ -52,7 +52,7 @@ dependencies:
   table_calendar: ^3.1.1
   breadcrumbs: ^0.1.0
   url_strategy: ^0.3.0
-  json_theme: ^7.0.0+1
+  json_theme: ^9.0.0+1
 
 dev_dependencies:
   flutter_test:

@@ -52,7 +52,7 @@ class VXTableService {
           .map((item) => VXtableRowsWeights.fromJson(item))
           .toList();
 
-        var velocityValue = response.data['finalVelocity'];
+        var velocityValue = response.data['finalVelocity'] ?? 0;
 
         return ObtainedDataVXWithVelocity(dataList: dataList, velocityValue: velocityValue);
 

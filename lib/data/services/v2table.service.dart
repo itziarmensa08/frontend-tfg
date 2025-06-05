@@ -53,7 +53,7 @@ class V2TableService {
           .map((item) => V2TableRowData.fromJson(item))
           .toList();
 
-        var velocityValue = response.data['finalVelocity'];
+        var velocityValue = response.data['finalVelocity'] ?? 0;
 
         return ObtainedDataWithVelocity(dataList: dataList, velocityValue: velocityValue);
 
