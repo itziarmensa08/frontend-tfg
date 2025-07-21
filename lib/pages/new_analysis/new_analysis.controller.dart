@@ -802,7 +802,7 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
       if (resultrateresponseN != null) {
         if (controller.firstSegmentN.value.velocityTAS != null) {
           var distance = controller.firstSegmentN.value.velocityTAS! * (((controller.failure.value.initialElevation! - controller.selectedAircraft.value!.profile!.nMotors!.heightSecondSegment!) / resultrateresponseN['finalPoint']['x'])/60);
-          controller.failure.value.distanceToInitial = controller.firstSegmentN.value.distanceToFinish! + controller.secondSegmentN.value.distanceToFinish! + distance;
+          controller.failure.value.distanceToInitial = (controller.firstSegmentN.value.distanceToFinish! + controller.secondSegmentN.value.distanceToFinish! + distance) / 6076.12;
         }
       }
     } else {
@@ -857,8 +857,8 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
       var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicFirstSegmentN1.value.id!, resultrateresponse['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - 35);
       if (resultgradientresponse != null) {
         controller.resultGradientFirstSegmentN1.value = resultgradientresponse;
-        controller.firstSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
-        controller.distanceFirstSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
+        controller.firstSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'] / 6076.12;
+        controller.distanceFirstSegmentN1.text = (resultgradientresponse['thirdPoint']['x'] / 6076.12).toString();
       }
     }
     if (controller.firstSegmentN1.value.distanceToFinish != null && controller.altitude.value.dpDistance != null) {
@@ -933,8 +933,8 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
         var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicSecondSegmentN1.value.id!, resultrateresponseSecond['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!);
         if (resultgradientresponse != null) {
           controller.resultGradientSecondSegmentN1.value = resultgradientresponse;
-          controller.secondSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
-          controller.distanceSecondSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
+          controller.secondSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'] / 6076.12;
+          controller.distanceSecondSegmentN1.text = (resultgradientresponse['thirdPoint']['x'] / 6076.12).toString();
         }
       }
       if (controller.secondSegmentN1.value.distanceToFinish != null && controller.altitude.value.dpDistance != null) {
@@ -1127,8 +1127,8 @@ Future<Map<String, bool>> calculateDataFailureGradient(NewAnalaysisController co
       var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicFirstSegmentN1.value.id!, resultrateresponse['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - 35);
       if (resultgradientresponse != null) {
         controller.resultGradientFirstSegmentN1.value = resultgradientresponse;
-        controller.firstSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
-        controller.distanceFirstSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
+        controller.firstSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'] / 6076.12;
+        controller.distanceFirstSegmentN1.text = (resultgradientresponse['thirdPoint']['x'] / 6076.12).toString();
       }
     }
     if (controller.firstSegmentN1.value.distanceToFinish != null && controller.gradient.value.dpDistance != null) {
@@ -1206,8 +1206,8 @@ Future<Map<String, bool>> calculateDataFailureGradient(NewAnalaysisController co
         var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicSecondSegmentN1.value.id!, resultrateresponseSecond['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!);
         if (resultgradientresponse != null) {
           controller.resultGradientSecondSegmentN1.value = resultgradientresponse;
-          controller.secondSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
-          controller.distanceSecondSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
+          controller.secondSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'] / 6076.12;
+          controller.distanceSecondSegmentN1.text = (resultgradientresponse['thirdPoint']['x'] / 6076.12).toString();
         }
       }
       if (controller.secondSegmentN1.value.distanceToFinish != null && controller.gradient.value.dpDistance != null) {
