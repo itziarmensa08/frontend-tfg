@@ -845,25 +845,32 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
     if (rateresponse != null) {
       controller.rateGraphicFirstSegmentN1.value = rateresponse;
     }
-    var gradientresponse = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 1);
-    if (gradientresponse != null) {
-      controller.gradientGraphicFirstSegmentN1.value = gradientresponse;
+    if (controller.selectedAircraft.value!.name != 'EC-GJM') {
+      var gradientresponse = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 1);
+      if (gradientresponse != null) {
+        controller.gradientGraphicFirstSegmentN1.value = gradientresponse;
+      }
     }
     var resultrateresponse = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicFirstSegmentN1.value.id!, controller.firstSegmentN1.value.temperature!, (controller.failure.value.initialElevation!), double.parse(controller.weight.text));
     if (resultrateresponse != null) {
       controller.resultRateFirstSegmentN1.value = resultrateresponse;
       controller.firstSegmentN1.value.rateClimb = resultrateresponse['finalPoint']['x'];
       controller.gradientFirstSegmentN1.text = resultrateresponse['finalPoint']['x'].toString();
-      var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicFirstSegmentN1.value.id!, resultrateresponse['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - 35);
-      if (resultgradientresponse != null) {
-        controller.resultGradientFirstSegmentN1.value = resultgradientresponse;
-        if (controller.selectedAircraft.value!.name == 'EC-NIR / EC-NIP') {
-          controller.firstSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
-          controller.distanceFirstSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
-        } else {
-          controller.firstSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'] / 6076.12;
-          controller.distanceFirstSegmentN1.text = (resultgradientresponse['thirdPoint']['x'] / 6076.12).toString();
+      if (controller.selectedAircraft.value!.name != 'EC-GJM') {
+        var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicFirstSegmentN1.value.id!, resultrateresponse['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - controller.failure.value.initialElevation!);
+        if (resultgradientresponse != null) {
+          controller.resultGradientFirstSegmentN1.value = resultgradientresponse;
+          if (controller.selectedAircraft.value!.name == 'EC-NIR / EC-NIP') {
+            controller.firstSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
+            controller.distanceFirstSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
+          } else {
+            controller.firstSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'] / 6076.12;
+            controller.distanceFirstSegmentN1.text = (resultgradientresponse['thirdPoint']['x'] / 6076.12).toString();
+          }
         }
+      } else {
+        controller.firstSegmentN1.value.distanceToFinish = (controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - controller.failure.value.initialElevation!) / (resultrateresponse['finalPoint']['x'] * 6076.12);
+        controller.distanceFirstSegmentN1.text = ((controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - controller.failure.value.initialElevation!) / (resultrateresponse['finalPoint']['x'] * 6076.12)).toString();
       }
     }
     if (controller.firstSegmentN1.value.distanceToFinish != null && controller.altitude.value.dpDistance != null) {
@@ -926,26 +933,43 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
       if (rateresponseSecond != null) {
         controller.rateGraphicSecondSegmentN1.value = rateresponseSecond;
       }
-      var gradientresponseSecond = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 2);
-      if (gradientresponseSecond != null) {
-        controller.gradientGraphicSecondSegmentN1.value = gradientresponseSecond;
+      if (controller.selectedAircraft.value!.name != 'EC-GJM') {
+        var gradientresponseSecond = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 2);
+        if (gradientresponseSecond != null) {
+          controller.gradientGraphicSecondSegmentN1.value = gradientresponseSecond;
+        }
       }
       var resultrateresponseSecond = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicSecondSegmentN1.value.id!, controller.secondSegmentN1.value.temperature!, double.parse(controller.elevationSecondSegmentN1.text), double.parse(controller.weight.text));
       if (resultrateresponseSecond != null) {
         controller.resultRateSecondSegmentN1.value = resultrateresponseSecond;
         controller.secondSegmentN1.value.rateClimb = resultrateresponseSecond['finalPoint']['x'];
         controller.gradientSecondSegmentN1.text = resultrateresponseSecond['finalPoint']['x'].toString();
-        var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicSecondSegmentN1.value.id!, resultrateresponseSecond['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!);
-        if (resultgradientresponse != null) {
-          controller.resultGradientSecondSegmentN1.value = resultgradientresponse;
-          if (controller.selectedAircraft.value!.name == 'EC-NIR / EC-NIP') {
-            controller.secondSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
-            controller.distanceSecondSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
+        if (controller.selectedAircraft.value!.name != 'EC-GJM') {
+          var resultgradientresponse;
+          if (controller.failure.value.initialElevation! > controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) {
+            resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicSecondSegmentN1.value.id!, resultrateresponseSecond['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.failure.value.initialElevation!);
           } else {
-            controller.secondSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'] / 6076.12;
-            controller.distanceSecondSegmentN1.text = (resultgradientresponse['thirdPoint']['x'] / 6076.12).toString();
+            resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicSecondSegmentN1.value.id!, resultrateresponseSecond['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!);
           }
+          if (resultgradientresponse != null) {
+            controller.resultGradientSecondSegmentN1.value = resultgradientresponse;
+            if (controller.selectedAircraft.value!.name == 'EC-NIR / EC-NIP') {
+              controller.secondSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
+              controller.distanceSecondSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
+            } else {
+              controller.secondSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'] / 6076.12;
+              controller.distanceSecondSegmentN1.text = (resultgradientresponse['thirdPoint']['x'] / 6076.12).toString();
+            }
 
+          }
+        } else {
+          if (controller.failure.value.initialElevation! > controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) {
+            controller.secondSegmentN1.value.distanceToFinish = (controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.failure.value.initialElevation!) / (resultrateresponseSecond['finalPoint']['x'] * 6076.12);
+            controller.distanceSecondSegmentN1.text = ((controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.failure.value.initialElevation!) / (resultrateresponseSecond['finalPoint']['x'] * 6076.12)).toString();
+          } else {
+            controller.secondSegmentN1.value.distanceToFinish = (controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) / (resultrateresponseSecond['finalPoint']['x'] * 6076.12);
+            controller.distanceSecondSegmentN1.text = ((controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) / (resultrateresponseSecond['finalPoint']['x'] * 6076.12)).toString();
+          }
         }
       }
       if (controller.secondSegmentN1.value.distanceToFinish != null && controller.altitude.value.dpDistance != null) {
@@ -1016,9 +1040,11 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
     if (rateresponseThird != null) {
       controller.rateGraphicThirdSegmentN1.value = rateresponseThird;
     }
-    var gradientresponseThird = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 2);
-    if (gradientresponseThird != null) {
-      controller.gradientGraphicThirdSegmentN1.value = gradientresponseThird;
+    if (controller.selectedAircraft.value!.name != 'EC-GJM') {
+      var gradientresponseThird = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 2);
+      if (gradientresponseThird != null) {
+        controller.gradientGraphicThirdSegmentN1.value = gradientresponseThird;
+      }
     }
     var resultrateresponseThird = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicThirdSegmentN1.value.id!, controller.thirdSegmentN1.value.temperature!, double.parse(controller.elevationThirdSegmentN1.text), double.parse(controller.weight.text));
     if (resultrateresponseThird != null) {
@@ -1126,25 +1152,32 @@ Future<Map<String, bool>> calculateDataFailureGradient(NewAnalaysisController co
     if (rateresponse != null) {
       controller.rateGraphicFirstSegmentN1.value = rateresponse;
     }
-    var gradientresponse = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 1);
-    if (gradientresponse != null) {
-      controller.gradientGraphicFirstSegmentN1.value = gradientresponse;
+    if (controller.selectedAircraft.value!.name != 'EC-GJM') {
+      var gradientresponse = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 1);
+      if (gradientresponse != null) {
+        controller.gradientGraphicFirstSegmentN1.value = gradientresponse;
+      }
     }
     var resultrateresponse = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicFirstSegmentN1.value.id!, controller.firstSegmentN1.value.temperature!, (controller.failure.value.initialElevation!), double.parse(controller.weight.text));
     if (resultrateresponse != null) {
       controller.resultRateFirstSegmentN1.value = resultrateresponse;
       controller.firstSegmentN1.value.rateClimb = resultrateresponse['finalPoint']['x'];
       controller.gradientFirstSegmentN1.text = resultrateresponse['finalPoint']['x'].toString();
-      var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicFirstSegmentN1.value.id!, resultrateresponse['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - 35);
-      if (resultgradientresponse != null) {
-        controller.resultGradientFirstSegmentN1.value = resultgradientresponse;
-        if (controller.selectedAircraft.value!.name == 'EC-NIR / EC-NIP') {
-          controller.firstSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
-          controller.distanceFirstSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
-        } else {
-          controller.firstSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'] / 6076.12;
-          controller.distanceFirstSegmentN1.text = (resultgradientresponse['thirdPoint']['x'] / 6076.12).toString();
+      if (controller.selectedAircraft.value!.name != 'EC-GJM') {
+        var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicFirstSegmentN1.value.id!, resultrateresponse['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - controller.failure.value.initialElevation!);
+        if (resultgradientresponse != null) {
+          controller.resultGradientFirstSegmentN1.value = resultgradientresponse;
+          if (controller.selectedAircraft.value!.name == 'EC-NIR / EC-NIP') {
+            controller.firstSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
+            controller.distanceFirstSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
+          } else {
+            controller.firstSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'] / 6076.12;
+            controller.distanceFirstSegmentN1.text = (resultgradientresponse['thirdPoint']['x'] / 6076.12).toString();
+          }
         }
+      } else {
+        controller.firstSegmentN1.value.distanceToFinish = (controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - controller.failure.value.initialElevation!) / (resultrateresponse['finalPoint']['x'] * 6076.12);
+        controller.distanceFirstSegmentN1.text = ((controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - controller.failure.value.initialElevation!) / (resultrateresponse['finalPoint']['x'] * 6076.12)).toString();
       }
     }
     if (controller.firstSegmentN1.value.distanceToFinish != null && controller.gradient.value.dpDistance != null) {
@@ -1210,24 +1243,41 @@ Future<Map<String, bool>> calculateDataFailureGradient(NewAnalaysisController co
       if (rateresponseSecond != null) {
         controller.rateGraphicSecondSegmentN1.value = rateresponseSecond;
       }
-      var gradientresponseSecond = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 2);
-      if (gradientresponseSecond != null) {
-        controller.gradientGraphicSecondSegmentN1.value = gradientresponseSecond;
+      if (controller.selectedAircraft.value!.name != 'EC-GJM') {
+        var gradientresponseSecond = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 2);
+        if (gradientresponseSecond != null) {
+          controller.gradientGraphicSecondSegmentN1.value = gradientresponseSecond;
+        }
       }
       var resultrateresponseSecond = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicSecondSegmentN1.value.id!, controller.secondSegmentN1.value.temperature!, double.parse(controller.elevationSecondSegmentN1.text), double.parse(controller.weight.text));
       if (resultrateresponseSecond != null) {
         controller.resultRateSecondSegmentN1.value = resultrateresponseSecond;
         controller.secondSegmentN1.value.rateClimb = resultrateresponseSecond['finalPoint']['x'];
         controller.gradientSecondSegmentN1.text = resultrateresponseSecond['finalPoint']['x'].toString();
-        var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicSecondSegmentN1.value.id!, resultrateresponseSecond['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!);
-        if (resultgradientresponse != null) {
-          controller.resultGradientSecondSegmentN1.value = resultgradientresponse;
-          if (controller.selectedAircraft.value!.name == 'EC-NIR / EC-NIP') {
-            controller.secondSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
-            controller.distanceSecondSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
+        if (controller.selectedAircraft.value!.name != 'EC-GJM') {
+          var resultgradientresponse;
+          if (controller.failure.value.initialElevation! > controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment!) {
+            resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicSecondSegmentN1.value.id!, resultrateresponseSecond['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.failure.value.initialElevation!);
           } else {
-            controller.secondSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'] / 6076.12;
-            controller.distanceSecondSegmentN1.text = (resultgradientresponse['thirdPoint']['x'] / 6076.12).toString();
+            resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicSecondSegmentN1.value.id!, resultrateresponseSecond['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!);
+          }
+          if (resultgradientresponse != null) {
+            controller.resultGradientSecondSegmentN1.value = resultgradientresponse;
+            if (controller.selectedAircraft.value!.name == 'EC-NIR / EC-NIP') {
+              controller.secondSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'];
+              controller.distanceSecondSegmentN1.text = resultgradientresponse['thirdPoint']['x'].toString();
+            } else {
+              controller.secondSegmentN1.value.distanceToFinish = resultgradientresponse['thirdPoint']['x'] / 6076.12;
+              controller.distanceSecondSegmentN1.text = (resultgradientresponse['thirdPoint']['x'] / 6076.12).toString();
+            }
+          }
+        } else {
+          if (controller.failure.value.initialElevation! > controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment!) {
+            controller.secondSegmentN1.value.distanceToFinish = (controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.failure.value.initialElevation!) / (resultrateresponseSecond['finalPoint']['x'] * 6076.12);
+            controller.distanceSecondSegmentN1.text = ((controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.failure.value.initialElevation!) / (resultrateresponseSecond['finalPoint']['x'] * 6076.12)).toString();
+          } else {
+            controller.secondSegmentN1.value.distanceToFinish = (controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) / (resultrateresponseSecond['finalPoint']['x'] * 6076.12);
+            controller.distanceSecondSegmentN1.text = ((controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) / (resultrateresponseSecond['finalPoint']['x'] * 6076.12)).toString();
           }
         }
       }

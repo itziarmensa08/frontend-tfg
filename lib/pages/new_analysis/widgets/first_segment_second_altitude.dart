@@ -231,6 +231,7 @@ class FirstSegmentSecondStepAltitude extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
+        if (controller.selectedAircraft.value!.name != 'EC-GJM')
         Center(child: Obx(() {
           if (controller.resultGradientFirstSegmentN1.isNotEmpty) {
             return GradientChart(gradientGraphic: controller.gradientGraphicFirstSegmentN1.value, resultRate: controller.resultGradientFirstSegmentN1);
@@ -238,6 +239,7 @@ class FirstSegmentSecondStepAltitude extends StatelessWidget {
             return const LinearProgressIndicator();
           }
         })),
+        if (controller.selectedAircraft.value!.name != 'EC-GJM')
         const SizedBox(height: 50),
         Row(
           children: [
