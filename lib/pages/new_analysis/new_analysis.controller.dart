@@ -158,6 +158,8 @@ class NewAnalaysisController extends GetxController {
   final Rx<Segment> firstSegmentN1 = Segment().obs;
   final TextEditingController elevationFirstSegmentN1 = TextEditingController();
   final RxList<V2TableRowData> obtainedDataN1 = RxList<V2TableRowData>();
+  final Rx<VXTableModel> dataSAA226TCFailure = VXTableModel().obs;
+  final RxList<VXtableRowsWeights> obtainedDataSAA226TCFailure = RxList<VXtableRowsWeights>();
   final TextEditingController velocityFirstSegmentN1 = TextEditingController();
   final RxList<ISATableData> obtainedISADataFirstSegmentN1 = RxList<ISATableData>();
   final TextEditingController densityFirstSegmentN1 = TextEditingController();
@@ -171,6 +173,7 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController timeToDPFirstSegmentN1 = TextEditingController();
   final TextEditingController altitudeInDPFirstSegmentN1 = TextEditingController();
   final TextEditingController gradientFirstSegmentN1 = TextEditingController();
+  final TextEditingController rateFirstSegmentGXJFailure = TextEditingController();
   final TextEditingController totalAltitudeInDPFirstSegmentN1 = TextEditingController();
 
   // ----------------------- N - 1 MOTORS - 2nd SEGMENT ----------------------------------------
@@ -178,6 +181,8 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController elevationSecondSegmentN1 = TextEditingController();
   final Rx<VYTableModel> vYtableN1 = VYTableModel().obs;
   final RxList<VYtableRowsPressures> obtainedDataVYN1 = RxList<VYtableRowsPressures>();
+  final Rx<VXTableModel> dataSAA226TCFailureSecond = VXTableModel().obs;
+  final RxList<VXtableRowsWeights> obtainedDataSAA226TCFailureSecond = RxList<VXtableRowsWeights>();
   final TextEditingController velocitySecondSegmentN1 = TextEditingController();
   final RxList<ISATableData> obtainedISADataSecondSegmentN1 = RxList<ISATableData>();
   final TextEditingController densitySecondSegmentN1 = TextEditingController();
@@ -202,7 +207,6 @@ class NewAnalaysisController extends GetxController {
   final TextEditingController densityThirdSegmentN1 = TextEditingController();
   final TextEditingController velocityThirdSegmentTASN1 = TextEditingController();
   final Rx<RateOfClimbGraphic> rateGraphicThirdSegmentN1 = RateOfClimbGraphic().obs;
-  final Rx<GradientGraphic> gradientGraphicThirdSegmentN1 = GradientGraphic().obs;
   final RxMap<String, dynamic> resultRateThirdSegmentN1 = <String, dynamic>{}.obs;
   final RxMap<String, dynamic> resultGradientThirdSegmentN1 = <String, dynamic>{}.obs;
   final TextEditingController timeThirdSegmentN1 = TextEditingController();
@@ -422,7 +426,6 @@ void deleteDataThirdStep(NewAnalaysisController controller) {
   controller.densityThirdSegmentN1.clear();
   controller.velocityThirdSegmentTASN1.clear();
   controller.rateGraphicThirdSegmentN1.value = RateOfClimbGraphic();
-  controller.gradientGraphicThirdSegmentN1.value = GradientGraphic();
   controller.resultRateThirdSegmentN1.clear();
   controller.resultGradientThirdSegmentN1.clear();
   controller.timeThirdSegmentN1.clear();
@@ -824,11 +827,26 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
 
     controller.firstSegmentN1.value.temperature = equivalentTemperatureFirstSegmentN1;
 
-    var obtainedData = await V2TableService.getObtainedData(controller.selectedAircraft.value!.id!, (controller.failure.value.initialElevation!), double.parse(controller.weight.text), controller.firstSegmentN1.value.temperature!, "V2");
-    if (obtainedData != null) {
-      controller.obtainedDataN1.value = obtainedData.dataList;
-      controller.velocityFirstSegmentN1.text = obtainedData.velocityValue.toString();
-      controller.firstSegmentN1.value.velocityIAS = obtainedData.velocityValue;
+    var obtainedData;
+
+    if (controller.selectedAircraft.value!.metro != 'SA226TC') {
+      obtainedData = await V2TableService.getObtainedData(controller.selectedAircraft.value!.id!, (controller.failure.value.initialElevation!), double.parse(controller.weight.text), controller.firstSegmentN1.value.temperature!, "V2");
+      if (obtainedData != null) {
+        controller.obtainedDataN1.value = obtainedData.dataList;
+        controller.velocityFirstSegmentN1.text = obtainedData.velocityValue.toString();
+        controller.firstSegmentN1.value.velocityIAS = obtainedData.velocityValue;
+      }
+    } else {
+      var response = await VXTableService.getVXtableByAircraft(controller.selectedAircraft.value!.id!, "failure1");
+      if (response != null) {
+        controller.dataSAA226TCFailure.value = response;
+      }
+      obtainedData = await VXTableService.getObtainedData(controller.selectedAircraft.value!.id!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text), "failure1");
+      if (obtainedData != null) {
+        controller.obtainedDataSAA226TCFailure.value = obtainedData.dataList;
+        controller.velocityFirstSegmentN1.text = obtainedData.velocityValue.toStringAsFixed(2);
+        controller.firstSegmentN1.value.velocityIAS = obtainedData.velocityValue;
+      }
     }
     var obtainedDataISA = await ISATableService.getObtainedData((controller.failure.value.initialElevation!));
     if (obtainedDataISA != null) {
@@ -845,7 +863,7 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
     if (rateresponse != null) {
       controller.rateGraphicFirstSegmentN1.value = rateresponse;
     }
-    if (controller.selectedAircraft.value!.name != 'EC-GJM') {
+    if (controller.selectedAircraft.value!.name != 'EC-GJM' && controller.selectedAircraft.value!.metro != 'SA226TC') {
       var gradientresponse = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 1);
       if (gradientresponse != null) {
         controller.gradientGraphicFirstSegmentN1.value = gradientresponse;
@@ -856,7 +874,12 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
       controller.resultRateFirstSegmentN1.value = resultrateresponse;
       controller.firstSegmentN1.value.rateClimb = resultrateresponse['finalPoint']['x'];
       controller.gradientFirstSegmentN1.text = resultrateresponse['finalPoint']['x'].toString();
-      if (controller.selectedAircraft.value!.name != 'EC-GJM') {
+      if (controller.selectedAircraft.value!.metro != 'SA226TC') {
+        controller.gradientFirstSegmentN1.text = resultrateresponse['finalPoint']['x'].toString();
+      } else {
+        controller.rateFirstSegmentGXJFailure.text = resultrateresponse['finalPoint']['x'].toString();
+      }
+      if (controller.selectedAircraft.value!.name != 'EC-GJM' && controller.selectedAircraft.value!.metro != 'SA226TC') {
         var resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicFirstSegmentN1.value.id!, resultrateresponse['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - controller.failure.value.initialElevation!);
         if (resultgradientresponse != null) {
           controller.resultGradientFirstSegmentN1.value = resultgradientresponse;
@@ -868,9 +891,16 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
             controller.distanceFirstSegmentN1.text = (resultgradientresponse['thirdPoint']['x'] / 6076.12).toString();
           }
         }
-      } else {
+      } else if (controller.selectedAircraft.value!.name == 'EC-GJM') {
         controller.firstSegmentN1.value.distanceToFinish = (controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - controller.failure.value.initialElevation!) / (resultrateresponse['finalPoint']['x'] * 6076.12);
         controller.distanceFirstSegmentN1.text = ((controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - controller.failure.value.initialElevation!) / (resultrateresponse['finalPoint']['x'] * 6076.12)).toString();
+      } else {
+        controller.firstSegmentN1.value.timeToFinish = (controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - 35) / resultrateresponse['finalPoint']['x']; // minutes
+        controller.timeFirstSegmentN1.text = ((controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - 35) / resultrateresponse['finalPoint']['x']).toStringAsFixed(2);
+        if (controller.firstSegmentN1.value.velocityTAS != null) {
+          controller.firstSegmentN1.value.distanceToFinish = controller.firstSegmentN1.value.velocityTAS! * (((controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - 35) / resultrateresponse['finalPoint']['x'])/60);
+          controller.distanceFirstSegmentN1.text = (controller.firstSegmentN1.value.velocityTAS! * (((controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! - 35) / resultrateresponse['finalPoint']['x'])/60)).toStringAsFixed(2);
+        }
       }
     }
     if (controller.firstSegmentN1.value.distanceToFinish != null && controller.altitude.value.dpDistance != null) {
@@ -880,8 +910,15 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
         controller.firstSegmentN1.value.reachDP = true;
         reachDP1 = true;
 
-        controller.firstSegmentN1.value.altitudeInDP = ((controller.altitude.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.firstSegmentN1.value.rateClimb!) / 100;
-        controller.altitudeInDPFirstSegmentN1.text = (((controller.altitude.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.firstSegmentN1.value.rateClimb!) / 100).toString();
+        if (controller.selectedAircraft.value!.metro != 'SA226TC') {
+          controller.firstSegmentN1.value.altitudeInDP = ((controller.altitude.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.firstSegmentN1.value.rateClimb!) / 100;
+          controller.altitudeInDPFirstSegmentN1.text = (((controller.altitude.value.dpDistance! - controller.failure.value.distanceToInitial!) * 6076.12 * controller.firstSegmentN1.value.rateClimb!) / 100).toString();
+        } else {
+          controller.firstSegmentN1.value.timeToDP = controller.altitude.value.dpDistance! / (controller.firstSegmentN1.value.velocityTAS! / 60);
+          controller.firstSegmentN1.value.altitudeInDP = controller.firstSegmentN1.value.timeToDP! * controller.firstSegmentN1.value.rateClimb!;
+          controller.altitudeInDPFirstSegmentN1.text = (controller.firstSegmentN1.value.timeToDP! * controller.firstSegmentN1.value.rateClimb!).toStringAsFixed(2);
+        }
+
         controller.totalAltitudeInDPFirstSegmentN1.text = (controller.firstSegmentN1.value.altitudeInDP! + controller.failure.value.initialElevation!).toString();
 
         if ((controller.firstSegmentN1.value.altitudeInDP! + controller.failure.value.initialElevation!) > controller.altitude.value.dpElevation!) {
@@ -908,15 +945,29 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
     controller.secondSegmentN1.value.temperature = equivalentTemperatureSecondSegmentN1;
 
     if (controller.firstSegmentN1.value.reachDP == false) {
-      var responseVY = await VYTableService.getVYtableByAircraft(controller.selectedAircraft.value!.id!, "failure");
-      if (responseVY != null) {
-        controller.vYtableN1.value = responseVY;
-      }
-      var obtainedDataVY = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, double.parse(controller.elevationSecondSegmentN1.text), double.parse(controller.weight.text), "failure");
-      if (obtainedDataVY != null) {
-        controller.obtainedDataVYN1.value = obtainedDataVY.dataList;
-        controller.velocitySecondSegmentN1.text = obtainedDataVY.velocityValue.toStringAsFixed(2);
-        controller.secondSegmentN1.value.velocityIAS = obtainedDataVY.velocityValue;
+      var obtainedDataVY;
+      if (controller.selectedAircraft.value!.metro != 'SA226TC') {
+        var responseVY = await VYTableService.getVYtableByAircraft(controller.selectedAircraft.value!.id!, "failure");
+        if (responseVY != null) {
+          controller.vYtableN1.value = responseVY;
+        }
+        obtainedDataVY = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, double.parse(controller.elevationSecondSegmentN1.text), double.parse(controller.weight.text), "failure");
+        if (obtainedDataVY != null) {
+          controller.obtainedDataVYN1.value = obtainedDataVY.dataList;
+          controller.velocitySecondSegmentN1.text = obtainedDataVY.velocityValue.toStringAsFixed(2);
+          controller.secondSegmentN1.value.velocityIAS = obtainedDataVY.velocityValue;
+        }
+      } else {
+        var response = await VXTableService.getVXtableByAircraft(controller.selectedAircraft.value!.id!, "failure2");
+        if (response != null) {
+          controller.dataSAA226TCFailureSecond.value = response;
+        }
+        obtainedDataVY = await VXTableService.getObtainedData(controller.selectedAircraft.value!.id!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text), "failure2");
+        if (obtainedDataVY != null) {
+          controller.obtainedDataSAA226TCFailureSecond.value = obtainedDataVY.dataList;
+          controller.velocitySecondSegmentN1.text = obtainedDataVY.velocityValue.toStringAsFixed(2);
+          controller.secondSegmentN1.value.velocityIAS = obtainedDataVY.velocityValue;
+        }
       }
       var obtainedDataISASecondSegment = await ISATableService.getObtainedData(double.parse(controller.elevationSecondSegmentN1.text));
       if (obtainedDataISASecondSegment != null) {
@@ -929,11 +980,15 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
         controller.secondSegmentN1.value.velocityTAS = velocityTAS;
         controller.velocitySecondSegmentTASN1.text = velocityTAS.toStringAsFixed(2);
       }
-      var rateresponseSecond = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 2, "failure");
+      var segment = 2;
+      if (controller.selectedAircraft.value!.metro == 'SA226TC') {
+        segment = 1;
+      }
+      var rateresponseSecond = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, segment, "failure");
       if (rateresponseSecond != null) {
         controller.rateGraphicSecondSegmentN1.value = rateresponseSecond;
       }
-      if (controller.selectedAircraft.value!.name != 'EC-GJM') {
+      if (controller.selectedAircraft.value!.name != 'EC-GJM' && controller.selectedAircraft.value!.metro != 'SA226TC') {
         var gradientresponseSecond = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 2);
         if (gradientresponseSecond != null) {
           controller.gradientGraphicSecondSegmentN1.value = gradientresponseSecond;
@@ -944,7 +999,7 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
         controller.resultRateSecondSegmentN1.value = resultrateresponseSecond;
         controller.secondSegmentN1.value.rateClimb = resultrateresponseSecond['finalPoint']['x'];
         controller.gradientSecondSegmentN1.text = resultrateresponseSecond['finalPoint']['x'].toString();
-        if (controller.selectedAircraft.value!.name != 'EC-GJM') {
+        if (controller.selectedAircraft.value!.name != 'EC-GJM' && controller.selectedAircraft.value!.metro != 'SA226TC') {
           var resultgradientresponse;
           if (controller.failure.value.initialElevation! > controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) {
             resultgradientresponse = await GradientGraphicService.calculateDistance(controller.gradientGraphicSecondSegmentN1.value.id!, resultrateresponseSecond['finalPoint']['x'], controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.failure.value.initialElevation!);
@@ -962,13 +1017,29 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
             }
 
           }
-        } else {
+        } else if (controller.selectedAircraft.value!.name == 'EC-GJM') {
           if (controller.failure.value.initialElevation! > controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) {
             controller.secondSegmentN1.value.distanceToFinish = (controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.failure.value.initialElevation!) / (resultrateresponseSecond['finalPoint']['x'] * 6076.12);
             controller.distanceSecondSegmentN1.text = ((controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.failure.value.initialElevation!) / (resultrateresponseSecond['finalPoint']['x'] * 6076.12)).toString();
           } else {
             controller.secondSegmentN1.value.distanceToFinish = (controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) / (resultrateresponseSecond['finalPoint']['x'] * 6076.12);
             controller.distanceSecondSegmentN1.text = ((controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) / (resultrateresponseSecond['finalPoint']['x'] * 6076.12)).toString();
+          }
+        } else {
+          if (controller.failure.value.initialElevation! > controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) {
+            controller.secondSegmentN1.value.timeToFinish = (controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.failure.value.initialElevation!) / resultrateresponseSecond['finalPoint']['x']; // minutes
+            controller.timeSecondSegmentN1.text = ((controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.failure.value.initialElevation!) / resultrateresponseSecond['finalPoint']['x']).toStringAsFixed(2);
+            if (controller.secondSegmentN1.value.velocityTAS != null) {
+              controller.secondSegmentN1.value.distanceToFinish = controller.secondSegmentN1.value.velocityTAS! * (((controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.failure.value.initialElevation!) / resultrateresponseSecond['finalPoint']['x'])/60);
+              controller.distanceSecondSegmentN1.text = (controller.secondSegmentN1.value.velocityTAS! * (((controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.failure.value.initialElevation!) / resultrateresponseSecond['finalPoint']['x'])/60)).toStringAsFixed(2);
+            }
+          } else {
+            controller.secondSegmentN1.value.timeToFinish = (controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) / resultrateresponseSecond['finalPoint']['x']; // minutes
+            controller.timeSecondSegmentN1.text = ((controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) / resultrateresponseSecond['finalPoint']['x']).toStringAsFixed(2);
+            if (controller.secondSegmentN1.value.velocityTAS != null) {
+              controller.secondSegmentN1.value.distanceToFinish = controller.secondSegmentN1.value.velocityTAS! * (((controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) / resultrateresponseSecond['finalPoint']['x'])/60);
+              controller.distanceSecondSegmentN1.text = (controller.secondSegmentN1.value.velocityTAS! * (((controller.selectedAircraft.value!.profile!.failure!.heightSecondSegment! - controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) / resultrateresponseSecond['finalPoint']['x'])/60)).toStringAsFixed(2);
+            }
           }
         }
       }
@@ -979,8 +1050,14 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
           controller.secondSegmentN1.value.reachDP = true;
           reachDP2 = true;
 
-          controller.secondSegmentN1.value.altitudeInDP = ((controller.altitude.value.dpDistance! - ((controller.firstSegmentN1.value.distanceToFinish ?? 0) + controller.failure.value.distanceToInitial!)) * 6076.12) * controller.secondSegmentN1.value.rateClimb! / 100;
-          controller.altitudeInDPSecondSegmentN1.text = (((controller.altitude.value.dpDistance! - ((controller.firstSegmentN1.value.distanceToFinish ?? 0) + controller.failure.value.distanceToInitial!)) * 6076.12) * controller.secondSegmentN1.value.rateClimb! / 100).toString();
+          if (controller.selectedAircraft.value!.metro != 'SA226TC') {
+            controller.secondSegmentN1.value.altitudeInDP = ((controller.altitude.value.dpDistance! - ((controller.firstSegmentN1.value.distanceToFinish ?? 0) + controller.failure.value.distanceToInitial!)) * 6076.12) * controller.secondSegmentN1.value.rateClimb! / 100;
+            controller.altitudeInDPSecondSegmentN1.text = (((controller.altitude.value.dpDistance! - ((controller.firstSegmentN1.value.distanceToFinish ?? 0) + controller.failure.value.distanceToInitial!)) * 6076.12) * controller.secondSegmentN1.value.rateClimb! / 100).toString();
+          } else {
+            controller.secondSegmentN1.value.timeToDP = (controller.altitude.value.dpDistance! - controller.firstSegmentN1.value.distanceToFinish!) / (controller.secondSegmentN1.value.velocityTAS! / 60);
+            controller.secondSegmentN1.value.altitudeInDP = controller.secondSegmentN1.value.timeToDP! * controller.secondSegmentN1.value.rateClimb!;
+            controller.altitudeInDPSecondSegmentN1.text = (controller.secondSegmentN1.value.timeToDP! * controller.secondSegmentN1.value.rateClimb!).toStringAsFixed(2);
+          }
 
           if (controller.failure.value.initialElevation! < controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment!) {
             controller.totalAltitudeInDPSecondSegmentN1.text = (controller.secondSegmentN1.value.altitudeInDP! + controller.selectedAircraft.value!.profile!.failure!.heightFirstSegment! + controller.selectedAirport.value!.elevation!).toString();
@@ -1015,15 +1092,29 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
   controller.thirdSegmentN1.value.temperature = equivalentTemperatureThirdSegmentN1;
 
   if (controller.secondSegmentN1.value.reachDP == false) {
-    var responseVY = await VYTableService.getVYtableByAircraft(controller.selectedAircraft.value!.id!, "failure");
-    if (responseVY != null) {
-      controller.vYtableN1.value = responseVY;
-    }
-    var obtainedDataVY = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, double.parse(controller.elevationThirdSegmentN1.text), double.parse(controller.weight.text), "failure");
-    if (obtainedDataVY != null) {
-      controller.obtainedDataThirdVYN1.value = obtainedDataVY.dataList;
-      controller.velocityThirdSegmentN1.text = obtainedDataVY.velocityValue.toStringAsFixed(2);
-      controller.thirdSegmentN1.value.velocityIAS = obtainedDataVY.velocityValue;
+    var obtainedDataVY;
+    if (controller.selectedAircraft.value!.metro != 'SA226TC') {
+      var responseVY = await VYTableService.getVYtableByAircraft(controller.selectedAircraft.value!.id!, "failure");
+      if (responseVY != null) {
+        controller.vYtableN1.value = responseVY;
+      }
+      obtainedDataVY = await VYTableService.getObtainedData(controller.selectedAircraft.value!.id!, double.parse(controller.elevationThirdSegmentN1.text), double.parse(controller.weight.text), "failure");
+      if (obtainedDataVY != null) {
+        controller.obtainedDataThirdVYN1.value = obtainedDataVY.dataList;
+        controller.velocityThirdSegmentN1.text = obtainedDataVY.velocityValue.toStringAsFixed(2);
+        controller.thirdSegmentN1.value.velocityIAS = obtainedDataVY.velocityValue;
+      }
+    } else {
+      var response = await VXTableService.getVXtableByAircraft(controller.selectedAircraft.value!.id!, "failure2");
+      if (response != null) {
+        controller.dataSAA226TCFailureSecond.value = response;
+      }
+      obtainedDataVY = await VXTableService.getObtainedData(controller.selectedAircraft.value!.id!, controller.selectedAirport.value!.elevation!, double.parse(controller.weight.text), "failure2");
+      if (obtainedDataVY != null) {
+        controller.obtainedDataSAA226TCFailureSecond.value = obtainedDataVY.dataList;
+        controller.velocityThirdSegmentN1.text = obtainedDataVY.velocityValue.toStringAsFixed(2);
+        controller.thirdSegmentN1.value.velocityIAS = obtainedDataVY.velocityValue;
+      }
     }
     var obtainedDataISAThirdSegment = await ISATableService.getObtainedData(double.parse(controller.elevationThirdSegmentN1.text));
     if (obtainedDataISAThirdSegment != null) {
@@ -1036,15 +1127,13 @@ Future<Map<String, bool>> calculateDataFailureAltitude(NewAnalaysisController co
       controller.thirdSegmentN1.value.velocityTAS = velocityTAS;
       controller.velocityThirdSegmentTASN1.text = velocityTAS.toStringAsFixed(2);
     }
-    var rateresponseThird = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, 3, "failure");
+    var segment2 = 3;
+    if (controller.selectedAircraft.value!.metro == 'SA226TC') {
+      segment2 = 1;
+    }
+    var rateresponseThird = await RateOfClimbGraphicService.getRateByAircraft(controller.selectedAircraft.value!.id!, segment2, "failure");
     if (rateresponseThird != null) {
       controller.rateGraphicThirdSegmentN1.value = rateresponseThird;
-    }
-    if (controller.selectedAircraft.value!.name != 'EC-GJM') {
-      var gradientresponseThird = await GradientGraphicService.getGradientByAircraft(controller.selectedAircraft.value!.id!, 2);
-      if (gradientresponseThird != null) {
-        controller.gradientGraphicThirdSegmentN1.value = gradientresponseThird;
-      }
     }
     var resultrateresponseThird = await RateOfClimbGraphicService.calculateRateOfClimb(controller.rateGraphicThirdSegmentN1.value.id!, controller.thirdSegmentN1.value.temperature!, double.parse(controller.elevationThirdSegmentN1.text), double.parse(controller.weight.text));
     if (resultrateresponseThird != null) {

@@ -224,7 +224,9 @@ class ThirdStepState extends State<ThirdStep> {
               },
               child: Text('minimum_altitude'.tr),
             ),
+            if (controller.selectedAircraft.value!.metro != 'SA226TC')
             const SizedBox(width: 20),
+            if (controller.selectedAircraft.value!.metro != 'SA226TC')
             ElevatedButton(
               onPressed: () {
                 controller.seeAnalysis.value = false;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/isa_table.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/vx_table.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/vyse_table.dart';
 import 'package:get/get.dart';
 
@@ -83,7 +84,10 @@ class ThirdSegmentSecondStepAltitude extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => VyseTable(table: controller.vYtableN1.value, obtainedData: controller.obtainedDataThirdVYN1))),
+        if (controller.selectedAircraft.value!.metro != 'SA226TC')
+          Center(child: Obx(() => VyseTable(table: controller.vYtableN1.value, obtainedData: controller.obtainedDataThirdVYN1))),
+        if (controller.selectedAircraft.value!.metro == 'SA226TC')
+          Center(child: Obx(() => VxTable(table: controller.dataSAA226TCFailureSecond.value, obtainedData: controller.obtainedDataSAA226TCFailureSecond))),
         const SizedBox(height: 50),
         Row(
           children: [

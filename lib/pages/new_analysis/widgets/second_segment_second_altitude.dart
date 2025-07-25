@@ -3,6 +3,7 @@ import 'package:frontend_tfg/pages/new_analysis/new_analysis.controller.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/gradient_chart.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/isa_table.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/rate_chart_gradient.dart';
+import 'package:frontend_tfg/pages/new_analysis/widgets/vx_table.dart';
 import 'package:frontend_tfg/pages/new_analysis/widgets/vyse_table.dart';
 import 'package:get/get.dart';
 
@@ -84,7 +85,10 @@ class SecondSegmentSecondStepAltitude extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 50),
-        Center(child: Obx(() => VyseTable(table: controller.vYtableN1.value, obtainedData: controller.obtainedDataVYN1))),
+        if (controller.selectedAircraft.value!.metro != 'SA226TC')
+          Center(child: Obx(() => VyseTable(table: controller.vYtableN1.value, obtainedData: controller.obtainedDataVYN1))),
+        if (controller.selectedAircraft.value!.metro == 'SA226TC')
+          Center(child: Obx(() => VxTable(table: controller.dataSAA226TCFailureSecond.value, obtainedData: controller.obtainedDataSAA226TCFailureSecond))),
         const SizedBox(height: 50),
         Row(
           children: [
@@ -195,38 +199,93 @@ class SecondSegmentSecondStepAltitude extends StatelessWidget {
           }
         })),
         const SizedBox(height: 50),
-        Row(
-          children: [
-            Text('gradientObtained'.tr, style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(width: 20),
-            Expanded(
-              child: TextFormField(
-                controller: controller.gradientSecondSegmentN1,
-                onChanged: (value) {
-                  controller.secondSegmentN1.value.rateClimb = double.parse(value);
-                  controller.altitude.value.secondSegment = controller.secondSegmentN1.value;
-                  controller.failure.value.altitude = controller.altitude.value;
-                  controller.newProcedure.value.failure = controller.failure.value;
-                },
-                decoration: InputDecoration(
-                  labelText: 'gradient'.tr,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
+        if (controller.selectedAircraft.value!.metro != 'SA226TC')
+          Row(
+            children: [
+              Text('gradientObtained'.tr, style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(width: 20),
+              Expanded(
+                child: TextFormField(
+                  controller: controller.gradientSecondSegmentN1,
+                  onChanged: (value) {
+                    controller.secondSegmentN1.value.rateClimb = double.parse(value);
+                    controller.altitude.value.secondSegment = controller.secondSegmentN1.value;
+                    controller.failure.value.altitude = controller.altitude.value;
+                    controller.newProcedure.value.failure = controller.failure.value;
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'gradient'.tr,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        if (controller.selectedAircraft.value!.metro == 'SA226TC')
+          Row(
+            children: [
+              Text('finalRateOfClimb'.tr, style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(width: 20),
+              Expanded(
+                child: TextFormField(
+                  controller: controller.gradientSecondSegmentN1,
+                  onChanged: (value) {},
+                  decoration: InputDecoration(
+                    labelText: 'rateOfClimb'.tr,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        if (controller.selectedAircraft.value!.metro == 'SA226TC')
+          const SizedBox(height: 50),
+        if (controller.selectedAircraft.value!.metro == 'SA226TC')
+          Row(
+            children: [
+              Text('timeFirstSegment'.tr, style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(width: 20),
+              Expanded(
+                child: TextFormField(
+                  controller: controller.timeSecondSegmentN1,
+                  onChanged: (value) {},
+                  decoration: InputDecoration(
+                    labelText: 'time'.tr,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         const SizedBox(height: 50),
-        if (controller.selectedAircraft.value!.name != 'EC-GJM')
+        if (controller.selectedAircraft.value!.name != 'EC-GJM' && controller.selectedAircraft.value!.metro != 'SA226TC')
         Center(child: Obx(() {
           if (controller.resultGradientSecondSegmentN1.isNotEmpty) {
             return GradientChart(gradientGraphic: controller.gradientGraphicSecondSegmentN1.value, resultRate: controller.resultGradientSecondSegmentN1);
@@ -234,7 +293,7 @@ class SecondSegmentSecondStepAltitude extends StatelessWidget {
             return const LinearProgressIndicator();
           }
         })),
-        if (controller.selectedAircraft.value!.name != 'EC-GJM')
+        if (controller.selectedAircraft.value!.name != 'EC-GJM' && controller.selectedAircraft.value!.metro != 'SA226TC')
         const SizedBox(height: 50),
         Row(
           children: [
