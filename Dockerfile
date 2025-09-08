@@ -7,14 +7,15 @@ RUN apt-get update && apt-get install -y \
     git \
     wget \
     unzip \
-    libgconf-2-4 \
     gdb \
     libstdc++6 \
     libglu1-mesa \
-    fonts-droid-fallback \
+    fonts-noto-core \
+    fonts-noto-cjk \
+    fonts-noto-color-emoji \
     lib32stdc++6 \
     python3 \
-    && apt-get clean
+ && rm -rf /var/lib/apt/lists/*
 
 # Clone Flutter repository and checkout the specified version
 RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
